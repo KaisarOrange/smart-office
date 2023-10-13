@@ -1,13 +1,17 @@
 <script lang="ts">
+	import { Avatar } from '@skeletonlabs/skeleton';
+	import PostComponentComment from './PostComponentComment.svelte';
+	import LikeShareComment from './LikeShareComment.svelte';
+
 	let liked: boolean;
+	let comment: boolean;
 </script>
 
 <div class="bg-white p-2 mt-2 rounded-sm">
 	<div class=" flex justify-center items-center gap-4">
-		<div class="flex flex-col items-center">
+		<div class="flex items-center">
 			<svg
-				class="fill-none stroke-[#0093ED]"
-				class:liked
+				class="fill-none cursor-pointer stroke-[#0093ED] {liked ? 'fill-[#0093ED]' : ''}"
 				on:click={() => {
 					liked = !liked;
 				}}
@@ -29,19 +33,23 @@
 			</svg>
 			<p class="text-xs">200</p>
 		</div>
-		<div class="flex flex-col items-center justify-center">
-			<img class="w-8 h-8" src="/comment.svg" alt="" />
+		<div class="flex items-center justify-center">
+			<img
+				on:click={() => {
+					comment = !comment;
+				}}
+				on:keydown={() => {}}
+				aria-hidden
+				class="w-8 h-8 cursor-pointer"
+				src="/comment.svg"
+				alt=""
+			/>
 			<p class="text-xs">200</p>
 		</div>
-		<div class="flex flex-col items-center justify-between">
+		<div class="flex items-center justify-between cursor-pointer">
 			<img class="w-7 h-7" src="/send.svg" alt="" />
-			<p class="text-xs mt-1">200</p>
 		</div>
 	</div>
-</div>
 
-<style>
-	.liked {
-		fill: #0093ed;
-	}
-</style>
+	<PostComponentComment {comment} />
+</div>

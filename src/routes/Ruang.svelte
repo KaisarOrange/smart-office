@@ -34,18 +34,20 @@
 				? 'clicked'
 				: 'clickedHid '} bg-[#D9D9D9] absolute top-20 h-[250px] py-4 px-5 flex flex-col gap-3 rounded-sm overflow-scroll overflow-x-hidden"
 		>
-			<button class="bg-[#0093ED] btn text-white font-semibold px-2 py-1 rounded-md">Ruang +</button
+			<button
+				class="bg-[#0093ED] hover:bg-[#51abef] active:bg-[#3d88b6] text-white font-semibold px-2 py-1 rounded-md"
+				>Ruang +</button
 			>
-			<hr />
+
 			{#each data.ruang as { ruang, img }}
-				<div class="flex items-center gap-2">
+				<div
+					on:click={() => {
+						goto(`/ruang/${ruang}`);
+					}}
+					class="flex cursor-pointer items-center gap-2 hover:bg-gray-100 bg-white px-1.5 rounded-md py-1"
+				>
 					<img class="w-12 h-12 object-cover rounded-full" src={img} alt="profile_picture" />
-					<div
-						on:click={() => {
-							goto(`/ruang/${ruang}`);
-						}}
-						class="font-semibold cursor-pointer"
-					>
+					<div class="font-semibold cursor-pointer">
 						{ruang}
 					</div>
 				</div>
