@@ -1,10 +1,12 @@
-import { ruang } from "$lib/data";
+import { ruang, posts } from '$lib/data';
 
-export function load() {
-  return {
-    ruang: ruang.map((ruang) => ({
-      ruang: ruang.ruang,
-      img: ruang.img,
-    })),
-  };
+export function load({ url }) {
+	return {
+		url: url.pathname,
+		posts,
+		ruang: ruang.map((ruang) => ({
+			ruang: ruang.ruang,
+			img: ruang.img
+		}))
+	};
 }

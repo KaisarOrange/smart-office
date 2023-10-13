@@ -10,15 +10,28 @@
 	import { goto } from '$app/navigation';
 </script>
 
-<nav class="bg-[#D9D9D9] flex justify-between p-3 items-center fixed top-0 w-full">
+<nav class="bg-[#D9D9D9] flex justify-between p-3 items-center fixed top-0 w-full z-10">
 	<div>
 		<a class="font-extrabold text-lg" href="/"><span class="text-[#0093ED]">SMART</span> OFFICE</a>
 	</div>
 	<div class="flex justify-around items-center gap-12">
-		<a class="font-semibold" href="/">Stream</a>
-		<a class="font-semibold" href="/profil">Profil</a>
-		<a class="font-semibold" href="/about">Stream</a>
-		<a class="font-semibold" href="/about">Stream</a>
+		<a class=" {data.url === '/' ? 'text-[#0093ED] font-bold' : 'font-semibold'}" href="/"
+			>Beranda
+			<div class="bg-blue-400 {data.url === '/' ? 'h-0.5' : ''}" /></a
+		>
+		<a class={data.url === '/profil' ? 'text-[#0093ED] font-bold' : 'font-semibold'} href="/profil"
+			>Profil
+			<div class="bg-blue-400 {data.url === '/profil' ? 'h-0.5' : ''}" /></a
+		>
+		<a
+			class={data.url === '/activity' ? 'text-[#0093ED] font-bold' : 'font-semibold'}
+			href="/activity"
+			>Activity
+			<div class="bg-blue-400 {data.url === '/activity' ? 'h-0.5' : ''}" /></a
+		>
+		<!-- <a class={data.url === '/' ? 'text-[#0093ED] font-bold' : 'font-semibold'} href="/"
+			>Stream <div class="bg-blue-400 {data.url === '/' ? 'h-0.5' : ''}" /></a
+		> -->
 
 		<button
 			on:click={() => goto('/tulis')}
@@ -33,7 +46,8 @@
 
 	<div class="flex justify-center items-center w-1/6">
 		<label class="label">
-			<input class="input rounded-sm p-1" type="text" placeholder="Input" />
+			<img class="absolute top-[27px] right-[235px] w-6 h-auto" src="/search.svg" alt="" />
+			<input class="rounded-sm px-8 py-1.5" type="text" placeholder="Search" />
 		</label>
 	</div>
 </nav>
