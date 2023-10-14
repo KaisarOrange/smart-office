@@ -4,14 +4,14 @@
 	import LikeShareComment from './LikeShareComment.svelte';
 
 	let liked: boolean;
-	let comment: boolean;
+	let comment: boolean = true;
 </script>
 
 <div class="bg-white p-2 mt-2 rounded-sm">
 	<div class=" flex justify-center items-center gap-4">
 		<div class="flex items-center">
 			<svg
-				class="fill-none cursor-pointer stroke-[#0093ED] {liked ? 'fill-[#0093ED]' : ''}"
+				class="cursor-pointer stroke-[#0093ED] {liked ? 'fill-[#0093ED]' : 'fill-none'}"
 				on:click={() => {
 					liked = !liked;
 				}}

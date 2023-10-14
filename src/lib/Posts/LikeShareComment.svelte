@@ -1,12 +1,12 @@
 <script lang="ts">
-	let liked: boolean;
-	let comment: boolean;
+	export let liked: boolean;
+	export let commentClick: boolean;
 </script>
 
 <div class=" flex justify-center items-center gap-4 mt-2">
 	<div class="flex items-center">
 		<svg
-			class="fill-none cursor-pointer stroke-[#0093ED] {liked ? 'fill-[#0093ED]' : ''}"
+			class=" cursor-pointer stroke-[#0093ED] {liked ? 'fill-[#0093ED]' : 'fill-none'}"
 			on:click={() => {
 				liked = !liked;
 			}}
@@ -31,7 +31,7 @@
 	<div class="flex items-center justify-center">
 		<img
 			on:click={() => {
-				comment = !comment;
+				commentClick = !commentClick;
 			}}
 			on:keydown={() => {}}
 			aria-hidden
