@@ -44,6 +44,12 @@
   "type": "module",
   "dependencies": {
     "@floating-ui/dom": "1.5.3",
-    "sass": "^1.69.3"
+    "@tiptap/core": "^2.1.12",
+    "@tiptap/extension-document": "^2.1.12",
+    "@tiptap/extension-placeholder": "^2.1.12",
+    "@tiptap/pm": "^2.1.12",
+    "@tiptap/starter-kit": "^2.1.12",
+    "sass": "^1.69.3",
+    "svelte-tiptap": "^1.1.2"
   }
 }
