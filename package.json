@@ -48,6 +48,7 @@
     "@tiptap/extension-character-count": "^2.1.12",
     "@tiptap/extension-document": "^2.1.12",
     "@tiptap/extension-placeholder": "^2.1.12",
+    "@tiptap/extension-youtube": "^2.1.12",
     "@tiptap/pm": "^2.1.12",
     "@tiptap/starter-kit": "^2.1.12",
     "remixicon": "^3.5.0",

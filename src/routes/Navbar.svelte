@@ -1,9 +1,9 @@
-<script>
+<script lang="ts">
 	import '../app.postcss';
 	import Ruang from './Ruang.svelte';
 	import Profil from './Profil.svelte';
 	import { goto } from '$app/navigation';
-	export let data;
+	export let data: any;
 </script>
 
 <nav class="bg-[#D9D9D9] flex justify-between p-3 items-center fixed top-0 w-full z-10">

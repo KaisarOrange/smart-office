@@ -5,6 +5,7 @@
 	import type { Readable } from 'svelte/store';
 	import { createEditor, Editor, EditorContent } from 'svelte-tiptap';
 	import StarterKit from '@tiptap/starter-kit';
+	import Youtube from '@tiptap/extension-youtube';
 	import CharacterCount from '@tiptap/extension-character-count';
 	import Placeholder from '@tiptap/extension-placeholder';
 	import Document from '@tiptap/extension-document';
@@ -16,11 +17,25 @@
 	const CustomDocument = Document.extend({
 		content: 'heading block*'
 	});
+
+	const addYoutubeVideo = () => {
+		const url = prompt('Enter YouTube URL');
+
+		if (url) {
+			$editor?.commands.setYoutubeVideo({
+				src: url,
+				width: 640,
+				height: 480
+			});
+		}
+	};
+
 	onMount(() => {
 		editor = createEditor({
 			extensions: [
 				CustomDocument,
 				CharacterCount,
+				Youtube,
 				StarterKit.configure({ document: false }),
 				Placeholder.configure({
 					placeholder: ({ node }) => {
@@ -35,6 +50,8 @@
 	});
 </script>
 
+<svelte:window on:click={(e) => (active = false)} />
+
 <nav class="bg-[#D9D9D9] flex justify-between py-4 px-8 items-center fixed top-0 w-full z-10">
 	<a class="font-extrabold text-lg" href="/"><span class="text-[#0093ED]">SMART</span> OFFICE</a>
 
@@ -42,7 +59,7 @@
 		<div>
 			<div
 				class="cursor-pointer select-none font-semibold"
-				on:click={() => {
+				on:click|stopPropagation={() => {
 					active = !active;
 				}}
 				on:keydown={() => {}}
@@ -57,11 +74,20 @@
 					: 'Paragraf'}
 				<i class="ri-arrow-down-s-line" />
 			</div>
-			<div class="{active ? '' : 'hidden'} absolute top-[68px] bg-[#D9D9D9] p-1 rounded-sm">
+			<div
+				on:click|stopPropagation={() => {
+					active = !active;
+				}}
+				on:keydown={() => {}}
+				aria-hidden
+				class="{active ? '' : 'hidden'} absolute top-[68px] bg-[#D9D9D9] p-1 rounded-sm"
+			>
 				<div class="bg-white p-3">
 					<div
 						on:click={() => $editor?.chain().focus().setParagraph().run()}
-						class={$editor?.isActive('paragraph') ? 'font-bold text-[#0093ED]' : ''}
+						class="{$editor?.isActive('paragraph')
+							? 'font-bold text-[#0093ED]'
+							: ''} cursor-pointer"
 						on:keydown={() => {}}
 						aria-hidden
 					>
@@ -69,7 +95,9 @@
 					</div>
 					<div
 						on:click={() => $editor?.chain().focus().toggleHeading({ level: 1 }).run()}
-						class={$editor?.isActive('heading', { level: 1 }) ? 'font-bold text-[#0093ED]' : ''}
+						class="{$editor?.isActive('heading', { level: 1 })
+							? 'font-bold text-[#0093ED]'
+							: ''} cursor-pointer"
 						on:keydown={() => {}}
 						aria-hidden
 					>
@@ -77,7 +105,9 @@
 					</div>
 					<div
 						on:click={() => $editor?.chain().focus().toggleHeading({ level: 2 }).run()}
-						class={$editor?.isActive('heading', { level: 2 }) ? 'font-bold text-[#0093ED]' : ''}
+						class="{$editor?.isActive('heading', { level: 2 })
+							? 'font-bold text-[#0093ED]'
+							: ''} cursor-pointer"
 						on:keydown={() => {}}
 						aria-hidden
 					>
@@ -85,7 +115,9 @@
 					</div>
 					<div
 						on:click={() => $editor?.chain().focus().toggleHeading({ level: 3 }).run()}
-						class={$editor?.isActive('heading', { level: 3 }) ? 'font-bold text-[#0093ED]' : ''}
+						class="{$editor?.isActive('heading', { level: 3 })
+							? 'font-bold text-[#0093ED]'
+							: ''} cursor-pointer"
 						on:keydown={() => {}}
 						aria-hidden
 					>
@@ -94,7 +126,7 @@
 				</div>
 			</div>
 		</div>
-		<div>
+		<div class="flex items-center gap-3">
 			<button
 				on:click={() => $editor?.chain().focus().toggleBold().run()}
 				disabled={!$editor?.can().chain().focus().toggleBold().run()}
@@ -151,6 +183,14 @@
 			>
 				<i class="ri-double-quotes-l text-lg" />
 			</button>
+
+			<button
+				on:click={() => addYoutubeVideo()}
+				class={$editor?.isActive('blockquote') ? 'font-bold' : ''}
+			>
+				<i class="ri-youtube-line text-lg" />
+			</button>
+
 			<!-- <button on:click={() => $editor?.chain().focus().setHorizontalRule().run()}>
 				horizontal rule
 			</button> -->
