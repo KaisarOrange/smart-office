@@ -5,11 +5,13 @@
 	import type { Readable } from 'svelte/store';
 	import { createEditor, Editor, EditorContent } from 'svelte-tiptap';
 	import StarterKit from '@tiptap/starter-kit';
-
+	import CharacterCount from '@tiptap/extension-character-count';
 	import Placeholder from '@tiptap/extension-placeholder';
 	import Document from '@tiptap/extension-document';
 	let active: boolean = false;
 	let editor: Readable<Editor>;
+
+	let currentActiveFont: string;
 
 	const CustomDocument = Document.extend({
 		content: 'heading block*'
@@ -18,6 +20,7 @@
 		editor = createEditor({
 			extensions: [
 				CustomDocument,
+				CharacterCount,
 				StarterKit.configure({ document: false }),
 				Placeholder.configure({
 					placeholder: ({ node }) => {
@@ -38,14 +41,21 @@
 	<div class="m-auto flex items-center gap-4">
 		<div>
 			<div
-				class="cursor-pointer select-none"
+				class="cursor-pointer select-none font-semibold"
 				on:click={() => {
 					active = !active;
 				}}
 				on:keydown={() => {}}
 				aria-hidden
 			>
-				Paragraf <i class="ri-arrow-down-s-line" />
+				{$editor?.isActive('heading', { level: 1 })
+					? 'Heading 1'
+					: $editor?.isActive('heading', { level: 2 })
+					? 'Heading 2'
+					: $editor?.isActive('heading', { level: 3 })
+					? 'Heading 3'
+					: 'Paragraf'}
+				<i class="ri-arrow-down-s-line" />
 			</div>
 			<div class="{active ? '' : 'hidden'} absolute top-[68px] bg-[#D9D9D9] p-1 rounded-sm">
 				<div class="bg-white p-3">
@@ -67,7 +77,7 @@
 					</div>
 					<div
 						on:click={() => $editor?.chain().focus().toggleHeading({ level: 2 }).run()}
-						class={$editor?.isActive('heading', { level: 2 }) ? 'font-bold' : ''}
+						class={$editor?.isActive('heading', { level: 2 }) ? 'font-bold text-[#0093ED]' : ''}
 						on:keydown={() => {}}
 						aria-hidden
 					>
@@ -75,7 +85,7 @@
 					</div>
 					<div
 						on:click={() => $editor?.chain().focus().toggleHeading({ level: 3 }).run()}
-						class={$editor?.isActive('heading', { level: 3 }) ? 'font-bold' : ''}
+						class={$editor?.isActive('heading', { level: 3 }) ? 'font-bold text-[#0093ED]' : ''}
 						on:keydown={() => {}}
 						aria-hidden
 					>
@@ -90,78 +100,83 @@
 				disabled={!$editor?.can().chain().focus().toggleBold().run()}
 				class={$editor?.isActive('bold') ? 'font-bold' : ''}
 			>
-				<i class="ri-bold" />
+				<i class="ri-bold text-lg" />
 			</button>
 			<button
 				on:click={() => $editor?.chain().focus().toggleItalic().run()}
 				disabled={!$editor?.can().chain().focus().toggleItalic().run()}
 				class={$editor?.isActive('italic') ? 'font-bold' : ''}
 			>
-				<i class="ri-italic" />
+				<i class="ri-italic text-lg" />
 			</button>
 			<button
 				on:click={() => $editor?.chain().focus().toggleStrike().run()}
 				disabled={!$editor?.can().chain().focus().toggleStrike().run()}
 				class={$editor?.isActive('strike') ? 'font-bold' : ''}
 			>
-				<i class="ri-strikethrough" />
+				<i class="ri-strikethrough text-lg" />
 			</button>
 			<button
 				on:click={() => $editor?.chain().focus().toggleCode().run()}
 				disabled={!$editor?.can().chain().focus().toggleCode().run()}
 				class={$editor?.isActive('code') ? 'font-bold' : ''}
 			>
-				<i class="ri-code-line" />
+				<i class="ri-code-line text-lg" />
 				<!-- code -->
 			</button>
-			<button on:click={() => $editor?.chain().focus().unsetAllMarks().run()}> clear marks </button>
-			<button on:click={() => $editor?.chain().focus().clearNodes().run()}> clear nodes </button>
+			<!-- <button on:click={() => $editor?.chain().focus().unsetAllMarks().run()}> clear marks </button>
+			<button on:click={() => $editor?.chain().focus().clearNodes().run()}> clear nodes </button> -->
 
 			<button
 				on:click={() => $editor?.chain().focus().toggleBulletList().run()}
 				class={$editor?.isActive('bulletList') ? 'font-bold' : ''}
 			>
-				<i class="ri-list-unordered" />
+				<i class="ri-list-unordered text-lg" />
 			</button>
 			<button
 				on:click={() => $editor?.chain().focus().toggleOrderedList().run()}
 				class={$editor?.isActive('orderedList') ? 'font-bold' : ''}
 			>
-				<i class="ri-list-ordered-2" />
+				<i class="ri-list-ordered-2 text-lg" />
 			</button>
 			<button
 				on:click={() => $editor?.chain().focus().toggleCodeBlock().run()}
 				class={$editor?.isActive('codeBlock') ? 'font-bold' : ''}
 			>
-				<i class="ri-code-box-line" />
+				<i class="ri-code-box-line text-lg" />
 			</button>
 			<button
 				on:click={() => $editor?.chain().focus().toggleBlockquote().run()}
 				class={$editor?.isActive('blockquote') ? 'font-bold' : ''}
 			>
-				<i class="ri-double-quotes-l" />
+				<i class="ri-double-quotes-l text-lg" />
 			</button>
-			<button on:click={() => $editor?.chain().focus().setHorizontalRule().run()}>
+			<!-- <button on:click={() => $editor?.chain().focus().setHorizontalRule().run()}>
 				horizontal rule
-			</button>
+			</button> -->
 			<!-- <button on:click={() => $editor?.chain().focus().setHardBreak().run()}> hard break </button> -->
 			<button
 				on:click={() => $editor?.chain().focus().undo().run()}
 				disabled={!$editor?.can().chain().focus().undo().run()}
 			>
-				<i class="ri-arrow-go-back-fill" />
+				<i class="ri-arrow-go-back-fill text-lg" />
 			</button>
 			<button
 				on:click={() => $editor?.chain().focus().redo().run()}
 				disabled={!$editor?.can().chain().focus().redo().run()}
 			>
-				<i class="ri-arrow-go-forward-fill" />
+				<i class="ri-arrow-go-forward-fill text-lg" />
 			</button>
 		</div>
 	</div>
 
-	<button class="btn font-semibold rounded-sm px-2 py-1 mr-2">Simpan draft</button>
-	<button class="btn bg-[#0093ED] text-white font-semibold rounded-sm px-2 py-1">Unggah</button>
+	<div class="flex items-center gap-5">
+		{$editor?.storage.characterCount.words()} kata
+		<div class="">
+			<button class="btn font-semibold rounded-sm px-2 py-1 mr-2">Simpan draft</button>
+			<button class="btn bg-[#0093ED] text-white font-semibold rounded-sm px-2 py-1">Unggah</button>
+		</div>
+	</div>
 </nav>
 
 <div class="tipedit">
