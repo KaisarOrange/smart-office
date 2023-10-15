@@ -45,10 +45,11 @@
 			{
 				user_name: 'Alif Ayodya',
 				user_img: '/alif.png',
-				comment: commentValue,
+				comment: { comment: commentValue },
 				like: 10
 			}
 		];
+		console.log(comments);
 	};
 </script>
 
@@ -59,12 +60,7 @@
 				<Avatar src={'/alif.png'} width={'w-10'} />
 			</div>
 			<div bind:innerText={commentValue} contenteditable class="textarea bg-white px-2 py-2" />
-			<!-- <textarea
-				contenteditable="true"
-				bind:value={commentValue}
-				class="textarea rounded-sm bg-white"
-				placeholder="Tambahkan komentar..."
-			/> -->
+
 			<button
 				on:click={() => {
 					addComment();
@@ -93,3 +89,9 @@
 		return;
 	}
 }} -->
+<!-- <textarea
+				contenteditable="true"
+				bind:value={commentValue}
+				class="textarea rounded-sm bg-white"
+				placeholder="Tambahkan komentar..."
+			/> -->

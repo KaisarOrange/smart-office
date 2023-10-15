@@ -4,7 +4,7 @@
 	import LikeShareComment from './LikeShareComment.svelte';
 
 	let liked: boolean;
-	let comment: boolean = true;
+	let comment: boolean = false;
 </script>
 
 <div class="bg-white p-2 mt-2 rounded-sm">
