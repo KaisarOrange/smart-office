@@ -8,14 +8,12 @@
 
 	import Placeholder from '@tiptap/extension-placeholder';
 	import Document from '@tiptap/extension-document';
-
+	let active: boolean = false;
 	let editor: Readable<Editor>;
 
-	export let data;
 	const CustomDocument = Document.extend({
 		content: 'heading block*'
 	});
-
 	onMount(() => {
 		editor = createEditor({
 			extensions: [
@@ -23,145 +21,147 @@
 				StarterKit.configure({ document: false }),
 				Placeholder.configure({
 					placeholder: ({ node }) => {
-						if (node.type.name === 'heading' || node.attrs.level == 1) {
-							return 'Whats the title?';
+						if (node.type.name === 'heading') {
+							return 'Tambahkan judul...';
 						}
-
-						return 'Can you add some further context?';
+						return 'tulis...';
 					}
 				})
-			],
-			content: `
-      <h1>
-        It’ll always have a heading …
-      </h1>
-      <p>
-        … if you pass a custom document. That’s the beauty of having full control over the schema.
-      </p>
-    `
+			]
 		});
 	});
 </script>
 
-<nav class="bg-[#D9D9D9] flex justify-between p-3 items-center fixed top-0 w-full z-10">
+<nav class="bg-[#D9D9D9] flex justify-between py-4 px-8 items-center fixed top-0 w-full z-10">
 	<a class="font-extrabold text-lg" href="/"><span class="text-[#0093ED]">SMART</span> OFFICE</a>
 
-	<div class="m-auto">
+	<div class="m-auto flex items-center gap-4">
+		<div>
+			<div
+				class="cursor-pointer select-none"
+				on:click={() => {
+					active = !active;
+				}}
+				on:keydown={() => {}}
+				aria-hidden
+			>
+				Paragraf <i class="ri-arrow-down-s-line" />
+			</div>
+			<div class="{active ? '' : 'hidden'} absolute top-[68px] bg-[#D9D9D9] p-1 rounded-sm">
+				<div class="bg-white p-3">
+					<div
+						on:click={() => $editor?.chain().focus().setParagraph().run()}
+						class={$editor?.isActive('paragraph') ? 'font-bold text-[#0093ED]' : ''}
+						on:keydown={() => {}}
+						aria-hidden
+					>
+						<p class="text-base mb-1">Paragraf</p>
+					</div>
+					<div
+						on:click={() => $editor?.chain().focus().toggleHeading({ level: 1 }).run()}
+						class={$editor?.isActive('heading', { level: 1 }) ? 'font-bold text-[#0093ED]' : ''}
+						on:keydown={() => {}}
+						aria-hidden
+					>
+						<p class="text-xl font-semibold mb-1">Heading 1</p>
+					</div>
+					<div
+						on:click={() => $editor?.chain().focus().toggleHeading({ level: 2 }).run()}
+						class={$editor?.isActive('heading', { level: 2 }) ? 'font-bold' : ''}
+						on:keydown={() => {}}
+						aria-hidden
+					>
+						<p class="text-lg font-medium mb-1">Heading 2</p>
+					</div>
+					<div
+						on:click={() => $editor?.chain().focus().toggleHeading({ level: 3 }).run()}
+						class={$editor?.isActive('heading', { level: 3 }) ? 'font-bold' : ''}
+						on:keydown={() => {}}
+						aria-hidden
+					>
+						<p class="text-base font-normal mb-1">Heading 3</p>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div>
 			<button
 				on:click={() => $editor?.chain().focus().toggleBold().run()}
 				disabled={!$editor?.can().chain().focus().toggleBold().run()}
 				class={$editor?.isActive('bold') ? 'font-bold' : ''}
 			>
-				bold
+				<i class="ri-bold" />
 			</button>
 			<button
 				on:click={() => $editor?.chain().focus().toggleItalic().run()}
 				disabled={!$editor?.can().chain().focus().toggleItalic().run()}
-				class={$editor?.isActive('italic') ? 'is-active' : ''}
+				class={$editor?.isActive('italic') ? 'font-bold' : ''}
 			>
-				italic
+				<i class="ri-italic" />
 			</button>
 			<button
 				on:click={() => $editor?.chain().focus().toggleStrike().run()}
 				disabled={!$editor?.can().chain().focus().toggleStrike().run()}
-				class={$editor?.isActive('strike') ? 'is-active' : ''}
+				class={$editor?.isActive('strike') ? 'font-bold' : ''}
 			>
-				strike
+				<i class="ri-strikethrough" />
 			</button>
 			<button
 				on:click={() => $editor?.chain().focus().toggleCode().run()}
 				disabled={!$editor?.can().chain().focus().toggleCode().run()}
-				class={$editor?.isActive('code') ? 'is-active' : ''}
+				class={$editor?.isActive('code') ? 'font-bold' : ''}
 			>
-				code
+				<i class="ri-code-line" />
+				<!-- code -->
 			</button>
 			<button on:click={() => $editor?.chain().focus().unsetAllMarks().run()}> clear marks </button>
 			<button on:click={() => $editor?.chain().focus().clearNodes().run()}> clear nodes </button>
-			<button
-				on:click={() => $editor?.chain().focus().setParagraph().run()}
-				class={$editor?.isActive('paragraph') ? 'is-active' : ''}
-			>
-				paragraph
-			</button>
-			<button
-				on:click={() => $editor?.chain().focus().toggleHeading({ level: 1 }).run()}
-				class={$editor?.isActive('heading', { level: 1 }) ? 'is-active' : ''}
-			>
-				h1
-			</button>
-			<button
-				on:click={() => $editor?.chain().focus().toggleHeading({ level: 2 }).run()}
-				class={$editor?.isActive('heading', { level: 2 }) ? 'is-active' : ''}
-			>
-				h2
-			</button>
-			<button
-				on:click={() => $editor?.chain().focus().toggleHeading({ level: 3 }).run()}
-				class={$editor?.isActive('heading', { level: 3 }) ? 'is-active' : ''}
-			>
-				h3
-			</button>
-			<button
-				on:click={() => $editor?.chain().focus().toggleHeading({ level: 4 }).run()}
-				class={$editor?.isActive('heading', { level: 4 }) ? 'is-active' : ''}
-			>
-				h4
-			</button>
-			<button
-				on:click={() => $editor?.chain().focus().toggleHeading({ level: 5 }).run()}
-				class={$editor?.isActive('heading', { level: 5 }) ? 'is-active' : ''}
-			>
-				h5
-			</button>
-			<button
-				on:click={() => $editor?.chain().focus().toggleHeading({ level: 6 }).run()}
-				class={$editor?.isActive('heading', { level: 6 }) ? 'is-active' : ''}
-			>
-				h6
-			</button>
+
 			<button
 				on:click={() => $editor?.chain().focus().toggleBulletList().run()}
-				class={$editor?.isActive('bulletList') ? 'is-active' : ''}
+				class={$editor?.isActive('bulletList') ? 'font-bold' : ''}
 			>
-				bullet list
+				<i class="ri-list-unordered" />
 			</button>
 			<button
 				on:click={() => $editor?.chain().focus().toggleOrderedList().run()}
-				class={$editor?.isActive('orderedList') ? 'is-active' : ''}
+				class={$editor?.isActive('orderedList') ? 'font-bold' : ''}
 			>
-				ordered list
+				<i class="ri-list-ordered-2" />
 			</button>
 			<button
 				on:click={() => $editor?.chain().focus().toggleCodeBlock().run()}
-				class={$editor?.isActive('codeBlock') ? 'is-active' : ''}
+				class={$editor?.isActive('codeBlock') ? 'font-bold' : ''}
 			>
-				code block
+				<i class="ri-code-box-line" />
 			</button>
 			<button
 				on:click={() => $editor?.chain().focus().toggleBlockquote().run()}
-				class={$editor?.isActive('blockquote') ? 'is-active' : ''}
+				class={$editor?.isActive('blockquote') ? 'font-bold' : ''}
 			>
-				blockquote
+				<i class="ri-double-quotes-l" />
 			</button>
 			<button on:click={() => $editor?.chain().focus().setHorizontalRule().run()}>
 				horizontal rule
 			</button>
-			<button on:click={() => $editor?.chain().focus().setHardBreak().run()}> hard break </button>
+			<!-- <button on:click={() => $editor?.chain().focus().setHardBreak().run()}> hard break </button> -->
 			<button
 				on:click={() => $editor?.chain().focus().undo().run()}
 				disabled={!$editor?.can().chain().focus().undo().run()}
 			>
-				undo
+				<i class="ri-arrow-go-back-fill" />
 			</button>
 			<button
 				on:click={() => $editor?.chain().focus().redo().run()}
 				disabled={!$editor?.can().chain().focus().redo().run()}
 			>
-				redo
+				<i class="ri-arrow-go-forward-fill" />
 			</button>
 		</div>
 	</div>
+
+	<button class="btn font-semibold rounded-sm px-2 py-1 mr-2">Simpan draft</button>
+	<button class="btn bg-[#0093ED] text-white font-semibold rounded-sm px-2 py-1">Unggah</button>
 </nav>
 
 <div class="tipedit">
@@ -173,13 +173,25 @@
 		padding: 5px;
 		min-height: 70vh;
 		width: 50%;
+		outline: none;
 		margin: auto;
 	}
+	:global(.tipedit .tiptap h1) {
+		font-size: 18px;
+	}
+
 	:global(.tipedit .tiptap p.is-editor-empty:first-child::before) {
 		color: #adb5bd;
 		content: attr(data-placeholder);
 		float: left;
 		height: 0;
 		pointer-events: none;
+	}
+	:global(.tipedit .tiptap .is-empty::before) {
+		content: attr(data-placeholder);
+		float: left;
+		color: #ced4da;
+		pointer-events: none;
+		height: 0;
 	}
 </style>

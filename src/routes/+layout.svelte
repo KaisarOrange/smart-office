@@ -4,6 +4,7 @@
 	import Toaste from './Toaste.svelte';
 	initializeStores();
 	import Navbar from './Navbar.svelte';
+	import 'remixicon/fonts/remixicon.css';
 </script>
 
 {#if data.url != '/tulis'}
