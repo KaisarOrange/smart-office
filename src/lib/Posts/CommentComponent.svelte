@@ -1,8 +1,8 @@
 <script lang="ts">
-	export let comments;
+	export let comments: any;
 	import { Avatar } from '@skeletonlabs/skeleton';
 	import LikeShareComment from './LikeShareComment.svelte';
-	let commentValue;
+	let commentValue: any;
 	let liked: boolean;
 	let commentClick: boolean;
 </script>
@@ -42,7 +42,7 @@
 								<!-- <div contenteditable class="textarea bg-white px-2 py-2 h-10" /> -->
 								<svelte:self {...comment.comment} />
 							{:else}
-								<div class="flex h-fit mt-2 gap-2">
+								<!-- <div class="flex h-fit mt-2 gap-2">
 									<div>
 										<Avatar src={'/alif.png'} width={'w-10'} />
 									</div>
@@ -53,12 +53,12 @@
 									/>
 									<button
 										on:click={() => {
-											addComment();
+											//addComment();
 										}}
 										class="btn bg-[#0093ED] h-10 text-white font-semibold text-sm rounded-sm"
 										>Tambah komentar</button
 									>
-								</div>
+								</div> -->
 							{/if}
 						{/each}
 					{/if}
