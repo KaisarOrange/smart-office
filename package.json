@@ -15,6 +15,9 @@
     "test:unit": "vitest"
   },
   "devDependencies": {
+    "@event-calendar/core": "^2.3.3",
+    "@event-calendar/day-grid": "^2.3.3",
+    "@event-calendar/time-grid": "^2.3.3",
     "@playwright/test": "^1.28.1",
     "@skeletonlabs/skeleton": "2.3.0",
     "@skeletonlabs/tw-plugin": "0.2.2",
@@ -47,10 +50,14 @@
     "@tiptap/core": "^2.1.12",
     "@tiptap/extension-character-count": "^2.1.12",
     "@tiptap/extension-document": "^2.1.12",
+    "@tiptap/extension-dropcursor": "^2.1.12",
+    "@tiptap/extension-image": "^2.1.12",
     "@tiptap/extension-placeholder": "^2.1.12",
     "@tiptap/extension-youtube": "^2.1.12",
     "@tiptap/pm": "^2.1.12",
     "@tiptap/starter-kit": "^2.1.12",
+    "@types/lodash": "^4.14.200",
+    "lodash": "^4.17.21",
     "remixicon": "^3.5.0",
     "sass": "^1.69.3",
     "svelte-tiptap": "^1.1.2"

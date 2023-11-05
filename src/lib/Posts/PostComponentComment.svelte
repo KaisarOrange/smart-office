@@ -4,6 +4,7 @@
 	import PostComponentComment from './PostComponentComment.svelte';
 	import PostsComponent from './PostsComponent.svelte';
 	import CommentComponent from './CommentComponent.svelte';
+	import { each } from 'lodash';
 	export let comment: boolean;
 
 	let commentValue: any;
@@ -14,27 +15,23 @@
 		{
 			user_name: 'James Hamilton',
 			user_img: 'https://source.unsplash.com/hr7eefjrekI',
-			comment: {
-				comment: 'Great article!',
-				comments: [
-					{
-						user_name: 'Alif',
-						user_img: '/alif.png',
-						comment: {
-							comment: 'Thanks!',
-							comments: [
-								{
-									user_name: 'James Hamilton',
-									user_img: 'https://source.unsplash.com/hr7eefjrekI',
-									comment: { comment: 'Your Welcome!' },
-									like: 10
-								}
-							]
-						},
-						like: 10
-					}
-				]
-			},
+			text: 'Hey nice!',
+			comments: [
+				{
+					user_name: 'Alif',
+					user_img: '/alif.png',
+					text: 'Thanks!',
+					comments: [
+						{
+							user_name: 'James Hamilton',
+							user_img: 'https://source.unsplash.com/hr7eefjrekI',
+							text: 'Your Welcome!',
+							like: 10
+						}
+					],
+					like: 10
+				}
+			],
 			like: 10
 		}
 	];
@@ -45,7 +42,7 @@
 			{
 				user_name: 'Alif Ayodya',
 				user_img: '/alif.png',
-				comment: { comment: commentValue },
+				text: commentValue,
 				like: 10
 			}
 		];
@@ -69,7 +66,9 @@
 				>Tambah komentar</button
 			>
 		</div>
-		<CommentComponent {comments} />
+		{#each comments as comment}
+			<CommentComponent {comment} />
+		{/each}
 	</div>
 {/if}
 

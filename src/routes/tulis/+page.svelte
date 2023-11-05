@@ -3,17 +3,18 @@
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import type { Readable } from 'svelte/store';
-	import { createEditor, Editor, EditorContent } from 'svelte-tiptap';
+	import { createEditor, Editor, EditorContent, SvelteRenderer } from 'svelte-tiptap';
 	import StarterKit from '@tiptap/starter-kit';
 	import Youtube from '@tiptap/extension-youtube';
 	import CharacterCount from '@tiptap/extension-character-count';
 	import Placeholder from '@tiptap/extension-placeholder';
+	import Image from '@tiptap/extension-image';
 	import Document from '@tiptap/extension-document';
 	let active: boolean = false;
 	let editor: Readable<Editor>;
 
 	let currentActiveFont: string;
-
+	let screenSize: any;
 	const CustomDocument = Document.extend({
 		content: 'heading block*'
 	});
@@ -24,8 +25,8 @@
 		if (url) {
 			$editor?.commands.setYoutubeVideo({
 				src: url,
-				width: 640,
-				height: 480
+				width: screenSize / 2,
+				height: screenSize / 3.5
 			});
 		}
 	};
@@ -36,6 +37,9 @@
 				CustomDocument,
 				CharacterCount,
 				Youtube,
+				Image.configure({
+					allowBase64: true
+				}),
 				StarterKit.configure({ document: false }),
 				Placeholder.configure({
 					placeholder: ({ node }) => {
@@ -45,12 +49,62 @@
 						return 'tulis...';
 					}
 				})
-			]
+			],
+			editorProps: {
+				handleDrop: function (view, event, slice, moved) {
+					if (
+						!moved &&
+						event.dataTransfer &&
+						event.dataTransfer.files &&
+						event.dataTransfer.files[0]
+					) {
+						const { schema } = view.state;
+						const coordinates = view.posAtCoords({ left: event.clientX, top: event.clientY });
+						const node = schema.nodes.image.create({ src: '/alif.png' }); // creates the image element
+						const transaction = view.state.tr.insert(coordinates!.pos, node); // places it in the correct position
+						view.dispatch(transaction);
+						return true;
+					}
+
+					return false;
+				}
+			}
 		});
 	});
 </script>
 
-<svelte:window on:click={(e) => (active = false)} />
+<!-- // if dropping external files
+						let file = event.dataTransfer.files[0]; // the dropped file
+						let filesize = (file.size / 1024 / 1024).toFixed(4); // get the filesize in MB
+						if ((file.type === 'image/jpeg' || file.type === 'image/png') && filesize < 10) {
+							// check valid image type under 10MB
+							// check the dimensions
+							let _URL = window.URL || window.webkitURL;
+							let img = new Image(); /* global Image */
+							img.src = _URL.createObjectURL(file);
+							img.onload = function () {
+								if (this.width > 5000 || this.height > 5000) {
+									window.alert('Your images need to be less than 5000 pixels in height and width.'); // display alert
+								} else {
+									// valid image so upload to server
+									// uploadImage will be your function to upload the image to the server or s3 bucket somewhere
+
+									// place the now uploaded image in the editor where it was dropped
+									const { schema } = view.state;
+									const coordinates = view.posAtCoords({
+										left: event.clientX,
+										top: event.clientY
+									});
+									const node = schema.nodes.image.create({ src: img.src }); // creates the image element
+									const transaction = view.state.tr.insert(coordinates!.pos, node); // places it in the correct position
+									return view.dispatch(transaction);
+								}
+							};
+							return true; // handled
+						}
+						return false; // not handled use default behaviour -->
+
+<svelte:window bind:innerWidth={screenSize} on:click={(e) => (active = false)} />
 
 <nav class="bg-[#D9D9D9] flex justify-between py-4 px-8 items-center fixed top-0 w-full z-10">
 	<a class="font-extrabold text-lg" href="/"><span class="text-[#0093ED]">SMART</span> OFFICE</a>
@@ -130,64 +184,61 @@
 			<button
 				on:click={() => $editor?.chain().focus().toggleBold().run()}
 				disabled={!$editor?.can().chain().focus().toggleBold().run()}
-				class={$editor?.isActive('bold') ? 'font-bold' : ''}
+				class={$editor?.isActive('bold') ? 'font-bold text-blue_office drop-shadow-md' : ''}
 			>
 				<i class="ri-bold text-lg" />
 			</button>
 			<button
 				on:click={() => $editor?.chain().focus().toggleItalic().run()}
 				disabled={!$editor?.can().chain().focus().toggleItalic().run()}
-				class={$editor?.isActive('italic') ? 'font-bold' : ''}
+				class={$editor?.isActive('italic') ? 'font-bold text-blue_office drop-shadow-md' : ''}
 			>
 				<i class="ri-italic text-lg" />
 			</button>
 			<button
 				on:click={() => $editor?.chain().focus().toggleStrike().run()}
 				disabled={!$editor?.can().chain().focus().toggleStrike().run()}
-				class={$editor?.isActive('strike') ? 'font-bold' : ''}
+				class={$editor?.isActive('strike') ? 'font-bold text-blue_office drop-shadow-md' : ''}
 			>
 				<i class="ri-strikethrough text-lg" />
 			</button>
-			<button
+			<!-- <button
 				on:click={() => $editor?.chain().focus().toggleCode().run()}
 				disabled={!$editor?.can().chain().focus().toggleCode().run()}
-				class={$editor?.isActive('code') ? 'font-bold' : ''}
+				class={$editor?.isActive('code') ? 'font-bold text-blue_office drop-shadow-md' : ''}
 			>
 				<i class="ri-code-line text-lg" />
-				<!-- code -->
-			</button>
+				
+			</button> -->
 			<!-- <button on:click={() => $editor?.chain().focus().unsetAllMarks().run()}> clear marks </button>
 			<button on:click={() => $editor?.chain().focus().clearNodes().run()}> clear nodes </button> -->
 
 			<button
 				on:click={() => $editor?.chain().focus().toggleBulletList().run()}
-				class={$editor?.isActive('bulletList') ? 'font-bold' : ''}
+				class={$editor?.isActive('bulletList') ? 'font-bold text-blue_office drop-shadow-md' : ''}
 			>
 				<i class="ri-list-unordered text-lg" />
 			</button>
 			<button
 				on:click={() => $editor?.chain().focus().toggleOrderedList().run()}
-				class={$editor?.isActive('orderedList') ? 'font-bold' : ''}
+				class={$editor?.isActive('orderedList') ? 'font-bold text-blue_office drop-shadow-md' : ''}
 			>
 				<i class="ri-list-ordered-2 text-lg" />
 			</button>
 			<button
 				on:click={() => $editor?.chain().focus().toggleCodeBlock().run()}
-				class={$editor?.isActive('codeBlock') ? 'font-bold' : ''}
+				class={$editor?.isActive('codeBlock') ? 'font-bold text-blue_office drop-shadow-md' : ''}
 			>
-				<i class="ri-code-box-line text-lg" />
+				<i class="ri-code-line text-lg" />
 			</button>
 			<button
 				on:click={() => $editor?.chain().focus().toggleBlockquote().run()}
-				class={$editor?.isActive('blockquote') ? 'font-bold' : ''}
+				class={$editor?.isActive('blockquote') ? 'font-bold text-blue_office drop-shadow-md' : ''}
 			>
 				<i class="ri-double-quotes-l text-lg" />
 			</button>
 
-			<button
-				on:click={() => addYoutubeVideo()}
-				class={$editor?.isActive('blockquote') ? 'font-bold' : ''}
-			>
+			<button on:click={() => addYoutubeVideo()}>
 				<i class="ri-youtube-line text-lg" />
 			</button>
 
@@ -248,5 +299,54 @@
 		color: #ced4da;
 		pointer-events: none;
 		height: 0;
+	}
+
+	:global(.tipedit .tiptap pre) {
+		background: #0d0d0d;
+		color: #fff;
+		font-family: 'JetBrainsMono', monospace;
+		padding: 0.75rem 1rem;
+		border-radius: 0.5rem;
+	}
+
+	:global(.tipedit .tiptap pre code) {
+		color: inherit;
+		padding: 0;
+		background: none;
+		font-size: 0.8rem;
+	}
+
+	:global(.tipedit .tiptap code) {
+		background: #cacaca;
+		color: #616161;
+	}
+
+	:global(.tipedit .tiptap img) {
+		max-width: 100%;
+		height: auto;
+	}
+
+	:global(.tipedit .tiptap blockquote) {
+		padding-left: 1rem;
+		border-left: 2px solid rgba(#0d0d0d, 0.1);
+	}
+
+	:global(.tipedit .tiptap ul) {
+		padding-left: 1rem;
+		@apply list-disc;
+	}
+	:global(.tipedit .tiptap ol) {
+		padding-left: 1rem;
+		@apply list-decimal;
+	}
+
+	:global(.tipedit .tiptap h1) {
+		@apply text-xl;
+	}
+	:global(.tipedit .tiptap h2) {
+		@apply text-lg;
+	}
+	:global(.tipedit .tiptap h3) {
+		@apply text-base;
 	}
 </style>
