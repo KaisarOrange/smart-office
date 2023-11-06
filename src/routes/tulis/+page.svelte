@@ -4,14 +4,18 @@
 	import { onMount } from 'svelte';
 	import type { Readable } from 'svelte/store';
 	import { createEditor, Editor, EditorContent, SvelteRenderer } from 'svelte-tiptap';
+	import Paragraph from '@tiptap/extension-paragraph';
+	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
 	import StarterKit from '@tiptap/starter-kit';
 	import Youtube from '@tiptap/extension-youtube';
 	import CharacterCount from '@tiptap/extension-character-count';
 	import Placeholder from '@tiptap/extension-placeholder';
 	import Image from '@tiptap/extension-image';
+	import { generateHTML } from '@tiptap/html';
 	import Document from '@tiptap/extension-document';
 	let active: boolean = false;
 	let editor: Readable<Editor>;
+	let isSaved: boolean = false;
 
 	let currentActiveFont: string;
 	let screenSize: any;
@@ -25,9 +29,24 @@
 		if (url) {
 			$editor?.commands.setYoutubeVideo({
 				src: url,
-				width: screenSize / 2,
-				height: screenSize / 3.5
+				width: 640,
+				height: 360
 			});
+		}
+	};
+	const modalStore = getModalStore();
+	const modal: ModalSettings = {
+		type: 'component',
+		component: 'modalComponentOne',
+
+		// Data
+		title: 'Please Confirm',
+		body: 'Are you sure you wish to proceed?',
+		// TRUE if confirm pressed, FALSE if cancel pressed
+		response: (r: boolean) => {
+			console.log('response:a', r);
+			console.log('response:b', r);
+			console.log('response:c', r);
 		}
 	};
 
@@ -264,8 +283,14 @@
 	<div class="flex items-center gap-5">
 		{$editor?.storage.characterCount.words()} kata
 		<div class="">
-			<button class="btn font-semibold rounded-sm px-2 py-1 mr-2">Simpan draft</button>
-			<button class="btn bg-[#0093ED] text-white font-semibold rounded-sm px-2 py-1">Unggah</button>
+			<button
+				on:click={() => (isSaved = !isSaved)}
+				class="btn font-semibold rounded-sm px-2 py-1 mr-2">Simpan draft</button
+			>
+			<button
+				on:click={() => modalStore.trigger(modal)}
+				class="btn bg-[#0093ED] text-white font-semibold rounded-sm px-2 py-1">Unggah</button
+			>
 		</div>
 	</div>
 </nav>
@@ -273,6 +298,8 @@
 <div class="tipedit">
 	<EditorContent editor={$editor} />
 </div>
+
+<!-- {JSON.stringify($editor?.getJSON())} -->
 
 <style>
 	:global(.tipedit .tiptap) {
