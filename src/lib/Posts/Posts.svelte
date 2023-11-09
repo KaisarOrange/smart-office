@@ -48,11 +48,17 @@
 
 <style lang="scss">
 	.tiptap {
+		:global(p::after) {
+			content: '';
+			display: inline-block;
+			width: 0px;
+		}
 		:global(> * + *) {
 			margin-top: 0.75em;
 		}
 
 		:global(h1) {
+			font-size: 18px;
 			line-height: 1.1;
 		}
 

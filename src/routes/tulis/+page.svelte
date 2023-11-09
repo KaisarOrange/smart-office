@@ -13,6 +13,9 @@
 	import Image from '@tiptap/extension-image';
 	import { generateHTML } from '@tiptap/html';
 	import Document from '@tiptap/extension-document';
+	import { postPosts } from '$lib/postPosts';
+	import { editorJson } from '$lib/Stores/editorOutput';
+
 	let active: boolean = false;
 	let editor: Readable<Editor>;
 	let isSaved: boolean = false;
@@ -22,6 +25,10 @@
 	const CustomDocument = Document.extend({
 		content: 'heading block*'
 	});
+
+	const updateStore = () => {
+		$editorJson = $editor.getJSON();
+	};
 
 	const addYoutubeVideo = () => {
 		const url = prompt('Enter YouTube URL');
@@ -38,16 +45,13 @@
 	const modal: ModalSettings = {
 		type: 'component',
 		component: 'modalComponentOne',
-
 		// Data
-		title: 'Please Confirm',
-		body: 'Are you sure you wish to proceed?',
+		title: 'Unggah',
+		body: 'Pilih lokasi:'
 		// TRUE if confirm pressed, FALSE if cancel pressed
-		response: (r: boolean) => {
-			console.log('response:a', r);
-			console.log('response:b', r);
-			console.log('response:c', r);
-		}
+		// response: (r: boolean) => {
+		// 	postPosts($editor?.getJSON());
+		// }
 	};
 
 	onMount(() => {
@@ -288,7 +292,10 @@
 				class="btn font-semibold rounded-sm px-2 py-1 mr-2">Simpan draft</button
 			>
 			<button
-				on:click={() => modalStore.trigger(modal)}
+				on:click={() => {
+					updateStore();
+					modalStore.trigger(modal);
+				}}
 				class="btn bg-[#0093ED] text-white font-semibold rounded-sm px-2 py-1">Unggah</button
 			>
 		</div>

@@ -7,7 +7,7 @@
 <div class=" px-3 h-[550px] py-2 rounded-sm bg-[#D9D9D9] right-5">
   <div class="flex px-1 justify-between items-center">
     <div>
-      <p class="font-bold">Tugas</p>
+      <p class="font-bold">Activity</p>
       <p class="font-thin">Sabtu, 14 Agustus</p>
     </div>
 
