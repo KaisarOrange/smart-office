@@ -6,11 +6,8 @@
 	export let data;
 </script>
 
-<!--
 <div class="flex justify-between m-6">
 	<Anggota />
-	<Posts {data} />
+	<Posts data={data.user.data.posts} />
 	<Todo />
-</div> -->
-
-<div>{data.title}</div>
+</div>
