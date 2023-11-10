@@ -1,11 +1,19 @@
-import { ruang } from '$lib/data';
+export async function load({ url, fetch }) {
+	const getUserInfo = async () => {
+		const res = await fetch('api/user');
+		const data = await res.json();
 
-export function load({ url }) {
+		return data;
+	};
+
+	const item = await getUserInfo();
+
 	return {
-		url: url.pathname,
-		ruang: ruang.map((ruang) => ({
-			ruang: ruang.ruang,
-			img: ruang.img
-		}))
+		user: item,
+		url: url.pathname
+		// ruang: ruang.map((ruang) => ({
+		// 	ruang: ruang.ruang,
+		// 	img: ruang.img
+		// }))
 	};
 }

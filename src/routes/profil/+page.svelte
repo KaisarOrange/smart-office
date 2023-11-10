@@ -4,11 +4,11 @@
 	import Todo from '$lib/Todo/Todo.svelte';
 	import Profil from './Profil.svelte';
 
-	// export let data;
+	export let data;
 </script>
 
 <div class="flex justify-between m-6">
 	<Profil />
-	<!-- <Posts {data} /> -->
+	<Posts data={data.user.data.posts} />
 	<Todo />
 </div>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { Avatar } from '@skeletonlabs/skeleton';
 	export let data: any;
-
 	let clicked: boolean;
 </script>
 
@@ -13,17 +13,15 @@
 	aria-hidden
 	class="flex justify-center items-center gap-2"
 >
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div class="flex flex-col">
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		<div
 			class="font-semibold select-none cursor-pointer flex items-center justify-center gap-2"
 			on:click|stopPropagation={() => {
 				clicked = !clicked;
 				console.log(clicked);
 			}}
+			on:keydown={() => {}}
+			aria-hidden
 		>
 			<img class="w-12 h-12 object-cover rounded-full" src="/alif.png" alt="profile_picture" />
 			<div class="">Ruang</div>
@@ -38,17 +36,18 @@
 				class="bg-[#0093ED] hover:bg-[#51abef] active:bg-[#3d88b6] text-white font-semibold px-2 py-1 rounded-md"
 				>Ruang +</button
 			>
-
-			{#each data.ruang as { ruang, img }}
+			{#each data as { name }}
 				<div
+					on:keydown={() => {}}
+					aria-hidden
 					on:click={() => {
-						goto(`/ruang/${ruang}`);
+						goto(`/ruang/${name}`);
 					}}
 					class="flex cursor-pointer items-center gap-2 hover:bg-gray-100 bg-white px-1.5 rounded-md py-1"
 				>
-					<img class="w-12 h-12 object-cover rounded-full" src={img} alt="profile_picture" />
+					<Avatar width="w-11" />
 					<div class="font-semibold cursor-pointer">
-						{ruang}
+						{name}
 					</div>
 				</div>
 			{/each}

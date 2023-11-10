@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let data: any;
+	/** @type {import('./$types').PageData} */
 	import { Toast, initializeStores, Modal, getModalStore } from '@skeletonlabs/skeleton';
 	import type { ModalSettings, ModalComponent, ModalStore } from '@skeletonlabs/skeleton';
 	import ModalComponentOne from '$lib/Modal/ModalSelect.svelte';
@@ -13,6 +13,8 @@
 		modalComponentOne: { ref: ModalComponentOne }
 		// ...
 	};
+
+	export let data: any;
 </script>
 
 {#if data.url != '/tulis'}

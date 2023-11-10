@@ -3,6 +3,7 @@
 	import Ruang from './Ruang.svelte';
 	import Profil from './Profil.svelte';
 	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
 	export let data: any;
 </script>
 
@@ -36,7 +37,7 @@
 	</div>
 
 	<div class="flex items-center gap-16">
-		<Ruang {data} />
+		<Ruang data={data.user.data.ruang} />
 		<Profil />
 	</div>
 

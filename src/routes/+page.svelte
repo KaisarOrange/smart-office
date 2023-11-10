@@ -4,7 +4,7 @@
 	import Posts from '$lib/Posts/Posts.svelte';
 </script>
 
-<div class=" flex justify-between m-6"><Posts {data} /></div>
+<div class=" flex justify-between m-6"><Posts data={data.posts.data} /></div>
 
 <style>
 </style>

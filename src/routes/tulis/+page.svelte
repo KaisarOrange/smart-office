@@ -11,9 +11,7 @@
 	import CharacterCount from '@tiptap/extension-character-count';
 	import Placeholder from '@tiptap/extension-placeholder';
 	import Image from '@tiptap/extension-image';
-	import { generateHTML } from '@tiptap/html';
 	import Document from '@tiptap/extension-document';
-	import { postPosts } from '$lib/postPosts';
 	import { editorJson } from '$lib/Stores/editorOutput';
 
 	let active: boolean = false;

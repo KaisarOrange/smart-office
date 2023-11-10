@@ -2,6 +2,30 @@
 	import PostsComponent from './PostsComponent.svelte';
 	import PostsKonten from './PostsKonten.svelte';
 	export let data: any;
+
+	const datehe = (dateInput: Date) => {
+		const monthList = [
+			'Januari',
+			'Febuari',
+			'Maret',
+			'April',
+			'Mei',
+			'Juni',
+			'Juli',
+			'Agustus',
+			'September',
+			'Oktober',
+			'November',
+			'Desember'
+		];
+		let date = new Date(dateInput);
+		const day = date.getDate();
+		const month = date.getMonth();
+		const year = date.getFullYear();
+
+		const fullDate = `${day}  ${monthList[month]}`;
+		return fullDate.toString();
+	};
 </script>
 
 <div class="w-1/2 flex flex-col items-center gap-5 mx-auto">
@@ -25,20 +49,20 @@
 			<PostsComponent />
 		</div>
 	{/each} -->
-	{#each data.posts.data as { judul, konten, user_id, photo_url }}
+	<!-- {JSON.stringify(data.posts.data[0].posts)} -->
+	{#each data as { user, created_at, ruang, konten }}
 		<div class="bg-[#D9D9D9] rounded-sm p-2 min-w-full max-w-full">
 			<div class="bg-white px-4 py-2 rounded-sm">
 				<div class="flex items-center gap-2">
 					<div class="flex items-center gap-2 font-light my-3">
-						<img class="w-10 h-10 object-cover rounded-full" src="./alif.png" alt="" />
-						<p>Alif Ayodya . 11 September 2023</p>
+						<img class="w-10 h-10 object-cover rounded-full" src={user.photo_url} alt="" />
+						<p>{user.user_name} . {datehe(created_at)}</p>
 					</div>
 					<div class="font-extralight">|</div>
 					<div class="flex items-center gap-2 font-light">
-						<p>{user_id}</p>
+						<p>{ruang.name}</p>
 					</div>
 				</div>
-				<!-- <h1 class="text-lg font-bold">{judul}</h1> -->
 				<div class="tiptap"><PostsKonten {konten} /></div>
 			</div>
 			<PostsComponent />

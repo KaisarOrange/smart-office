@@ -1,4 +1,3 @@
-export const ssr = false;
 export function load({ fetch }) {
 	const getPosts = async () => {
 		const res = await fetch('api/posts');
