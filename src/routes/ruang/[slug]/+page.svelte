@@ -4,10 +4,11 @@
 	import Todo from '$lib/Todo/Todo.svelte';
 
 	export let data;
+	console.log(data);
 </script>
 
 <div class="flex justify-between m-6">
-	<Anggota />
-	<Posts data={data.user.data.posts} />
+	<Anggota data={data.ruang.data.user} />
+	<Posts data={data.ruang.data.posts} />
 	<Todo />
 </div>

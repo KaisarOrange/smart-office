@@ -36,12 +36,12 @@
 				class="bg-[#0093ED] hover:bg-[#51abef] active:bg-[#3d88b6] text-white font-semibold px-2 py-1 rounded-md"
 				>Ruang +</button
 			>
-			{#each data as { name }}
+			{#each data as { name, id }}
 				<div
 					on:keydown={() => {}}
 					aria-hidden
 					on:click={() => {
-						goto(`/ruang/${name}`);
+						goto(`/ruang/${id}`);
 					}}
 					class="flex cursor-pointer items-center gap-2 hover:bg-gray-100 bg-white px-1.5 rounded-md py-1"
 				>
