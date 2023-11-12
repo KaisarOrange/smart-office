@@ -18,6 +18,8 @@
 	let editor: Readable<Editor>;
 	let isSaved: boolean = false;
 
+	export let data;
+
 	let currentActiveFont: string;
 	let screenSize: any;
 	const CustomDocument = Document.extend({
@@ -39,13 +41,15 @@
 			});
 		}
 	};
+
 	const modalStore = getModalStore();
 	const modal: ModalSettings = {
 		type: 'component',
 		component: 'modalComponentOne',
 		// Data
 		title: 'Unggah',
-		body: 'Pilih lokasi:'
+		body: 'Pilih ruang untuk menyimpan:',
+		meta: { ruang: data.user.data.ruang }
 		// TRUE if confirm pressed, FALSE if cancel pressed
 		// response: (r: boolean) => {
 		// 	postPosts($editor?.getJSON());

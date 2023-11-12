@@ -8,7 +8,7 @@
 </script>
 
 <div class="flex justify-between m-6">
-	<Profil />
+	<Profil data={data.user.data} />
 	<Posts data={data.user.data.posts} />
 	<Todo />
 </div>

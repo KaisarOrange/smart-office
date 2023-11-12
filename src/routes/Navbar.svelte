@@ -5,6 +5,7 @@
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	export let data: any;
+	console.log(data, 'hehehe');
 </script>
 
 <nav class="bg-[#D9D9D9] flex justify-between p-3 items-center fixed top-0 w-full z-10">
@@ -38,7 +39,7 @@
 
 	<div class="flex items-center gap-16">
 		<Ruang data={data.user.data.ruang} />
-		<Profil />
+		<Profil data={data.user.data} />
 	</div>
 
 	<div class="flex justify-center items-center w-1/6">

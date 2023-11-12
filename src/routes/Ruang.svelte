@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { Avatar } from '@skeletonlabs/skeleton';
+	import { SlideToggle } from '@skeletonlabs/skeleton';
 	export let data: any;
 	let clicked: boolean;
 </script>
@@ -23,7 +24,7 @@
 			on:keydown={() => {}}
 			aria-hidden
 		>
-			<img class="w-12 h-12 object-cover rounded-full" src="/alif.png" alt="profile_picture" />
+			<Avatar width={'w-12'} />
 			<div class="">Ruang</div>
 			<img src="/down.png" class="w-2 h-2" alt="" />
 		</div>
@@ -45,7 +46,7 @@
 					}}
 					class="flex cursor-pointer items-center gap-2 hover:bg-gray-100 bg-white px-1.5 rounded-md py-1"
 				>
-					<Avatar width="w-11" />
+					<Avatar width="w-10" />
 					<div class="font-semibold cursor-pointer">
 						{name}
 					</div>

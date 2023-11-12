@@ -4,7 +4,7 @@
 	import Todo from '$lib/Todo/Todo.svelte';
 
 	export let data;
-	console.log(data);
+	console.log(data.ruang);
 </script>
 
 <div class="flex justify-between m-6">
