@@ -16,12 +16,10 @@
 	const modalStore = getModalStore();
 
 	const roomsList = $modalStore[0].meta.ruang;
-	console.log(NIL);
 	function onFormSubmit(): void {
 		// if ($modalStore[0].response) $modalStore[0].response(flavor);
 		const konten: any = $editorJson;
 		const ruangId: string = roomId;
-
 		postPosts(ruangId, konten);
 		modalStore.close();
 	}

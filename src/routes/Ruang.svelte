@@ -1,9 +1,46 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { Avatar } from '@skeletonlabs/skeleton';
+	import { currentRuang } from '$lib/Stores/editorOutput';
+	import { Avatar, getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
 	import { SlideToggle } from '@skeletonlabs/skeleton';
 	export let data: any;
 	let clicked: boolean;
+
+	const createRuang = async (name: any) => {
+		// const konten: any = get(editorJson);
+		if (name != '') {
+			const res = await fetch(`http://127.0.0.1:8080/api/ruang`, {
+				method: 'POST',
+				body: JSON.stringify({
+					name,
+					user_id: '1513bed2-331e-456e-9349-bc92da500614'
+				}),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+			const respon = await res.json();
+			console.log(respon);
+			if (res.ok) {
+				goto(`/ruang/${respon.data.id}`);
+			}
+		}
+		return;
+	};
+
+	const modal: ModalSettings = {
+		type: 'prompt',
+		// Data
+		title: 'Buat Ruang Baru',
+		body: 'Tambahkan nama ruang yang anda inginkan.',
+		// Populates the input value and attributes
+		value: '',
+		valueAttr: { type: 'text', minlength: 3, maxlength: 55, required: true },
+		// Returns the updated response value
+		response: (r: string) => createRuang(r)
+	};
+
+	const modalStore = getModalStore();
 </script>
 
 <svelte:window on:click={(e) => (clicked = false)} />
@@ -25,7 +62,7 @@
 			aria-hidden
 		>
 			<Avatar width={'w-12'} />
-			<div class="">Ruang</div>
+			<div class="">{$currentRuang}</div>
 			<img src="/down.png" class="w-2 h-2" alt="" />
 		</div>
 		<div
@@ -34,6 +71,9 @@
 				: 'clickedHid '} bg-[#D9D9D9] absolute top-20 h-[250px] py-4 px-5 flex flex-col gap-3 rounded-sm overflow-scroll overflow-x-hidden"
 		>
 			<button
+				on:click={() => {
+					modalStore.trigger(modal);
+				}}
 				class="bg-[#0093ED] hover:bg-[#51abef] active:bg-[#3d88b6] text-white font-semibold px-2 py-1 rounded-md"
 				>Ruang +</button
 			>
@@ -43,6 +83,7 @@
 					aria-hidden
 					on:click={() => {
 						goto(`/ruang/${id}`);
+						$currentRuang = name;
 					}}
 					class="flex cursor-pointer items-center gap-2 hover:bg-gray-100 bg-white px-1.5 rounded-md py-1"
 				>

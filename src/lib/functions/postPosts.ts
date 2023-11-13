@@ -13,7 +13,7 @@ export const postPosts = async (ruang_id: string, konten: any) => {
 			body: JSON.stringify({
 				judul: title,
 				konten: konten,
-				user_id: '1eda295b-dba9-4a0e-ba5f-dc6cedc1ece5',
+				user_id: '1513bed2-331e-456e-9349-bc92da500614',
 				ruang_id
 			}),
 			headers: {

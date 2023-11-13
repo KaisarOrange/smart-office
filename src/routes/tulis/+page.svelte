@@ -12,7 +12,7 @@
 	import Placeholder from '@tiptap/extension-placeholder';
 	import Image from '@tiptap/extension-image';
 	import Document from '@tiptap/extension-document';
-	import { editorJson } from '$lib/Stores/editorOutput';
+	import { currentRuang, editorJson } from '$lib/Stores/editorOutput';
 
 	let active: boolean = false;
 	let editor: Readable<Editor>;
@@ -132,7 +132,13 @@
 <svelte:window bind:innerWidth={screenSize} on:click={(e) => (active = false)} />
 
 <nav class="bg-[#D9D9D9] flex justify-between py-4 px-8 items-center fixed top-0 w-full z-10">
-	<a class="font-extrabold text-lg" href="/"><span class="text-[#0093ED]">SMART</span> OFFICE</a>
+	<a
+		on:click={() => {
+			$currentRuang = 'Ruang';
+		}}
+		class="font-extrabold text-lg"
+		href="/"><span class="text-[#0093ED]">SMART</span> OFFICE</a
+	>
 
 	<div class="m-auto flex items-center gap-4">
 		<div>

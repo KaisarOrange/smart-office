@@ -21,7 +21,7 @@
 	<Navbar {data} />
 {/if}
 <Modal
-	buttonPositive="bg-blue_office"
+	buttonPositive="bg-blue_office text-white font-semibold"
 	buttonNeutral={'bg-surface-400'}
 	components={modalRegistry}
 />
