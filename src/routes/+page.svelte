@@ -6,7 +6,7 @@
 	console.log('gello: ', data);
 </script>
 
-<div class=" flex justify-between m-6"><Posts data={data.posts.data} /></div>
+<div class=" flex justify-between m-6"><Posts data={data.posts.data.ruang} /></div>
 
 <style>
 </style>
