@@ -15,6 +15,7 @@
 	};
 
 	export let data: any;
+	console.log('data: ', data);
 </script>
 
 {#if data.url != '/tulis'}

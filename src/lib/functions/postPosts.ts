@@ -20,8 +20,8 @@ export const postPosts = async (ruang_id: string, konten: any, privatee: boolean
 					konten: konten,
 					user_id: PUBLIC_USER_ID,
 					ruang_id,
-					privatee,
-					draft: false
+					private: privatee,
+					draft: true
 				}),
 				headers: {
 					'Content-Type': 'application/json'
