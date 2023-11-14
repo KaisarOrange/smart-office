@@ -3,6 +3,7 @@
 	import { currentRuang } from '$lib/Stores/editorOutput';
 	import { Avatar, getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
 	import { SlideToggle } from '@skeletonlabs/skeleton';
+	import { PUBLIC_USER_ID } from '$env/static/public';
 	export let data: any;
 	let clicked: boolean;
 
@@ -13,7 +14,7 @@
 				method: 'POST',
 				body: JSON.stringify({
 					name,
-					user_id: '1513bed2-331e-456e-9349-bc92da500614'
+					user_id: PUBLIC_USER_ID
 				}),
 				headers: {
 					'Content-Type': 'application/json'
@@ -23,6 +24,7 @@
 			console.log(respon);
 			if (res.ok) {
 				goto(`/ruang/${respon.data.id}`);
+				$currentRuang = respon.data.name;
 			}
 		}
 		return;

@@ -6,7 +6,6 @@
 	import { onMount } from 'svelte';
 	import { currentRuang } from '$lib/Stores/editorOutput';
 	export let data: any;
-	console.log(data, 'hehehe');
 </script>
 
 <nav class="bg-[#D9D9D9] flex justify-between p-3 items-center fixed top-0 w-full z-10">

@@ -4,7 +4,6 @@
 	import { goto } from '$app/navigation';
 
 	export let data: any;
-	console.log('first', data);
 </script>
 
 <div class="flex justify-center items-center gap-3">

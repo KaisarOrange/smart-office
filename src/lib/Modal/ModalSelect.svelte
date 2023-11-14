@@ -13,6 +13,8 @@
 
 	// Local
 	let roomId = '';
+	let privatee: boolean = false;
+
 	const modalStore = getModalStore();
 
 	const roomsList = $modalStore[0].meta.ruang;
@@ -20,18 +22,15 @@
 		// if ($modalStore[0].response) $modalStore[0].response(flavor);
 		const konten: any = $editorJson;
 		const ruangId: string = roomId;
-		postPosts(ruangId, konten);
+		postPosts(ruangId, konten, privatee);
 		modalStore.close();
 	}
 
-	let privatee: boolean = false;
 	// Base Classes
 	const cBase = 'card p-4 w-modal shadow-xl space-y-4';
 	const cHeader = 'text-2xl font-bold';
 	const cListButton = 'bg-blue_office overflow-hidden';
 </script>
-
-<!-- @component This example creates a simple form modal. -->
 
 {#if $modalStore[0]}
 	<div class="modal-example-form {cBase} ">
