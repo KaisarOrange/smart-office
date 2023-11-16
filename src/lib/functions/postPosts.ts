@@ -21,7 +21,7 @@ export const postPosts = async (ruang_id: string, konten: any, privatee: boolean
 					user_id: PUBLIC_USER_ID,
 					ruang_id,
 					private: privatee,
-					draft: true
+					draft: false
 				}),
 				headers: {
 					'Content-Type': 'application/json'

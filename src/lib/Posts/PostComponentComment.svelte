@@ -56,7 +56,11 @@
 			<div>
 				<Avatar src={'/alif.png'} width={'w-10'} />
 			</div>
-			<div bind:innerText={commentValue} contenteditable class="textarea bg-white px-2 py-2" />
+			<div
+				bind:innerText={commentValue}
+				contenteditable
+				class="textarea break-all bg-white px-2 py-2"
+			/>
 
 			<button
 				on:click={() => {

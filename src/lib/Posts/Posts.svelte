@@ -50,24 +50,30 @@
 		</div>
 	{/each} -->
 	<!-- {JSON.stringify(data.posts.data[0].posts)} -->
-	{#each data as { user, created_at, ruang, konten }}
-		<div class="bg-[#D9D9D9] rounded-sm p-2 min-w-full max-w-full">
-			<div class="bg-white px-4 py-2 rounded-sm">
-				<div class="flex items-center gap-2">
-					<div class="flex items-center gap-2 font-light my-3">
-						<img class="w-10 h-10 object-cover rounded-full" src={user.photo_url} alt="" />
-						<p>{user.user_name} . {datehe(created_at)}</p>
+	{#if data}
+		{#each data as { user, draft, created_at, ruang, konten }}
+			<div class="bg-[#D9D9D9] rounded-sm p-2 min-w-full max-w-full">
+				<div class="bg-white px-4 py-2 rounded-sm">
+					<div class="flex items-center gap-2">
+						<div class="flex items-center gap-2 font-light my-3">
+							<img class="w-10 h-10 object-cover rounded-full" src={user.photo_url} alt="" />
+							<p>{user.user_name} . {datehe(created_at)}</p>
+						</div>
+						<div class="font-extralight">|</div>
+						<div class="flex items-center gap-2 font-light">
+							<p>{ruang.name}</p>
+						</div>
+						<div class="font-extralight" />
+						<div class="font-extralight text-blue_office">
+							{draft ? 'Draft' : ''}
+						</div>
 					</div>
-					<div class="font-extralight">|</div>
-					<div class="flex items-center gap-2 font-light">
-						<p>{ruang.name}</p>
-					</div>
+					<div class="tiptap"><PostsKonten {konten} /></div>
 				</div>
-				<div class="tiptap"><PostsKonten {konten} /></div>
+				<PostsComponent />
 			</div>
-			<PostsComponent />
-		</div>
-	{/each}
+		{/each}
+	{/if}
 </div>
 
 <style lang="scss">

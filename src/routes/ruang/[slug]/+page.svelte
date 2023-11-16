@@ -2,9 +2,12 @@
 	import Posts from '$lib/Posts/Posts.svelte';
 	import Anggota from '$lib/Anggota.svelte';
 	import Todo from '$lib/Todo/Todo.svelte';
+	import { currentRuang } from '$lib/Stores/editorOutput';
+	import { afterUpdate, beforeUpdate, onMount } from 'svelte';
 
 	export let data;
-	console.log(data.ruang);
+
+	$currentRuang = data.ruang.data.name;
 </script>
 
 <div class="flex justify-between m-6">
