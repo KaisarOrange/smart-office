@@ -6,9 +6,32 @@
 	let commentValue: any;
 	let liked: boolean;
 	let commentClick: boolean;
+
+	const addComment = () => {
+		comment.comments = [
+			...comment.comments,
+			{
+				user_name: 'Alif Ayodya',
+				user_img: '/alif.png',
+				text: commentValue,
+				like: 10
+			}
+		];
+	};
+
+	const addComments = () => {
+		comment['comments'] = [
+			{
+				user_name: 'Alif Ayodya',
+				user_img: '/alif.png',
+				text: commentValue,
+				like: 10
+			}
+		];
+	};
 </script>
 
-<div class="mt-6 w-full box-border">
+<div class=" w-full box-border">
 	<div class="flex gap-2 my-2">
 		<div>
 			<Avatar src={comment.user_img} width={'w-10'} />
@@ -20,7 +43,7 @@
 
 			{#if commentClick}
 				{#if comment.comments}
-					<div class="flex h-fit mt-2 gap-2 w-full">
+					<div class="flex h-fit mt-1 gap-2 w-full">
 						<div>
 							<Avatar src={'/alif.png'} width={'w-10'} />
 						</div>
@@ -28,6 +51,7 @@
 							<div class="flex flex-col items-end">
 								<div
 									bind:innerText={commentValue}
+									placeholder="Tambahkan komentar..."
 									contenteditable
 									class="textarea w-full break-all bg-white px-2 py-2"
 								/>
@@ -41,7 +65,7 @@
 									>
 									<button
 										on:click={() => {
-											// addComment();
+											addComment();
 										}}
 										class="btn bg-[#0093ED] w-fit px-2 py-1.5 mt-1 text-white font-semibold text-sm rounded-sm"
 										>Balas</button
@@ -59,7 +83,7 @@
 						<div>
 							<Avatar src={'/alif.png'} width={'w-10'} />
 						</div>
-						<div class="flex flex-col flex-1 w-full">
+						<div class="flex flex-col items-end flex-1">
 							<div
 								bind:innerText={commentValue}
 								contenteditable
@@ -68,9 +92,16 @@
 							<div>
 								<button
 									on:click={() => {
-										//addComment();
+										// addComment();
 									}}
-									class="btn bg-[#0093ED] h-10 left-0 text-white font-semibold text-sm rounded-sm"
+									class="btn w-fit px-2 py-1.5 mt-1 text-black font-semibold text-sm rounded-sm"
+									>Batal</button
+								>
+								<button
+									on:click={() => {
+										addComments();
+									}}
+									class="btn bg-[#0093ED] w-fit px-2 py-1.5 mt-1 text-white font-semibold text-sm rounded-sm"
 									>Balas</button
 								>
 							</div>

@@ -29,27 +29,6 @@
 </script>
 
 <div class="w-1/2 flex flex-col items-center gap-5 mx-auto">
-	<!-- {#each data.posts as { content, author_name, author_img, title, img, ruang }}
-		<div class="bg-[#D9D9D9] rounded-sm p-2">
-			<div class="bg-white px-4 py-2 rounded-sm">
-				<div class="flex items-center gap-2">
-					<div class="flex items-center gap-2 font-light my-3">
-						<img class="w-10 h-10 object-cover rounded-full" src={author_img} alt="" />
-						<p>{author_name} . 11 September 2023</p>
-					</div>
-					<div class="font-extralight">|</div>
-					<div class="flex items-center gap-2 font-light">
-						<img class="w-10 h-10 object-cover rounded-full" src={img} alt="" />
-						<p>{ruang}</p>
-					</div>
-				</div>
-				<h1 class="text-lg font-bold">{title}</h1>
-				<div class="tiptap">{@html content}</div>
-			</div>
-			<PostsComponent />
-		</div>
-	{/each} -->
-	<!-- {JSON.stringify(data.posts.data[0].posts)} -->
 	{#if data}
 		{#each data as { user, draft, created_at, ruang, konten }}
 			<div class="bg-[#D9D9D9] rounded-sm p-2 min-w-full max-w-full">

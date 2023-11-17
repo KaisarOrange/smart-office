@@ -46,7 +46,6 @@
 				like: 10
 			}
 		];
-		console.log(comments);
 	};
 </script>
 
@@ -58,6 +57,7 @@
 			</div>
 			<div
 				bind:innerText={commentValue}
+				placeholder="Tambahkan komentar..."
 				contenteditable
 				class="textarea break-all bg-white px-2 py-2"
 			/>
@@ -75,26 +75,3 @@
 		{/each}
 	</div>
 {/if}
-
-<!-- on:keydown={(e) => {
-	if (e.key === 'Enter') {
-		const currentTextAreaIndex = textAreaWidth.findIndex((e) => e === currentTextAreaWidth);
-		if (currentTextAreaIndex < textAreaWidth.length - 1) {
-			currentTextAreaWidth = textAreaWidth[currentTextAreaIndex + 1];
-		}
-		return;
-	}
-	if (e.key === 'Backspace') {
-		const currentTextAreaIndex = textAreaWidth.findIndex((e) => e === currentTextAreaWidth);
-		if (currentTextAreaIndex > 0) {
-			currentTextAreaWidth = textAreaWidth[currentTextAreaIndex - 1];
-		}
-		return;
-	}
-}} -->
-<!-- <textarea
-				contenteditable="true"
-				bind:value={commentValue}
-				class="textarea rounded-sm bg-white"
-				placeholder="Tambahkan komentar..."
-			/> -->
