@@ -11,6 +11,8 @@
 	const like = null;
 	const choice = [posts, draft, like];
 	$: dataPost = choice[selected];
+
+	console.log(data);
 	// selected === 0 ? draft : posts;
 </script>
 

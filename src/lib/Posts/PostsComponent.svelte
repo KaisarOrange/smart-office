@@ -2,9 +2,16 @@
 	import { Avatar } from '@skeletonlabs/skeleton';
 	import PostComponentComment from './PostComponentComment.svelte';
 	import LikeShareComment from './LikeShareComment.svelte';
+	import { setContext } from 'svelte';
+	import { writable } from 'svelte/store';
 
+	export let id: number;
 	let liked: boolean;
-	let comment: boolean = false;
+	let commentClicked: boolean = false;
+	export let comments: any;
+
+	let commentData = writable(comments);
+	setContext('comments', commentData);
 </script>
 
 <div class="bg-white p-2 mt-2 rounded-sm">
@@ -36,7 +43,7 @@
 		<div class="flex items-center justify-center">
 			<img
 				on:click={() => {
-					comment = !comment;
+					commentClicked = !commentClicked;
 				}}
 				on:keydown={() => {}}
 				aria-hidden
@@ -51,5 +58,5 @@
 		</div>
 	</div>
 
-	<PostComponentComment {comment} />
+	<PostComponentComment {commentClicked} {id} />
 </div>

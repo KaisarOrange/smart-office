@@ -2,11 +2,15 @@
 	export let comment: any;
 	import { Avatar } from '@skeletonlabs/skeleton';
 	import LikeShareComment from './LikeShareComment.svelte';
-	import { each } from 'lodash';
+	import { getContext } from 'svelte';
+	import { postComment } from '$lib/functions/postComment';
+
 	let commentValue: any;
 	let liked: boolean;
 	let commentClick: boolean;
+	export let id: number;
 
+	let comments: any = getContext('comments');
 	const addComment = () => {
 		comment.comments = [
 			...comment.comments,
@@ -17,6 +21,8 @@
 				like: 10
 			}
 		];
+
+		postComment(id, $comments);
 	};
 
 	const addComments = () => {
@@ -28,6 +34,7 @@
 				like: 10
 			}
 		];
+		postComment(id, $comments);
 	};
 </script>
 
@@ -76,7 +83,7 @@
 					</div>
 
 					{#each comment.comments as commente}
-						<svelte:self comment={commente} />
+						<svelte:self comment={commente} {id} />
 					{/each}
 				{:else}
 					<div class="flex h-fit w-full mt-2 gap-2">

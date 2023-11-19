@@ -1,44 +1,40 @@
 <script lang="ts">
 	import { Avatar } from '@skeletonlabs/skeleton';
-	import LikeShareComment from './LikeShareComment.svelte';
-	import PostComponentComment from './PostComponentComment.svelte';
-	import PostsComponent from './PostsComponent.svelte';
-	import CommentComponent from './CommentComponent.svelte';
-	import { each } from 'lodash';
-	export let comment: boolean;
 
+	import CommentComponent from './CommentComponent.svelte';
+	import { getContext } from 'svelte';
+	import { postComment } from '$lib/functions/postComment';
+	export let commentClicked: boolean;
+
+	export let id: number;
 	let commentValue: any;
-	let cs: number = 10;
-	let textAreaWidth: number[] = [10, 20, 30, 40, 50, 60, 70, 80, 90];
-	let currentTextAreaWidth: number = textAreaWidth[0];
-	let comments: any[] = [
-		{
-			user_name: 'James Hamilton',
-			user_img: 'https://source.unsplash.com/hr7eefjrekI',
-			text: 'Hey nice!',
-			comments: [
-				{
-					user_name: 'Alif',
-					user_img: '/alif.png',
-					text: 'Thanks!',
-					comments: [
-						{
-							user_name: 'James Hamilton',
-							user_img: 'https://source.unsplash.com/hr7eefjrekI',
-							text: 'Your Welcome!',
-							like: 10
-						}
-					],
-					like: 10
-				}
-			],
-			like: 10
-		}
-	];
+	let comments: any = getContext('comments');
+	// {
+	// 		user_name: 'James Hamilton',
+	// 		user_img: 'https://source.unsplash.com/hr7eefjrekI',
+	// 		text: 'Hey nice!',
+	// 		comments: [
+	// 			{
+	// 				user_name: 'Alif',
+	// 				user_img: '/alif.png',
+	// 				text: 'Thanks!',
+	// 				comments: [
+	// 					{
+	// 						user_name: 'James Hamilton',
+	// 						user_img: 'https://source.unsplash.com/hr7eefjrekI',
+	// 						text: 'Your Welcome!',
+	// 						like: 10
+	// 					}
+	// 				],
+	// 				like: 10
+	// 			}
+	// 		],
+	// 		like: 10
+	// 	}
 
 	const addComment = () => {
-		comments = [
-			...comments,
+		$comments = [
+			...$comments,
 			{
 				user_name: 'Alif Ayodya',
 				user_img: '/alif.png',
@@ -46,10 +42,12 @@
 				like: 10
 			}
 		];
+
+		postComment(id, $comments);
 	};
 </script>
 
-{#if comment}
+{#if commentClicked}
 	<div class="mx-2">
 		<div class="flex h-fit justify-center mt-2 gap-2">
 			<div>
@@ -70,8 +68,8 @@
 				>Tambah komentar</button
 			>
 		</div>
-		{#each comments as comment}
-			<CommentComponent {comment} />
+		{#each $comments as comment}
+			<CommentComponent {comment} {id} />
 		{/each}
 	</div>
 {/if}

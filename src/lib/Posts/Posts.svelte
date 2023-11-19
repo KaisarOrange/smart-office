@@ -30,7 +30,7 @@
 
 <div class="w-1/2 flex flex-col items-center gap-5 mx-auto">
 	{#if data}
-		{#each data as { user, draft, created_at, ruang, konten }}
+		{#each data as { user, draft, created_at, ruang, konten, comment, id }}
 			<div class="bg-[#D9D9D9] rounded-sm p-2 min-w-full max-w-full">
 				<div class="bg-white px-4 py-2 rounded-sm">
 					<div class="flex items-center gap-2">
@@ -49,7 +49,7 @@
 					</div>
 					<div class="tiptap"><PostsKonten {konten} /></div>
 				</div>
-				<PostsComponent />
+				<PostsComponent comments={comment.comments} {id} />
 			</div>
 		{/each}
 	{/if}
