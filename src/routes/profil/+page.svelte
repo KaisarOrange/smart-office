@@ -14,10 +14,12 @@
 
 	console.log(data);
 	// selected === 0 ? draft : posts;
+
+	const userInfo = { username: data.user.data.user_name, photo: data.user.data.photo_url };
 </script>
 
 <div class="flex justify-between m-6">
 	<Profil data={data.user.data} bind:selected />
-	<Posts data={dataPost} />
+	<Posts data={dataPost} {userInfo} />
 	<Todo />
 </div>

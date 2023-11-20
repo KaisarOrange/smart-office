@@ -6,6 +6,7 @@
 	import { postComment } from '$lib/functions/postComment';
 
 	let commentValue: any;
+	export let userInfo: any;
 	let liked: boolean;
 	let commentClick: boolean;
 	export let id: number;
@@ -28,8 +29,8 @@
 	const addComments = () => {
 		comment['comments'] = [
 			{
-				user_name: 'Alif Ayodya',
-				user_img: '/alif.png',
+				user_name: userInfo.username,
+				user_img: userInfo.photo,
 				text: commentValue,
 				like: 10
 			}

@@ -6,9 +6,11 @@
 	import { postComment } from '$lib/functions/postComment';
 	export let commentClicked: boolean;
 
+	export let userInfo: any;
 	export let id: number;
 	let commentValue: any;
 	let comments: any = getContext('comments');
+	console.log(userInfo);
 	// {
 	// 		user_name: 'James Hamilton',
 	// 		user_img: 'https://source.unsplash.com/hr7eefjrekI',
@@ -36,8 +38,8 @@
 		$comments = [
 			...$comments,
 			{
-				user_name: 'Alif Ayodya',
-				user_img: '/alif.png',
+				user_name: userInfo.username,
+				user_img: userInfo.photo,
 				text: commentValue,
 				like: 10
 			}
@@ -51,7 +53,7 @@
 	<div class="mx-2">
 		<div class="flex h-fit justify-center mt-2 gap-2">
 			<div>
-				<Avatar src={'/alif.png'} width={'w-10'} />
+				<Avatar src={userInfo.photo} width={'w-10'} />
 			</div>
 			<div
 				bind:innerText={commentValue}
@@ -69,7 +71,7 @@
 			>
 		</div>
 		{#each $comments as comment}
-			<CommentComponent {comment} {id} />
+			<CommentComponent {comment} {id} {userInfo} />
 		{/each}
 	</div>
 {/if}

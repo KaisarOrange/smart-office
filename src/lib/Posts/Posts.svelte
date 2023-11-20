@@ -2,7 +2,8 @@
 	import PostsComponent from './PostsComponent.svelte';
 	import PostsKonten from './PostsKonten.svelte';
 	export let data: any;
-
+	export let userInfo: any;
+	console.log(userInfo);
 	const datehe = (dateInput: Date) => {
 		const monthList = [
 			'Januari',
@@ -49,7 +50,7 @@
 					</div>
 					<div class="tiptap"><PostsKonten {konten} /></div>
 				</div>
-				<PostsComponent comments={comment.comments} {id} />
+				<PostsComponent comments={comment.comments} {id} {userInfo} />
 			</div>
 		{/each}
 	{/if}
