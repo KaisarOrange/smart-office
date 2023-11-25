@@ -5,10 +5,7 @@
 	import { Avatar, ListBox, ListBoxItem, getModalStore } from '@skeletonlabs/skeleton';
 	import { postPosts } from '$lib/functions/postPosts';
 	import { fade } from 'svelte/transition';
-	import { v4 as uuidv4, NIL } from 'uuid';
 
-	// Props
-	/** Exposes parent props to this component. */
 	export let parent: SvelteComponent;
 
 	// Local
@@ -22,7 +19,7 @@
 		// if ($modalStore[0].response) $modalStore[0].response(flavor);
 		const konten: any = $editorJson;
 		const ruangId: string = roomId;
-		postPosts(ruangId, konten, privatee);
+		postPosts(ruangId, false, konten, privatee);
 		modalStore.close();
 	}
 
@@ -36,8 +33,14 @@
 	<div class="modal-example-form {cBase} ">
 		<header class={cHeader}>{$modalStore[0].title ?? '(title missing)'}</header>
 		<article>{$modalStore[0].body ?? '(body missing)'}</article>
-		<SlideToggle active={'bg-blue_office'} size="sm" name="slider-label" bind:checked={privatee}
-			>{privatee ? 'private' : 'public'}</SlideToggle
+		<SlideToggle
+			on:click={() => {
+				roomId = '';
+			}}
+			active={'bg-blue_office'}
+			size="sm"
+			name="slider-label"
+			bind:checked={privatee}>{privatee ? 'private' : 'public'}</SlideToggle
 		>
 
 		{#if !privatee}
@@ -63,9 +66,13 @@
 		{/if}
 
 		<!-- prettier-ignore -->
+
 		<footer class="modal-footer {parent.regionFooter}">
-        <button class="btn {parent.buttonNeutral} bg-transparent border border-black" on:click={parent.onClose}>{parent.buttonTextCancel}</button>
-        <button class="btn {parent.buttonPositive} text-white " on:click={onFormSubmit}>Unggah</button>
-    </footer>
+			<button
+				class="btn {parent.buttonNeutral} bg-transparent border border-black"
+				on:click={parent.onClose}>{parent.buttonTextCancel}</button
+			>
+			<button disabled={roomId === ""} class="btn {parent.buttonPositive} text-white" on:click={onFormSubmit}>Unggah</button>
+		</footer>
 	</div>
 {/if}

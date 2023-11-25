@@ -6,11 +6,10 @@
 	import { postComment } from '$lib/functions/postComment';
 	export let commentClicked: boolean;
 
-	export let userInfo: any;
 	export let id: number;
 	let commentValue: any;
 	let comments: any = getContext('comments');
-	console.log(userInfo);
+	let userInfo: any = getContext('userinfo');
 	// {
 	// 		user_name: 'James Hamilton',
 	// 		user_img: 'https://source.unsplash.com/hr7eefjrekI',
@@ -71,7 +70,7 @@
 			>
 		</div>
 		{#each $comments as comment}
-			<CommentComponent {comment} {id} {userInfo} />
+			<CommentComponent {comment} {id} />
 		{/each}
 	</div>
 {/if}

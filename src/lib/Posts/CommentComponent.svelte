@@ -6,10 +6,11 @@
 	import { postComment } from '$lib/functions/postComment';
 
 	let commentValue: any;
-	export let userInfo: any;
 	let liked: boolean;
 	let commentClick: boolean;
 	export let id: number;
+
+	let userInfo: any = getContext('userinfo');
 
 	let comments: any = getContext('comments');
 	const addComment = () => {
@@ -53,7 +54,7 @@
 				{#if comment.comments}
 					<div class="flex h-fit mt-1 gap-2 w-full">
 						<div>
-							<Avatar src={'/alif.png'} width={'w-10'} />
+							<Avatar src={userInfo.photo} width={'w-10'} />
 						</div>
 						<div class="flex flex-col flex-1">
 							<div class="flex flex-col items-end">
@@ -89,7 +90,7 @@
 				{:else}
 					<div class="flex h-fit w-full mt-2 gap-2">
 						<div>
-							<Avatar src={'/alif.png'} width={'w-10'} />
+							<Avatar src={userInfo?.photo} width={'w-10'} />
 						</div>
 						<div class="flex flex-col items-end flex-1">
 							<div

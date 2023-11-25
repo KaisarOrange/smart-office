@@ -13,14 +13,13 @@
 	import Image from '@tiptap/extension-image';
 	import Document from '@tiptap/extension-document';
 	import { currentRuang, editorJson } from '$lib/Stores/editorOutput';
+	import { postPosts } from '$lib/functions/postPosts';
 
 	let active: boolean = false;
 	let editor: Readable<Editor>;
-	let isSaved: boolean = false;
 
 	export let data;
 
-	let currentActiveFont: string;
 	let screenSize: any;
 	const CustomDocument = Document.extend({
 		content: 'heading block*'
@@ -54,6 +53,20 @@
 		// response: (r: boolean) => {
 		// 	postPosts($editor?.getJSON());
 		// }
+	};
+	const modalDraft: ModalSettings = {
+		type: 'confirm',
+		title: 'Draft',
+		body: 'Simpan sebagai draft?',
+		meta: { ruang: data.user.data.ruang },
+		response: (r: boolean) => {
+			const konten: any = $editorJson;
+
+			if (r === true) {
+				postPosts(data.user.data.id, true, konten, true);
+				return;
+			}
+		}
 	};
 
 	onMount(() => {
@@ -93,8 +106,13 @@
 
 					return false;
 				}
+			},
+			onUpdate: ({ editor }) => {
+				$editorJson = editor.getJSON();
+				// send the content to an API here
 			}
 		});
+		$editorJson = $editor.getJSON();
 	});
 </script>
 
@@ -296,12 +314,15 @@
 		{$editor?.storage.characterCount.words()} kata
 		<div class="">
 			<button
-				on:click={() => (isSaved = !isSaved)}
+				disabled={$editor?.isEmpty}
+				on:click={() => {
+					modalStore.trigger(modalDraft);
+				}}
 				class="btn font-semibold rounded-sm px-2 py-1 mr-2">Simpan draft</button
 			>
 			<button
+				disabled={$editor?.isEmpty}
 				on:click={() => {
-					updateStore();
 					modalStore.trigger(modal);
 				}}
 				class="btn bg-[#0093ED] text-white font-semibold rounded-sm px-2 py-1">Unggah</button

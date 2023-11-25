@@ -6,7 +6,6 @@
 	import { writable } from 'svelte/store';
 
 	export let id: number;
-	export let userInfo: any;
 
 	let liked: boolean;
 	let commentClicked: boolean = false;
@@ -60,5 +59,5 @@
 		</div>
 	</div>
 
-	<PostComponentComment {commentClicked} {id} {userInfo} />
+	<PostComponentComment {commentClicked} {id} />
 </div>

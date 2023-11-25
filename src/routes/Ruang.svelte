@@ -58,7 +58,6 @@
 			class="font-semibold select-none cursor-pointer flex items-center justify-center gap-2"
 			on:click|stopPropagation={() => {
 				clicked = !clicked;
-				console.log(clicked);
 			}}
 			on:keydown={() => {}}
 			aria-hidden

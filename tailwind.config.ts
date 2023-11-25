@@ -13,7 +13,8 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				blue_office: '#0093ED'
+				blue_office: '#0093ED',
+				grey_office: '#D9D9D9'
 			}
 		}
 	},
