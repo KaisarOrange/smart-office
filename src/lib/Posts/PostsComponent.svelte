@@ -2,16 +2,37 @@
 	import { Avatar } from '@skeletonlabs/skeleton';
 	import PostComponentComment from './PostComponentComment.svelte';
 	import LikeShareComment from './LikeShareComment.svelte';
-	import { setContext } from 'svelte';
+	import { onMount, setContext } from 'svelte';
 	import { writable } from 'svelte/store';
+	import { postLike } from '$lib/functions/postLike';
+	import { PUBLIC_USER_ID } from '$env/static/public';
 
 	export let id: number;
+	export let user_like: any;
 
 	let liked: boolean;
 	let commentClicked: boolean = false;
 	export let comments: any;
 
+	let likeCount: number = 0;
+
 	let commentData = writable(comments);
+	onMount(async () => {
+		if (user_like?.length > 0) {
+			liked = true;
+		} else {
+			liked = false;
+		}
+
+		try {
+			const res = await fetch(`http://127.0.0.1:8080/api/posts/like/${id}`);
+			const data = await res.json();
+			likeCount = data?.like_count;
+		} catch (err) {
+			console.log('hello: ', err);
+		}
+	});
+
 	setContext('comments', commentData);
 </script>
 
@@ -21,7 +42,9 @@
 			<svg
 				class="cursor-pointer stroke-[#0093ED] {liked ? 'fill-[#0093ED]' : 'fill-none'}"
 				on:click={() => {
+					postLike(liked, id);
 					liked = !liked;
+					liked ? likeCount++ : likeCount--;
 				}}
 				on:keydown={() => {}}
 				aria-hidden
@@ -39,7 +62,7 @@
 					stroke-linejoin="round"
 				/>
 			</svg>
-			<p class="text-xs">200</p>
+			<p class="text-xs">{likeCount}</p>
 		</div>
 		<div class="flex items-center justify-center">
 			<img
