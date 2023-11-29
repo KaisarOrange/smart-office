@@ -9,7 +9,7 @@
 
 	export let id: number;
 	export let user_like: any;
-
+	console.log(user_like);
 	let liked: boolean;
 	let commentClicked: boolean = false;
 	export let comments: any;
@@ -34,6 +34,27 @@
 	});
 
 	setContext('comments', commentData);
+
+	function countElements(arr: any) {
+		let count = 0;
+
+		function traverseArray(subArray: any) {
+			subArray.forEach((element: any) => {
+				if (Array.isArray(element)) {
+					// If the element is an array, recursively traverse it
+					traverseArray(element);
+				} else {
+					// If the element is not an array, increment the count
+					count++;
+				}
+			});
+		}
+
+		traverseArray(arr);
+		return count;
+	}
+	console.log(commentData);
+	// const commentCount = countElements(commentData);
 </script>
 
 <div class="bg-white p-2 mt-2 rounded-sm">
