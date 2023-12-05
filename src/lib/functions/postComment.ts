@@ -2,7 +2,7 @@
 export const postComment = async (posts_id: number, comments: any) => {
 	try {
 		const res = await fetch(`http://127.0.0.1:8080/api/posts/comment`, {
-			method: 'POST',
+			method: 'PUT',
 			body: JSON.stringify({
 				posts_id,
 				comments

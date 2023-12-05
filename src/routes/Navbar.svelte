@@ -2,7 +2,7 @@
 	import '../app.postcss';
 	import Ruang from './Ruang.svelte';
 	import Profil from './Profil.svelte';
-	import { goto } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { currentRuang } from '$lib/Stores/editorOutput';
 	export let data: any;
@@ -32,11 +32,14 @@
 			on:click={() => {
 				$currentRuang = 'Ruang';
 			}}
-			class={data.url === '/profil' ? 'text-[#0093ED] font-bold' : 'font-semibold'}
 			href="/profil"
-			>Profil
-			<div class="bg-blue-400 {data.url === '/profil' ? 'h-0.5' : ''}" /></a
+			on:keydown={() => {}}
+			aria-hidden
+			class={data.url === '/profil' ? 'text-[#0093ED] font-bold' : 'font-semibold'}
 		>
+			Profil
+			<div class="bg-blue-400 {data.url === '/profil' ? 'h-0.5' : ''}" />
+		</a>
 		<a
 			on:click={() => {
 				$currentRuang = 'Ruang';

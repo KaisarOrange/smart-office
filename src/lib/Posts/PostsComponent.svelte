@@ -2,10 +2,11 @@
 	import { Avatar } from '@skeletonlabs/skeleton';
 	import PostComponentComment from './PostComponentComment.svelte';
 	import LikeShareComment from './LikeShareComment.svelte';
-	import { onMount, setContext } from 'svelte';
+	import { afterUpdate, onMount, setContext } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { postLike } from '$lib/functions/postLike';
 	import { PUBLIC_USER_ID } from '$env/static/public';
+	import { countElements } from './functions/commentCounter';
 
 	export let id: number;
 	export let user_like: any;
@@ -13,6 +14,10 @@
 	let liked: boolean;
 	let commentClicked: boolean = false;
 	export let comments: any;
+
+	console.log(comments);
+
+	let commentCount: number = 0;
 
 	let likeCount: number = 0;
 
@@ -35,26 +40,13 @@
 
 	setContext('comments', commentData);
 
-	function countElements(arr: any) {
-		let count = 0;
+	afterUpdate(() => {
+		commentCount = countElements(comments);
+	});
 
-		function traverseArray(subArray: any) {
-			subArray.forEach((element: any) => {
-				if (Array.isArray(element)) {
-					// If the element is an array, recursively traverse it
-					traverseArray(element);
-				} else {
-					// If the element is not an array, increment the count
-					count++;
-				}
-			});
-		}
-
-		traverseArray(arr);
-		return count;
+	if (comments) {
+		commentCount = countElements(comments);
 	}
-	console.log(commentData);
-	// const commentCount = countElements(commentData);
 </script>
 
 <div class="bg-white p-2 mt-2 rounded-sm">
@@ -96,7 +88,9 @@
 				src="/comment.svg"
 				alt=""
 			/>
-			<p class="text-xs">200</p>
+			{#if comments}
+				<p class="text-xs">{commentCount}</p>
+			{/if}
 		</div>
 		<div class="flex items-center justify-between cursor-pointer">
 			<img class="w-7 h-7" src="/send.svg" alt="" />

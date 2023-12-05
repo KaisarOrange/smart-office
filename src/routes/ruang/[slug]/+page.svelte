@@ -3,7 +3,6 @@
 	import Anggota from '$lib/Anggota.svelte';
 	import Todo from '$lib/Todo/Todo.svelte';
 	import { currentRuang } from '$lib/Stores/editorOutput';
-	import { afterUpdate, beforeUpdate, onMount } from 'svelte';
 
 	export let data;
 

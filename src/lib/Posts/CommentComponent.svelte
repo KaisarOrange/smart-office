@@ -4,11 +4,13 @@
 	import LikeShareComment from './LikeShareComment.svelte';
 	import { getContext } from 'svelte';
 	import { postComment } from '$lib/functions/postComment';
+	import { countElements } from './functions/commentCounter';
 
 	let commentValue: any;
 	let liked: boolean;
 	let commentClick: boolean;
 	export let id: number;
+	let commentCount: number = 0;
 
 	let userInfo: any = getContext('userinfo');
 
@@ -38,6 +40,12 @@
 		];
 		postComment(id, $comments);
 	};
+
+	if (comment?.comments) {
+		commentCount = countElements(comment?.comments);
+	}
+
+	console.log(comment.like);
 </script>
 
 <div class=" w-full box-border">
@@ -48,7 +56,7 @@
 		<div class="flex flex-col items-start flex-1">
 			<p class="font-semibold">{comment.user_name}</p>
 			<p>{comment.text}</p>
-			<LikeShareComment bind:liked bind:commentClick />
+			<LikeShareComment bind:liked bind:commentClick {commentCount} like={comment.like} />
 
 			{#if commentClick}
 				{#if comment.comments}

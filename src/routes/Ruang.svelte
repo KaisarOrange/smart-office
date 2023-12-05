@@ -21,7 +21,6 @@
 				}
 			});
 			const respon = await res.json();
-			console.log(respon);
 			if (res.ok) {
 				goto(`/ruang/${respon.data.id}`);
 				$currentRuang = respon.data.name;

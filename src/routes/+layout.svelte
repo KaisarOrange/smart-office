@@ -23,7 +23,6 @@
 	const set = () => {
 		$modalStore[0]?.response(false);
 	};
-	console.log('data: ', data);
 </script>
 
 {#if data.url != '/tulis' && data.url != '/edit'}

@@ -4,6 +4,7 @@
 	import CommentComponent from './CommentComponent.svelte';
 	import { getContext } from 'svelte';
 	import { postComment } from '$lib/functions/postComment';
+	import { countElements } from './functions/commentCounter';
 	export let commentClicked: boolean;
 
 	export let id: number;
