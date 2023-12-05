@@ -3,7 +3,9 @@
 	import { currentRuang } from '$lib/Stores/editorOutput';
 	import { Avatar, getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
 	import { SlideToggle } from '@skeletonlabs/skeleton';
-	import { PUBLIC_USER_ID } from '$env/static/public';
+
+	import { env } from '$env/dynamic/private';
+
 	export let data: any;
 	let clicked: boolean;
 
@@ -14,7 +16,7 @@
 				method: 'POST',
 				body: JSON.stringify({
 					name,
-					user_id: PUBLIC_USER_ID
+					user_id: env.PUBLIC_USER_ID
 				}),
 				headers: {
 					'Content-Type': 'application/json'
