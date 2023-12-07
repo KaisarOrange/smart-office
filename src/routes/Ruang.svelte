@@ -4,7 +4,7 @@
 	import { Avatar, getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
 	import { SlideToggle } from '@skeletonlabs/skeleton';
 
-	import { env } from '$env/dynamic/private';
+	import { env } from '$env/dynamic/public';
 
 	export let data: any;
 	let clicked: boolean;

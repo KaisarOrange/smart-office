@@ -18,13 +18,15 @@
 </script>
 
 <div class="flex justify-between m-6">
-	<Profil data={data.user.data} bind:selected />
-	{#if selected === 0}
-		<Posts data={posts} {userInfo} />
-	{:else if selected === 1}
-		<Posts data={draft} {userInfo} />
-	{:else}
-		<Posts data={like} {userInfo} />
+	{#if data}
+		<Profil data={data.user.data} bind:selected />
+		{#if selected === 0}
+			<Posts data={posts} {userInfo} />
+		{:else if selected === 1}
+			<Posts data={draft} {userInfo} />
+		{:else}
+			<Posts data={like} {userInfo} />
+		{/if}
+		<Todo />
 	{/if}
-	<Todo />
 </div>

@@ -26,7 +26,7 @@
 </script>
 
 {#if data.url != '/tulis' && data.url != '/edit'}
-	<Navbar {data} />
+	<Navbar bind:data />
 {/if}
 <Modal
 	buttonPositive="bg-blue_office text-white font-semibold"
@@ -37,6 +37,7 @@
 	}}
 />
 <Toaste />
+
 <div class="mt-24 bg-white"><slot /></div>
 
 <style>
