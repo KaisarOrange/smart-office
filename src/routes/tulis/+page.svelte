@@ -331,7 +331,7 @@
 	</div>
 </nav>
 
-<div class="tipedit">
+<div class="tipedit mt-24">
 	<EditorContent editor={$editor} />
 </div>
 

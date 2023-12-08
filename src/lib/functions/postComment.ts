@@ -1,7 +1,9 @@
+import { env } from '$env/dynamic/public';
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const postComment = async (posts_id: number, comments: any) => {
 	try {
-		const res = await fetch(`http://127.0.0.1:8080/api/posts/comment`, {
+		const res = await fetch(`${env.PUBLIC_SERVER_URL}/api/posts/comment`, {
 			method: 'PUT',
 			body: JSON.stringify({
 				posts_id,

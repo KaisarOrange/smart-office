@@ -11,7 +11,7 @@
 	$currentRuang = data.ruang.data.name;
 </script>
 
-<div class="flex justify-between m-6">
+<div class="flex justify-between m-6 mt-24">
 	<Anggota data={data.ruang.data.user} />
 	<Posts data={data.ruang.data.posts} {userInfo} />
 	<Todo />

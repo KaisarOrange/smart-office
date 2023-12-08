@@ -1,4 +1,5 @@
 import { goto } from '$app/navigation';
+import { env } from '$env/dynamic/public';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const postDelete = async (id: string) => {
@@ -8,7 +9,7 @@ export const postDelete = async (id: string) => {
 		// if (privatee) {
 		// 	ruang_id = PUBLIC_USER_ID;
 		// }
-		const res = await fetch(`http://127.0.0.1:8080/api/posts/delete/${id}`, {
+		const res = await fetch(`${env.PUBLIC_SERVER_URL}/api/posts/delete/${id}`, {
 			method: 'DELETE',
 			headers: {
 				'Content-Type': 'application/json'

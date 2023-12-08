@@ -78,6 +78,6 @@
 	};
 </script>
 
-<div class="w-3/4 m-auto">
+<div class="mt-24 w-3/4 m-auto">
 	<Calendar {plugins} {options} />
 </div>

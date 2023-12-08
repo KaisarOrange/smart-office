@@ -1,4 +1,5 @@
 import { goto } from '$app/navigation';
+import { env } from '$env/dynamic/public';
 import { PUBLIC_USER_ID } from '$env/static/public';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -19,7 +20,7 @@ export const postPosts = async (
 				ruang_id = PUBLIC_USER_ID;
 				console.log(ruang_id);
 			}
-			const res = await fetch(`http://127.0.0.1:8080/api/posts`, {
+			const res = await fetch(`${env.PUBLIC_SERVER_URL}/api/posts`, {
 				method: 'POST',
 				body: JSON.stringify({
 					judul: title,

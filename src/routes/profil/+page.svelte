@@ -17,7 +17,7 @@
 	const userInfo = { username: data.user.data.user_name, photo: data.user.data.photo_url };
 </script>
 
-<div class="flex justify-between m-6">
+<div class="flex justify-between m-6 mt-24">
 	{#if data}
 		<Profil data={data.user.data} bind:selected />
 		{#if selected === 0}

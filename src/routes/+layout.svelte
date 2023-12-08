@@ -25,7 +25,7 @@
 	};
 </script>
 
-{#if data.url != '/tulis' && data.url != '/edit'}
+{#if data.url != '/tulis' && data.url != '/edit' && data.url != '/live'}
 	<Navbar bind:data />
 {/if}
 <Modal
@@ -38,7 +38,7 @@
 />
 <Toaste />
 
-<div class="mt-24 bg-white"><slot /></div>
+<div class="bg-white"><slot /></div>
 
 <style>
 	:root {

@@ -1,5 +1,13 @@
 <script>
 	import { onMount } from 'svelte';
+	import VideoDisplay from './VideoDisplay.svelte';
+	let videos;
+	let videosPeers = [];
+	let test = [0, 1, 2, 3];
+
+	const removeTest = () => {
+		videosPeers = videosPeers.splice(1);
+	};
 
 	function connect(stream) {
 		let pc = new RTCPeerConnection({
@@ -19,38 +27,32 @@
 				return;
 			}
 
-			let col = document.createElement('div');
-			let el = document.createElement(event.track.kind);
-			el.srcObject = event.streams[0];
-			el.setAttribute('controls', 'true');
-			el.setAttribute('autoplay', 'true');
-			el.setAttribute('playsinline', 'true');
-			el.setAttribute('muted', 'true');
+			// videosPeers = event.streams[0];
+			console.log(event.track.id);
+			videosPeers = [...videosPeers, { id: event.track.id, stream: event.streams[0] }];
 
-			col.appendChild(el);
-			document.getElementById('noone').style.display = 'none';
-			document.getElementById('nocon').style.display = 'none';
-			document.getElementById('videos').appendChild(col);
+			// document.getElementById('videos').appendChild(col);
 
 			event.track.onmute = function (event) {
-				el.play();
+				// el.play();
 			};
 
 			event.streams[0].onremovetrack = ({ track }) => {
-				if (el.parentNode) {
-					el.parentNode.remove();
-				}
-				if (document.getElementById('videos').childElementCount <= 3) {
-					document.getElementById('noone').style.display = 'grid';
-					document.getElementById('noonein').style.display = 'grid';
-				}
+				videosPeers = videosPeers.filter((e) => e.id != track.id);
+				// if (el.parentNode) {
+				// 	el.parentNode.remove();
+				// }
+				// if (document.getElementById('videos').childElementCount <= 3) {
+				// 	document.getElementById('noone').style.display = 'grid';
+				// 	document.getElementById('noonein').style.display = 'grid';
+				// }
 			};
 		};
 
 		stream.getTracks().forEach((track) => pc.addTrack(track, stream));
 
 		let ws = new WebSocket(
-			'ws://127.0.0.1:8081/room/ee2f3861-5997-4d52-b48d-b35ed5481a18/websocket'
+			'ws://192.168.100.35:8081/room/ee2f3861-5997-4d52-b48d-b35ed5481a18/websocket'
 		);
 		pc.onicecandidate = (e) => {
 			console.log(e);
@@ -78,8 +80,8 @@
 			while (pr.childElementCount > 3) {
 				pr.lastChild.remove();
 			}
-			document.getElementById('noone').style.display = 'none';
-			document.getElementById('nocon').style.display = 'flex';
+			// document.getElementById('noone').style.display = 'none';
+			// document.getElementById('nocon').style.display = 'flex';
 			setTimeout(function () {
 				connect(stream);
 			}, 1000);
@@ -87,7 +89,6 @@
 
 		ws.onmessage = function (evt) {
 			let msg = JSON.parse(evt.data);
-			console.log('geyyyy');
 			if (!msg) {
 				return console.log('failed to parse msg');
 			}
@@ -145,7 +146,7 @@
 				}
 			})
 			.then((stream) => {
-				document.getElementById('localVideo').srcObject = stream;
+				videos = stream;
 				connect(stream);
 			})
 			.catch((err) => console.log(err));
@@ -156,36 +157,12 @@
 	<p class="icon-users" id="viewer-count" />
 </div>
 
-<div id="noperm" class="columns">
-	<div class="column notif">
-		<article class="notification is-link">
-			Camera and microphone permissions are needed to join the room. <br />
-			Otherwise, you can join the <a href=" .StreamLink "><strong>stream</strong></a> as viewer.
-		</article>
-	</div>
-</div>
+<div class="" id="videos">
+	<div class="flex justify-center items-center m-auto">
+		<VideoDisplay video={videos} />
 
-<div id="peers">
-	<div class="columns is-multiline flex gap-4" id="videos">
-		<div class="column is-6 peer">
-			<video id="localVideo" class="video-area mirror" autoplay muted />
-		</div>
-		<div id="noone" class="column is-6 notif">
-			<article id="noonein" class="notification is-primary is-light">
-				<button class="delete" />
-				No other streamer is in the room. <br />
-				Share your room link to invite your friends.
-			</article>
-			<article class="notification is-primary is-light">
-				<button class="delete" />
-				Share your stream link with your viewers.
-			</article>
-		</div>
-		<div id="nocon" class="column is-6 notif">
-			<article class="notification is-danger">
-				Connection is closed!<br />
-				Please refresh the page.
-			</article>
-		</div>
+		{#each videosPeers as video (video.id)}
+			<VideoDisplay video={video.stream} />
+		{/each}
 	</div>
 </div>
