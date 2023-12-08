@@ -1,4 +1,6 @@
 import { env } from '$env/dynamic/public';
+export const ssr = false;
+
 export async function load({ fetch, params }) {
 	const getRuang = async () => {
 		const res = await fetch(`${env.PUBLIC_SERVER_URL}/api/ruang/${params.slug}`);

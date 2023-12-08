@@ -1,4 +1,5 @@
 import { env } from '$env/dynamic/public';
+export const ssr = false;
 
 export async function load({ fetch }) {
 	try {
