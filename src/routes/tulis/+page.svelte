@@ -19,7 +19,8 @@
 	let editor: Readable<Editor>;
 
 	export let data;
-
+	let ruanglist: any = [];
+	let userId = '';
 	let screenSize: any;
 	const CustomDocument = Document.extend({
 		content: 'heading block*'
@@ -42,34 +43,28 @@
 	};
 
 	const modalStore = getModalStore();
-	const modal: ModalSettings = {
-		type: 'component',
-		component: 'modalComponentOne',
-		// Data
-		title: 'Unggah',
-		body: 'Pilih ruang untuk menyimpan:',
-		meta: { ruang: data.user.data.ruang }
-		// TRUE if confirm pressed, FALSE if cancel pressed
-		// response: (r: boolean) => {
-		// 	postPosts($editor?.getJSON());
-		// }
-	};
-	const modalDraft: ModalSettings = {
+
+	let modalDraft: ModalSettings = {
 		type: 'confirm',
 		title: 'Draft',
 		body: 'Simpan sebagai draft?',
-		meta: { ruang: data.user.data.ruang },
+		// meta: { ruang: ruanglist },
 		response: (r: boolean) => {
 			const konten: any = $editorJson;
 
 			if (r === true) {
-				postPosts(data.user.data.id, true, konten, true);
+				postPosts(userId, true, konten, true);
 				return;
 			}
 		}
 	};
 
 	onMount(() => {
+		data.stream?.users.then((res: any) => {
+			ruanglist = res.data.ruang;
+			userId = res.data.id;
+		});
+
 		editor = createEditor({
 			extensions: [
 				CustomDocument,
@@ -312,22 +307,31 @@
 
 	<div class="flex items-center gap-5">
 		{$editor?.storage.characterCount.words()} kata
-		<div class="">
-			<button
-				disabled={$editor?.isEmpty}
-				on:click={() => {
-					modalStore.trigger(modalDraft);
-				}}
-				class="btn font-semibold rounded-sm px-2 py-1 mr-2">Simpan draft</button
-			>
-			<button
-				disabled={$editor?.isEmpty}
-				on:click={() => {
-					modalStore.trigger(modal);
-				}}
-				class="btn bg-[#0093ED] text-white font-semibold rounded-sm px-2 py-1">Unggah</button
-			>
-		</div>
+		<button
+			disabled={$editor?.isEmpty}
+			on:click={() => {
+				modalStore.trigger(modalDraft);
+			}}
+			class="btn font-semibold rounded-sm px-2 py-1 mr-2">Simpan draft</button
+		>
+		<button
+			disabled={$editor?.isEmpty}
+			on:click={() => {
+				modalStore.trigger({
+					type: 'component',
+					component: 'modalComponentOne',
+					// Data
+					title: 'Unggah',
+					body: 'Pilih ruang untuk menyimpan:',
+					meta: { ruang: ruanglist }
+					// TRUE if confirm pressed, FALSE if cancel pressed
+					// response: (r: boolean) => {
+					// 	postPosts($editor?.getJSON());
+					// }
+				});
+			}}
+			class="btn bg-[#0093ED] text-white font-semibold rounded-sm px-2 py-1">Unggah</button
+		>
 	</div>
 </nav>
 

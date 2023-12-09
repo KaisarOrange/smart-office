@@ -4,12 +4,15 @@
 	import PostsKonten from './PostsKonten.svelte';
 	import PostsMoreComponent from './PostsMoreComponent.svelte';
 	export let data: any;
-	export let userInfo: any;
-	let clicked = false;
+	export let user;
+	const userInfoo = { username: '', photo: '' };
 
-	console.log(data);
+	user.then((res) => {
+		userInfoo.username = res.data.user_name;
+		userInfoo.photo = res.data.photo_url;
+	});
 
-	setContext('userinfo', userInfo);
+	setContext('userinfo', userInfoo);
 	const datehe = (dateInput: Date) => {
 		const monthList = [
 			'Januari',

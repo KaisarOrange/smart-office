@@ -1,6 +1,6 @@
 <script lang="ts">
 	/** @type {import('./$types').PageData} */
-	import { Toast, initializeStores, Modal, getModalStore } from '@skeletonlabs/skeleton';
+	import { initializeStores, Modal, getModalStore } from '@skeletonlabs/skeleton';
 	import type { ModalSettings, ModalComponent, ModalStore } from '@skeletonlabs/skeleton';
 	import ModalComponentOne from '$lib/Modal/ModalSelect.svelte';
 	import Toaste from './Toaste.svelte';
@@ -8,6 +8,7 @@
 	import Navbar from './Navbar.svelte';
 	import 'remixicon/fonts/remixicon.css';
 	import ModalEditPost from '$lib/Modal/ModalEditPost.svelte';
+	import Spinner from '$lib/Spinner/Spinner.svelte';
 
 	const modalRegistry: Record<string, ModalComponent> = {
 		// Set a unique modal ID, then pass the component reference
@@ -25,20 +26,22 @@
 	};
 </script>
 
-{#if data.url != '/tulis' && data.url != '/edit' && data.url != '/live'}
-	<Navbar bind:data />
-{/if}
-<Modal
-	buttonPositive="bg-blue_office text-white font-semibold"
-	buttonNeutral={'bg-surface-400'}
-	components={modalRegistry}
-	on:backdrop={(event) => {
-		console.log(event);
-	}}
-/>
-<Toaste />
+{#await data.stream.users}
+	<Spinner />
+{:then users}
+	<Navbar data={users.data} />
+	<Modal
+		buttonPositive="bg-blue_office text-white font-semibold"
+		buttonNeutral={'bg-surface-400'}
+		components={modalRegistry}
+		on:backdrop={(event) => {
+			console.log(event);
+		}}
+	/>
+	<Toaste />
 
-<div class="bg-white"><slot /></div>
+	<div class="bg-white"><slot /></div>
+{/await}
 
 <style>
 	:root {

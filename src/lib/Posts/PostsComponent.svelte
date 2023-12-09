@@ -1,12 +1,10 @@
 <script lang="ts">
-	import { Avatar } from '@skeletonlabs/skeleton';
 	import PostComponentComment from './PostComponentComment.svelte';
-	import LikeShareComment from './LikeShareComment.svelte';
 	import { afterUpdate, onMount, setContext } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { postLike } from '$lib/functions/postLike';
-	import { PUBLIC_USER_ID } from '$env/static/public';
 	import { countElements } from './functions/commentCounter';
+	import { env } from '$env/dynamic/public';
 
 	export let id: number;
 	export let user_like: any;
@@ -30,7 +28,7 @@
 		}
 
 		try {
-			const res = await fetch(`http://127.0.0.1:8080/api/posts/like/${id}`);
+			const res = await fetch(`${env.PUBLIC_SERVER_URL}/api/posts/like/${id}`);
 			const data = await res.json();
 			likeCount = data?.like_count;
 		} catch (err) {

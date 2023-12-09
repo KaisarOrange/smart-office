@@ -1,31 +1,39 @@
 <script>
+	// @ts-nocheck
+
 	import Posts from '$lib/Posts/Posts.svelte';
-	import Anggota from '$lib/Anggota.svelte';
 	import Todo from '$lib/Todo/Todo.svelte';
 	import Profil from './Profil.svelte';
-	import { afterUpdate } from 'svelte';
 
 	export let data;
 	let selected = 0;
-	const posts = data.user.data.posts;
-	const draft = data.draft.data;
-	const like = data.like.data.user_like;
-	const choice = [posts, draft, like];
-	$: dataPost = choice[selected];
-	// selected === 0 ? draft : posts;
-	afterUpdate(() => {});
-	const userInfo = { username: data.user.data.user_name, photo: data.user.data.photo_url };
 </script>
 
 <div class="flex justify-between m-6 mt-24">
 	{#if data}
-		<Profil data={data.user.data} bind:selected />
+		{#await data?.stream?.users}
+			<div>hello</div>
+		{:then users}
+			<Profil data={users.data} bind:selected />
+		{/await}
 		{#if selected === 0}
-			<Posts data={posts} {userInfo} />
+			{#await data.stream.users}
+				<div>hello</div>
+			{:then users}
+				<Posts data={users.data.posts} user={data.stream?.users} />
+			{/await}
 		{:else if selected === 1}
-			<Posts data={draft} {userInfo} />
+			{#await data.stream_profile?.draft}
+				<div>hello</div>
+			{:then draft}
+				<Posts data={draft.data} user={data.stream?.users} />
+			{/await}
 		{:else}
-			<Posts data={like} {userInfo} />
+			{#await data.stream_profile?.like}
+				<div>hello</div>
+			{:then like}
+				<Posts data={like.data.user_like} user={data.stream?.users} />
+			{/await}
 		{/if}
 		<Todo />
 	{/if}

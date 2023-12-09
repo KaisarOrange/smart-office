@@ -3,6 +3,7 @@
 
 	export let data: any;
 	export let selected: number;
+	console.log(data);
 </script>
 
 <div class="bg-[#D9D9D9] bg min-h-[400px] flex flex-col rounded-sm w-60 h-fit">

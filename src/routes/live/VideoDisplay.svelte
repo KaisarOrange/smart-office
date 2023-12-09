@@ -13,6 +13,6 @@
 	}
 </script>
 
-<div class="column is-6 peer">
-	<video id="localVideo" use:srcObject={video} class="video-area mirror" autoplay muted />
+<div class="">
+	<video id="localVideo" use:srcObject={video} class="rounded-sm" autoplay muted />
 </div>

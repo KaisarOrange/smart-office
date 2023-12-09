@@ -1,11 +1,18 @@
 <script>
+	// @ts-nocheck
+
 	import '../app.postcss';
 	export let data;
 	import Posts from '$lib/Posts/Posts.svelte';
-	const userInfo = { username: data.user.data.user_name, photo: data.user.data.photo_url };
 </script>
 
-<div class="mt-24 flex justify-between m-6"><Posts data={data.posts.data} {userInfo} /></div>
+{#await data.streamed?.posts}
+	<div>hello</div>
+{:then posts}
+	<div class="mt-24 flex justify-between m-6">
+		<Posts data={posts.data} user={data.stream?.users} />
+	</div>
+{/await}
 
 <style>
 </style>

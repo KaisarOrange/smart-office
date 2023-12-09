@@ -158,7 +158,7 @@
 </div>
 
 <div class="" id="videos">
-	<div class="flex justify-center items-center m-auto">
+	<div class="flex justify-center gap-4 items-center m-auto w-2/3 h-screen">
 		<VideoDisplay video={videos} />
 
 		{#each videosPeers as video (video.id)}
