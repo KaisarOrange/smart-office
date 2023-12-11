@@ -10,7 +10,7 @@ export const postPosts = async (
 	privatee: boolean
 ) => {
 	// const konten: any = get(editorJson);
-	console.log(konten);
+
 	const hasTitle: boolean = konten.content[0].content ? true : false;
 
 	if (hasTitle) {
@@ -34,8 +34,8 @@ export const postPosts = async (
 					'Content-Type': 'application/json'
 				}
 			});
-			const result = await res.json();
-			console.log(result);
+			// const result = await res.json();
+
 			if (res.ok) {
 				goto('/');
 			}

@@ -1,5 +1,4 @@
 <script lang="ts">
-	import '../../app.postcss';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import type { Readable } from 'svelte/store';
@@ -14,7 +13,6 @@
 	import Document from '@tiptap/extension-document';
 	import { currentRuang, editorJson } from '$lib/Stores/editorOutput';
 	import { postPosts } from '$lib/functions/postPosts';
-
 	let active: boolean = false;
 	let editor: Readable<Editor>;
 
@@ -91,9 +89,12 @@
 						event.dataTransfer.files &&
 						event.dataTransfer.files[0]
 					) {
+						console.log();
 						const { schema } = view.state;
 						const coordinates = view.posAtCoords({ left: event.clientX, top: event.clientY });
-						const node = schema.nodes.image.create({ src: '/alif.png' }); // creates the image element
+						const node = schema.nodes.image.create({
+							src: 'https://source.unsplash.com/3tYZjGSBwbk'
+						}); // creates the image element
 						const transaction = view.state.tr.insert(coordinates!.pos, node); // places it in the correct position
 						view.dispatch(transaction);
 						return true;
@@ -150,7 +151,7 @@
 			$currentRuang = 'Ruang';
 		}}
 		class="font-extrabold text-lg"
-		href="/"><span class="text-[#0093ED]">SMART</span> OFFICE</a
+		href="/beranda"><span class="text-[#0093ED]">SMART</span> OFFICE</a
 	>
 
 	<div class="m-auto flex items-center gap-4">

@@ -25,7 +25,7 @@
 			});
 			const respon = await res.json();
 			if (res.ok) {
-				goto(`/ruang/${respon.data.id}`);
+				goto(`/beranda/ruang/${respon.data.id}`);
 				invalidate(() => true);
 				$currentRuang = respon.data.name;
 			}
@@ -86,7 +86,7 @@
 					on:keydown={() => {}}
 					aria-hidden
 					on:click={() => {
-						goto(`/ruang/${id}`);
+						goto(`/beranda/ruang/${id}`);
 						$currentRuang = name;
 					}}
 					class="flex cursor-pointer items-center gap-2 hover:bg-gray-100 bg-white px-1.5 rounded-md py-1"

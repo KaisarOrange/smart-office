@@ -79,7 +79,9 @@
 					) {
 						const { schema } = view.state;
 						const coordinates = view.posAtCoords({ left: event.clientX, top: event.clientY });
-						const node = schema.nodes.image.create({ src: '/alif.png' }); // creates the image element
+						const node = schema.nodes.image.create({
+							src: 'https://source.unsplash.com//376KN_ISplE'
+						}); // creates the image element
 						const transaction = view.state.tr.insert(coordinates!.pos, node); // places it in the correct position
 						view.dispatch(transaction);
 						return true;
@@ -92,7 +94,7 @@
 				$editorJson = editor.getJSON();
 				// send the content to an API here
 			},
-			content: generateHTML($currentPost.konten, [StarterKit, Youtube])
+			content: generateHTML($currentPost.konten, [StarterKit, Youtube, Image])
 		});
 		$editorJson = $editor.getJSON();
 	});

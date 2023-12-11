@@ -7,7 +7,7 @@
 	export let user;
 	const userInfoo = { username: '', photo: '' };
 
-	user.then((res) => {
+	user.then((res: any) => {
 		userInfoo.username = res.data.user_name;
 		userInfoo.photo = res.data.photo_url;
 	});
@@ -42,7 +42,7 @@
 	{#if data}
 		{#each data as { user, draft, created_at, ruang, konten, comment, id, user_like }}
 			<div class="bg-[#D9D9D9] rounded-sm p-2 min-w-full max-w-full">
-				<div class="bg-white px-4 py-2 rounded-sm">
+				<div class="bg-white px-4 pt-2 rounded-sm">
 					<div class="flex justify-between items-center">
 						<div class="flex items-center gap-2">
 							<div class="flex items-center gap-2 font-light my-3">
@@ -60,7 +60,9 @@
 						</div>
 						<PostsMoreComponent {konten} {id} />
 					</div>
-					<div class="tiptap"><PostsKonten {konten} /></div>
+					<div class="tiptap max-h-[30rem]">
+						<PostsKonten {konten} />
+					</div>
 				</div>
 				<PostsComponent comments={comment.comments} {id} {user_like} />
 			</div>

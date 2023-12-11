@@ -1,47 +1,9 @@
 <script lang="ts">
-	/** @type {import('./$types').PageData} */
-	import { initializeStores, Modal, getModalStore } from '@skeletonlabs/skeleton';
-	import type { ModalSettings, ModalComponent, ModalStore } from '@skeletonlabs/skeleton';
-	import ModalComponentOne from '$lib/Modal/ModalSelect.svelte';
-	import Toaste from './Toaste.svelte';
-	initializeStores();
-	import Navbar from './Navbar.svelte';
 	import 'remixicon/fonts/remixicon.css';
-	import ModalEditPost from '$lib/Modal/ModalEditPost.svelte';
-	import Spinner from '$lib/Spinner/Spinner.svelte';
-
-	const modalRegistry: Record<string, ModalComponent> = {
-		// Set a unique modal ID, then pass the component reference
-		modalComponentOne: { ref: ModalComponentOne },
-		modalEditPost: { ref: ModalEditPost }
-
-		// ...
-	};
-	let modalStore: any = getModalStore();
-
-	export let data: any;
-
-	const set = () => {
-		$modalStore[0]?.response(false);
-	};
+	import '../app.postcss';
 </script>
 
-{#await data.stream.users}
-	<Spinner />
-{:then users}
-	<Navbar data={users.data} />
-	<Modal
-		buttonPositive="bg-blue_office text-white font-semibold"
-		buttonNeutral={'bg-surface-400'}
-		components={modalRegistry}
-		on:backdrop={(event) => {
-			console.log(event);
-		}}
-	/>
-	<Toaste />
-
-	<div class="bg-white"><slot /></div>
-{/await}
+<slot />
 
 <style>
 	:root {

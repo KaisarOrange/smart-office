@@ -8,8 +8,12 @@
 	import Image from '@tiptap/extension-image';
 
 	export let konten: any;
+
+	export let clicked = false;
 </script>
 
-<div>
-	{@html generateHTML(konten, [Youtube, StarterKit])}
+<!-- <button on:click={() => (clicked = !clicked)}>test</button> -->
+
+<div class=" {clicked ? '' : 'overflow-hidden max-h-[28rem] text-ellipsis '}">
+	{@html generateHTML(konten, [Youtube, StarterKit, Image])}
 </div>

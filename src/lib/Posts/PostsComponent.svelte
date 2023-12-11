@@ -90,8 +90,11 @@
 				<p class="text-xs">{commentCount}</p>
 			{/if}
 		</div>
-		<div class="flex items-center justify-between cursor-pointer">
-			<img class="w-7 h-7" src="/send.svg" alt="" />
+		<div class="">
+			<!-- <img class="w-7 h-7" src="/send.svg" alt="" /> -->
+			<button class="btn bg-blue_office text-white font-semibold px-2 py-0.5 rounded sm"
+				>Lanjut baca</button
+			>
 		</div>
 	</div>
 

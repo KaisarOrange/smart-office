@@ -1,13 +1,11 @@
 <script lang="ts">
-	import '../app.postcss';
 	import Ruang from './Ruang.svelte';
 	import Profil from './Profil.svelte';
-	import { goto, invalidateAll } from '$app/navigation';
+	import { goto, invalidate, invalidateAll } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { currentRuang } from '$lib/Stores/editorOutput';
 	import { navigating, page } from '$app/stores';
 	export let data: any;
-	console.log(data);
 </script>
 
 <nav class="bg-[#D9D9D9] flex justify-between p-3 items-center fixed top-0 w-full z-10">
@@ -25,35 +23,39 @@
 			on:click={() => {
 				$currentRuang = 'Ruang';
 			}}
-			class=" {$page.url.pathname === '/' ? 'text-[#0093ED] font-bold' : 'font-semibold'}"
-			href="/"
+			class=" {$page.url.pathname === '/beranda' ? 'text-[#0093ED] font-bold' : 'font-semibold'}"
+			href="/beranda"
 			>Beranda
-			<div class="bg-blue-400 {$page.url.pathname === '/' ? 'h-0.5' : ''}" /></a
+			<div class="bg-blue-400 {$page.url.pathname === '/beranda' ? 'h-0.5' : ''}" /></a
 		>
 		<a
 			on:click={() => {
 				$currentRuang = 'Ruang';
 			}}
-			href="/profil"
+			href="/beranda/profil"
 			on:keydown={() => {}}
 			aria-hidden
-			class={$page.url.pathname === '/profil' ? 'text-[#0093ED] font-bold' : 'font-semibold'}
+			class={$page.url.pathname === '/beranda/profil'
+				? 'text-[#0093ED] font-bold'
+				: 'font-semibold'}
 		>
 			Profil
-			<div class="bg-blue-400 {$page.url.pathname === '/profil' ? 'h-0.5' : ''}" />
+			<div class="bg-blue-400 {$page.url.pathname === '/beranda/profil' ? 'h-0.5' : ''}" />
 		</a>
 		<a
 			on:click={() => {
 				$currentRuang = 'Ruang';
 			}}
-			class={$page.url.pathname === '/activity' ? 'text-[#0093ED] font-bold' : 'font-semibold'}
-			href="/activity"
+			class={$page.url.pathname === '/beranda/activity'
+				? 'text-[#0093ED] font-bold'
+				: 'font-semibold'}
+			href="/beranda/activity"
 			>Activity
-			<div class="bg-blue-400 {$page.url.pathname === '/activity' ? 'h-0.5' : ''}" /></a
+			<div class="bg-blue-400 {$page.url.pathname === '/beranda/activity' ? 'h-0.5' : ''}" /></a
 		>
 
 		<button
-			on:click={() => goto('/tulis')}
+			on:click={() => goto('/beranda/tulis')}
 			class="btn text-white font-semibold bg-[#0093ED] px-2 py-0.5 rounded-md">Tulis +</button
 		>
 	</div>

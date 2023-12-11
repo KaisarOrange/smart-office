@@ -16,7 +16,7 @@
 	<div
 		style="background-image: url(/message.svg);"
 		class="relative block w-6 h-6 bg-contain select-none cursor-pointer"
-		on:click={() => goto('/message')}
+		on:click={() => goto('/beranda/message')}
 	>
 		<span
 			class="absolute text-xs text-white font-bold bottom-3 left-3 bg-[#0093ED] rounded-full px-1"
