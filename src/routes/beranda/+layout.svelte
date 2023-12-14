@@ -9,6 +9,8 @@
 	import 'remixicon/fonts/remixicon.css';
 	import ModalEditPost from '$lib/Modal/ModalEditPost.svelte';
 	import Spinner from '$lib/Spinner/Spinner.svelte';
+	import { page } from '$app/stores';
+	import { userID } from '$lib/Stores/editorOutput';
 
 	const modalRegistry: Record<string, ModalComponent> = {
 		// Set a unique modal ID, then pass the component reference
@@ -17,19 +19,25 @@
 
 		// ...
 	};
-	let modalStore: any = getModalStore();
+	// let modalStore: any = getModalStore();
 
 	export let data: any;
 
-	const set = () => {
-		$modalStore[0]?.response(false);
-	};
+	// const set = () => {
+	// 	$modalStore[0]?.response(false);
+	// };
+
+	if (data) {
+		$userID = data.currentUserID;
+	}
 </script>
 
 {#await data.stream.users}
 	<Spinner />
 {:then users}
-	<Navbar data={users.data} />
+	{#if $page.url.pathname != '/beranda/live'}
+		<Navbar data={users.data} />
+	{/if}
 	<Modal
 		buttonPositive="bg-blue_office text-white font-semibold"
 		buttonNeutral={'bg-surface-400'}

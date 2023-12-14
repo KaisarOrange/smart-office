@@ -1,8 +1,7 @@
 import { env } from '$env/dynamic/public';
-import { PUBLIC_USER_ID } from '$env/static/public';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const postLike = async (liked: boolean, id: number) => {
+export const postLike = async (liked: boolean, id: number, user_id: string) => {
 	// const konten: any = get(editorJson);
 	try {
 		// if (privatee) {
@@ -11,7 +10,7 @@ export const postLike = async (liked: boolean, id: number) => {
 		await fetch(`${env.PUBLIC_SERVER_URL}/api/posts/like`, {
 			method: 'PUT',
 			body: JSON.stringify({
-				user_id: PUBLIC_USER_ID,
+				user_id: user_id,
 				posts_id: id
 			}),
 			headers: {

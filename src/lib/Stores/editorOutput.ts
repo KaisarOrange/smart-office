@@ -7,3 +7,5 @@ export const editorJson: Writable<JSONContent> = writable();
 export const currentRuang: Writable<string> = writable('Ruang');
 
 export const currentPost: Writable<any> = writable();
+
+export const userID: Writable<string> = writable('');

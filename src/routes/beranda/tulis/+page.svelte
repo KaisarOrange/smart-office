@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+	import { goto, invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import type { Readable } from 'svelte/store';
 	import { createEditor, Editor, EditorContent, SvelteRenderer } from 'svelte-tiptap';
@@ -11,7 +11,7 @@
 	import Placeholder from '@tiptap/extension-placeholder';
 	import Image from '@tiptap/extension-image';
 	import Document from '@tiptap/extension-document';
-	import { currentRuang, editorJson } from '$lib/Stores/editorOutput';
+	import { currentRuang, editorJson, userID } from '$lib/Stores/editorOutput';
 	import { postPosts } from '$lib/functions/postPosts';
 	let active: boolean = false;
 	let editor: Readable<Editor>;
@@ -51,7 +51,7 @@
 			const konten: any = $editorJson;
 
 			if (r === true) {
-				postPosts(userId, true, konten, true);
+				postPosts(userId, true, konten, true, $userID);
 				return;
 			}
 		}

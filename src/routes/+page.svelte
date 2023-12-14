@@ -18,8 +18,9 @@
 			<a on:click={() => {}} href="/activity">Activity </a>
 		</div>
 		<div>
-			<button class="btn bg-blue_office text-white rounded-md font-semibold px-5 py-1"
-				>Daftar</button
+			<button
+				on:click={() => goto('/daftar')}
+				class="btn bg-blue_office text-white rounded-md font-semibold px-5 py-1">Daftar</button
 			>
 			<button
 				on:click={() => goto('/login')}
@@ -34,7 +35,10 @@
 			<h1 class="text-3xl">Kolaborasi Tanpa Batas, Komunikasi Tanpa Hambatan</h1>
 			<p class="mt-2">Solusi bisnis untuk mengoptimalkan produktivitas dan kerjasama tim.</p>
 			<div class="flex gap-4">
-				<button class="btn bg-blue_office text-white rounded-md mt-5 font-semibold">Mulai</button>
+				<button
+					on:click={() => goto('/daftar')}
+					class="btn bg-blue_office text-white rounded-md mt-5 font-semibold">Mulai</button
+				>
 				<button
 					class="btn bg-whites variant-outline-primary rounded-md mt-5 text-blue_office font-semibold"
 					>Hubungi kami</button

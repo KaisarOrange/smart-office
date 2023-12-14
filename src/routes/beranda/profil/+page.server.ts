@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { env } from '$env/dynamic/public';
 
-export async function load({ fetch }) {
+export async function load({ fetch, locals }) {
 	try {
 		// 	const res = await fetch(`${env.PUBLIC_SERVER_URL}/api/posts/${env.PUBLIC_USER_ID}/draft`);
 		// 	const resLike = await fetch(`${env.PUBLIC_SERVER_URL}/api/posts/${env.PUBLIC_USER_ID}/like`);
@@ -14,7 +14,7 @@ export async function load({ fetch }) {
 		// 		like: dataLike
 		// 	};
 
-		const fetchDraft = fetch(`${env.PUBLIC_SERVER_URL}/api/posts/${env.PUBLIC_USER_ID}/draft`)
+		const fetchDraft = fetch(`${env.PUBLIC_SERVER_URL}/api/posts/${locals.user.user_id}/draft`)
 			.then((res) => {
 				return res.json();
 			})
@@ -23,7 +23,7 @@ export async function load({ fetch }) {
 				return err;
 			});
 
-		const fetchLike = fetch(`${env.PUBLIC_SERVER_URL}/api/posts/${env.PUBLIC_USER_ID}/like`)
+		const fetchLike = fetch(`${env.PUBLIC_SERVER_URL}/api/posts/${locals.user.user_id}/like`)
 			.then((res) => {
 				return res.json();
 			})

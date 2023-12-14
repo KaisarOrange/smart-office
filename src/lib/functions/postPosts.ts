@@ -1,13 +1,13 @@
 import { goto } from '$app/navigation';
 import { env } from '$env/dynamic/public';
-import { PUBLIC_USER_ID } from '$env/static/public';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const postPosts = async (
 	ruang_id: string,
 	draft: boolean,
 	konten: any,
-	privatee: boolean
+	privatee: boolean,
+	user_id: string
 ) => {
 	// const konten: any = get(editorJson);
 
@@ -17,7 +17,7 @@ export const postPosts = async (
 		const title = konten.content[0].content[0].text;
 		try {
 			if (privatee) {
-				ruang_id = PUBLIC_USER_ID;
+				ruang_id = user_id;
 				console.log(ruang_id);
 			}
 			const res = await fetch(`${env.PUBLIC_SERVER_URL}/api/posts`, {
@@ -25,7 +25,7 @@ export const postPosts = async (
 				body: JSON.stringify({
 					judul: title,
 					konten: konten,
-					user_id: PUBLIC_USER_ID,
+					user_id: user_id,
 					ruang_id,
 					private: privatee,
 					draft

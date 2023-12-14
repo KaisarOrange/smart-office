@@ -1,10 +1,11 @@
 <script lang="ts">
 	import PostComponentComment from './PostComponentComment.svelte';
-	import { afterUpdate, onMount, setContext } from 'svelte';
+	import { afterUpdate, getContext, onMount, setContext } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { postLike } from '$lib/functions/postLike';
 	import { countElements } from './functions/commentCounter';
 	import { env } from '$env/dynamic/public';
+	import { userID } from '$lib/Stores/editorOutput';
 
 	export let id: number;
 	export let user_like: any;
@@ -45,6 +46,8 @@
 	if (comments) {
 		commentCount = countElements(comments);
 	}
+
+	let clicked: any = getContext('clicked');
 </script>
 
 <div class="bg-white p-2 mt-2 rounded-sm">
@@ -53,7 +56,7 @@
 			<svg
 				class="cursor-pointer stroke-[#0093ED] {liked ? 'fill-[#0093ED]' : 'fill-none'}"
 				on:click={() => {
-					postLike(liked, id);
+					postLike(liked, id, $userID);
 					liked = !liked;
 					liked ? likeCount++ : likeCount--;
 				}}
@@ -92,7 +95,11 @@
 		</div>
 		<div class="">
 			<!-- <img class="w-7 h-7" src="/send.svg" alt="" /> -->
-			<button class="btn bg-blue_office text-white font-semibold px-2 py-0.5 rounded sm"
+			<button
+				on:click={() => {
+					$clicked = !$clicked;
+				}}
+				class="btn bg-blue_office text-white font-semibold px-2 py-0.5 rounded sm"
 				>Lanjut baca</button
 			>
 		</div>

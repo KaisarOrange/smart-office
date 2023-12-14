@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { SvelteComponent } from 'svelte';
-	import { editorJson } from '$lib/Stores/editorOutput';
+	import { editorJson, userID } from '$lib/Stores/editorOutput';
 	import { SlideToggle } from '@skeletonlabs/skeleton';
 	import { Avatar, ListBox, ListBoxItem, getModalStore } from '@skeletonlabs/skeleton';
 	import { postPosts } from '$lib/functions/postPosts';
@@ -19,7 +19,7 @@
 		// if ($modalStore[0].response) $modalStore[0].response(flavor);
 		const konten: any = $editorJson;
 		const ruangId: string = roomId;
-		postPosts(ruangId, false, konten, privatee);
+		postPosts(ruangId, false, konten, privatee, $userID);
 		modalStore.close();
 	}
 
@@ -72,7 +72,7 @@
 				class="btn {parent.buttonNeutral} bg-transparent border border-black"
 				on:click={parent.onClose}>{parent.buttonTextCancel}</button
 			>
-			<button disabled={roomId === ""} class="btn {parent.buttonPositive} text-white" on:click={onFormSubmit}>Unggah</button>
+			<button disabled={roomId === "" && privatee != true} class="btn {parent.buttonPositive} text-white" on:click={onFormSubmit}>Unggah</button>
 		</footer>
 	</div>
 {/if}

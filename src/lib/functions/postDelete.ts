@@ -18,7 +18,7 @@ export const postDelete = async (id: string) => {
 		const result = await res.json();
 		console.log(result);
 		if (res.ok) {
-			goto('/');
+			goto('/beranda', { invalidateAll: true });
 		}
 	} catch (error: any) {
 		console.error(error);

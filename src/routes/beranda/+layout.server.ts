@@ -1,13 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { env } from '$env/dynamic/public';
+import { redirect } from '@sveltejs/kit';
 
 // export const ssr = false;
-export async function load({ fetch }) {
+export async function load({ fetch, locals }) {
+	if (!locals.user) {
+		throw redirect(302, '/');
+	}
+	const userID = locals.user.user_id;
 	try {
 		// const res = await fetch(`${env.PUBLIC_SERVER_URL}/api/user/${env.PUBLIC_USER_ID}`);
 		// const data = await res.json();
 
-		const fet = fetch(`${env.PUBLIC_SERVER_URL}/api/user/${env.PUBLIC_USER_ID}`)
+		const fet = fetch(`${env.PUBLIC_SERVER_URL}/api/user/${locals.user.user_id}`)
 			.then((res) => {
 				return res.json();
 			})
@@ -27,7 +32,8 @@ export async function load({ fetch }) {
 							console.log(error);
 						});
 				})
-			}
+			},
+			currentUserID: userID
 			// user: data,
 		};
 	} catch (err) {

@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { fly } from 'svelte/transition';
 	let clicked: boolean;
 	let num: Number[] = [0, 1, 2, 3];
 </script>

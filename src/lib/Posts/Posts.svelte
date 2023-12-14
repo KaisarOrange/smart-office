@@ -3,6 +3,8 @@
 	import PostsComponent from './PostsComponent.svelte';
 	import PostsKonten from './PostsKonten.svelte';
 	import PostsMoreComponent from './PostsMoreComponent.svelte';
+	import { writable } from 'svelte/store';
+	import { page } from '$app/stores';
 	export let data: any;
 	export let user;
 	const userInfoo = { username: '', photo: '' };
@@ -36,6 +38,9 @@
 		const fullDate = `${day}  ${monthList[month]}`;
 		return fullDate.toString();
 	};
+
+	let clickedLanjut = writable(false);
+	setContext('clicked', clickedLanjut);
 </script>
 
 <div class="w-1/2 flex flex-col items-center gap-5 mx-auto">
@@ -58,9 +63,11 @@
 								{draft ? 'Draft' : ''}
 							</div>
 						</div>
-						<PostsMoreComponent {konten} {id} />
+						{#if $page.url.pathname != '/beranda'}
+							<PostsMoreComponent {konten} {id} />
+						{/if}
 					</div>
-					<div class="tiptap max-h-[30rem]">
+					<div class="tiptap min-h-[28rem]">
 						<PostsKonten {konten} />
 					</div>
 				</div>

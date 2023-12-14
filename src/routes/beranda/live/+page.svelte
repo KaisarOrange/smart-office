@@ -52,7 +52,7 @@
 		stream.getTracks().forEach((track) => pc.addTrack(track, stream));
 
 		let ws = new WebSocket(
-			'ws://192.168.100.35:8081/room/ee2f3861-5997-4d52-b48d-b35ed5481a18/websocket'
+			'ws://127.0.0.1:8081/room/ee2f3861-5997-4d52-b48d-b35ed5481a18/websocket'
 		);
 		pc.onicecandidate = (e) => {
 			console.log(e);

@@ -10,7 +10,7 @@
 		<div class="flex gap-2 p-2 bg-white mx-2 my-3 rounded-md">
 			<img class="w-8 h-8 object-cover rounded-full" src={photo_url} alt="profile_picture" />
 			<div class="text-sm">
-				<p class="font-semibold">{name}</p>
+				<p class="font-semibold">{user_name}</p>
 				<p class="text-xs">{email}</p>
 			</div>
 		</div>

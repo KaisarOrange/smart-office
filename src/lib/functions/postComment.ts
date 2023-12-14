@@ -13,8 +13,11 @@ export const postComment = async (posts_id: number, comments: any) => {
 				'Content-Type': 'application/json'
 			}
 		});
-		const result = await res.json();
-		console.log(result);
+
+		if (res.ok) {
+			return;
+		}
+		// const result = await res.json();
 	} catch (error) {
 		console.error(error);
 	}

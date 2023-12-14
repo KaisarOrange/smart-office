@@ -1,10 +1,9 @@
 <script lang="ts">
 	import Ruang from './Ruang.svelte';
 	import Profil from './Profil.svelte';
-	import { goto, invalidate, invalidateAll } from '$app/navigation';
-	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
 	import { currentRuang } from '$lib/Stores/editorOutput';
-	import { navigating, page } from '$app/stores';
+	import { page } from '$app/stores';
 	export let data: any;
 </script>
 

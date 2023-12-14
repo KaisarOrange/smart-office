@@ -1,9 +1,8 @@
 import { goto } from '$app/navigation';
 import { env } from '$env/dynamic/public';
-import { PUBLIC_USER_ID } from '$env/static/public';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const postUpdate = async (id: string, konten: any) => {
+export const postUpdate = async (id: string, konten: any, user_id: string) => {
 	// const konten: any = get(editorJson);
 	const hasTitle: boolean = konten.content[0].content ? true : false;
 
@@ -19,7 +18,7 @@ export const postUpdate = async (id: string, konten: any) => {
 				body: JSON.stringify({
 					judul: title,
 					konten: konten,
-					user_id: PUBLIC_USER_ID,
+					user_id: user_id,
 					id
 				}),
 				headers: {
@@ -29,7 +28,7 @@ export const postUpdate = async (id: string, konten: any) => {
 			const result = await res.json();
 			console.log(result);
 			if (res.ok) {
-				goto('/');
+				goto('/beranda');
 			}
 		} catch (error: any) {
 			console.error(error);

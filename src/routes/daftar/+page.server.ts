@@ -1,5 +1,6 @@
 import { env } from '$env/dynamic/public';
 import { redirect } from '@sveltejs/kit';
+import { jwtDecode } from 'jwt-decode';
 
 export async function load({ locals }) {
 	if (locals.user) {
@@ -8,10 +9,11 @@ export async function load({ locals }) {
 }
 
 export const actions = {
-	login: async ({ request, cookies }) => {
+	register: async ({ request, cookies }) => {
 		const data = await request.formData();
 		const username = data.get('username');
 		const password = data.get('password');
+		const confirm = data.get('confirmPassword');
 
 		if (username === '' && password === '') {
 			return { inputEmpty: true, inputPasswordEmpty: true };
@@ -21,11 +23,17 @@ export const actions = {
 			return { inputPasswordEmpty: true };
 		}
 
-		const res = await fetch(`${env.PUBLIC_SERVER_URL}/api/auth/login`, {
+		if (password != confirm) {
+			return { inputPasswordAndConfirm: true };
+		}
+
+		const res = await fetch(`${env.PUBLIC_SERVER_URL}/api/users`, {
 			method: 'POST',
 			body: JSON.stringify({
 				user_name: username,
-				password
+				password,
+				name: 'name',
+				email: 'email'
 			}),
 			headers: {
 				'Content-Type': 'application/json'
@@ -38,6 +46,7 @@ export const actions = {
 		}
 
 		const result = await res.json();
+		console.log(jwtDecode(result.token));
 		cookies.set('token', result.token, {
 			path: '/',
 			secure: false

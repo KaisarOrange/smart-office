@@ -12,7 +12,7 @@
 	import Placeholder from '@tiptap/extension-placeholder';
 	import Image from '@tiptap/extension-image';
 	import Document from '@tiptap/extension-document';
-	import { currentPost, currentRuang, editorJson } from '$lib/Stores/editorOutput';
+	import { currentPost, currentRuang, editorJson, userID } from '$lib/Stores/editorOutput';
 	import { postPosts } from '$lib/functions/postPosts';
 	import { generateHTML } from '@tiptap/html';
 	import { postUpdate } from '$lib/functions/postUpdate';
@@ -303,7 +303,7 @@
 					on:click={() => {
 						// updateStore();
 						$editorJson = $editor.getJSON();
-						postUpdate($currentPost.id, $editorJson);
+						postUpdate($currentPost.id, $editorJson, $userID);
 						modalStore.close();
 					}}
 					class="btn bg-[#0093ED] text-white font-semibold rounded-sm px-2 py-1">Simpan</button

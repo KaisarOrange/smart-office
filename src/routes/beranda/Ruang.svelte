@@ -1,11 +1,10 @@
 <script lang="ts">
 	import { goto, invalidate } from '$app/navigation';
-	import { currentRuang } from '$lib/Stores/editorOutput';
+	import { currentRuang, userID } from '$lib/Stores/editorOutput';
 	import { Avatar, getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
 	import { SlideToggle } from '@skeletonlabs/skeleton';
 
 	import { env } from '$env/dynamic/public';
-	import { PUBLIC_SERVER_URL } from '$env/static/public';
 
 	export let data: any;
 	let clicked: boolean;
@@ -13,11 +12,11 @@
 	const createRuang = async (name: any) => {
 		// const konten: any = get(editorJson);
 		if (name != '') {
-			const res = await fetch(`${PUBLIC_SERVER_URL}/api/ruang`, {
+			const res = await fetch(`${env.PUBLIC_SERVER_URL}/api/ruang`, {
 				method: 'POST',
 				body: JSON.stringify({
 					name,
-					user_id: env.PUBLIC_USER_ID
+					user_id: $userID
 				}),
 				headers: {
 					'Content-Type': 'application/json'
@@ -25,8 +24,8 @@
 			});
 			const respon = await res.json();
 			if (res.ok) {
-				goto(`/beranda/ruang/${respon.data.id}`);
-				invalidate(() => true);
+				goto(`/beranda/ruang/${respon.data.id}`, { invalidateAll: true });
+
 				$currentRuang = respon.data.name;
 			}
 		}

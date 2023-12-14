@@ -7,7 +7,6 @@
 	import { currentRuang } from '$lib/Stores/editorOutput';
 
 	export let data;
-	console.log(data);
 
 	// $currentRuang = data.ruang.data.name;
 
