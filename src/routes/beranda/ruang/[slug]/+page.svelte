@@ -5,6 +5,7 @@
 	import Anggota from '$lib/Anggota.svelte';
 	import Todo from '$lib/Todo/Todo.svelte';
 	import { currentRuang } from '$lib/Stores/editorOutput';
+	import Spinner from '$lib/Spinner/Spinner.svelte';
 
 	export let data;
 
@@ -15,7 +16,9 @@
 
 <div class="flex justify-between m-6 mt-24">
 	{#await data.ruang.ruangs}
-		<div>hello</div>
+		<div class="m-auto">
+			<Spinner />
+		</div>
 	{:then ruang}
 		<Anggota data={ruang.data.user} />
 		<Posts data={ruang.data.posts} user={data.stream?.users} />

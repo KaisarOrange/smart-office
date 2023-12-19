@@ -1,12 +1,6 @@
 <script lang="ts">
-	import { getContext } from 'svelte';
-	import { countElements } from './functions/commentCounter';
-
-	export let liked: boolean;
 	export let commentClick: boolean;
 	export let commentCount: number;
-	export let like: number;
-
 	// const commentCount = countElements(comments);
 </script>
 

@@ -13,23 +13,38 @@
 	import { userID } from '$lib/Stores/editorOutput';
 
 	const modalRegistry: Record<string, ModalComponent> = {
-		// Set a unique modal ID, then pass the component reference
 		modalComponentOne: { ref: ModalComponentOne },
 		modalEditPost: { ref: ModalEditPost }
-
-		// ...
 	};
-	// let modalStore: any = getModalStore();
 
 	export let data: any;
 
-	// const set = () => {
-	// 	$modalStore[0]?.response(false);
-	// };
+	let time: any;
 
 	if (data) {
 		$userID = data.currentUserID;
 	}
+
+	// onMount(() => {
+	// 	const evtSrc = new EventSource(`${env.PUBLIC_SERVER_URL}/api/sse/${data.currentUserID}`);
+
+	// 	evtSrc.onmessage = (event) => {
+	// 		time = event.data;
+	// 		console.log(event);
+	// 		console.log(event.data);
+	// 	};
+	// });
+
+	// async function handleGetTime() {
+	// 	console.log('oke');
+	// 	const res = await fetch(`${env.PUBLIC_SERVER_URL}/time`);
+	// 	if (res.status !== 200) {
+	// 		console.log('Could not connect to the server');
+	// 	} else {
+	// 		const respon = await res.json();
+	// 		console.log(respon);
+	// 	}
+	// }
 </script>
 
 {#await data.stream.users}

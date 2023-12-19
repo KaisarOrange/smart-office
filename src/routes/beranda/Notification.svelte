@@ -1,10 +1,27 @@
 <script lang="ts">
+	import { env } from '$env/dynamic/public';
+	import Like from '$lib/Notification/Like.svelte';
+	import { onMount } from 'svelte';
+	import { userID } from '$lib/Stores/editorOutput';
+	import { notifications } from '$lib/notification';
+	import Invite from '$lib/Notification/Invite.svelte';
+
 	let clicked: boolean;
 	let num: Number[] = [0, 1, 2, 3];
+
+	let notifs: any;
+
+	let notifCount = 0;
+
+	onMount(() => {
+		setInterval(async () => {
+			const fet = await fetch(`${env.PUBLIC_SERVER_URL}/api/user/notif/${$userID}`);
+			notifs = await fet.json();
+		}, 1000);
+	});
 </script>
 
 <svelte:window on:click={(e) => (clicked = false)} />
-
 <div
 	style="background-image: url(/bell.svg);"
 	class="relative block w-7 h-7 bg-contain select-none cursor-pointer"
@@ -19,7 +36,7 @@
 	aria-hidden
 >
 	<span class="absolute text-xs text-white font-bold bottom-3 left-3 bg-[#0093ED] rounded-full px-1"
-		>2</span
+		>{notifs?.data.length}</span
 	>
 </div>
 
@@ -36,18 +53,15 @@
 	>
 		<p class="font-semibold mx-2">Notifikasi</p>
 		<hr class="" />
-		<div class="overflow-scroll overflow-x-hidden">
-			{#each num as numb}
-				<div class="flex gap-2 rounded-md bg-white p-2 mx-2 mb-2">
-					<img class="w-8 h-8 object-cover rounded-full" src="/alif.png" alt="profile_picture" />
-					<div class="text-sm">
-						<p class="font-semibold">
-							Ruang . <span class="font-normal">4h</span>
-						</p>
-						<div class="">Lorem, ipsum dolor sit amet consectetur adipisicing elit</div>
-					</div>
-				</div>
-			{/each}
+		<div class="overflow-scroll overflow-x-hidden h-full">
+			{#if notifs}
+				{#each notifs.data as { message, type }}
+					{#if type === 'like'}
+						<Like {message} />
+						<Invite {message} />
+					{/if}
+				{/each}
+			{/if}
 		</div>
 	</div>
 </div>
