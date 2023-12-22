@@ -394,13 +394,8 @@
 </nav>
 
 <div class="tipedit mt-24">
-	<div id="template" style="display: none;">
-		<strong>Bolded content</strong>
-	</div>
 	<EditorContent editor={$editor} />
 </div>
-
-<!-- {JSON.stringify($editor?.getJSON())} -->
 
 <style>
 	:global(.tipedit .tiptap) {
