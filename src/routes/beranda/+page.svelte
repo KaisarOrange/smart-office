@@ -13,6 +13,3 @@
 		<Posts data={posts.data} user={data.stream?.users} />
 	</div>
 {/await}
-
-<style>
-</style>

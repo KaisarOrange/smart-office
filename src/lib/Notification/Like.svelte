@@ -5,7 +5,7 @@
 </script>
 
 <div
-	on:click={() => goto(`/beranda/ruang/${message.post_id}/${message.post_id}`)}
+	on:click={() => goto(`/beranda/ruang/${message.ruang_id}/${message.post_id}`)}
 	aria-hidden
 	on:keydown={() => {}}
 	class="flex gap-2 rounded-md bg-white p-2 mx-2 mb-2"

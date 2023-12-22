@@ -63,11 +63,11 @@
 								{draft ? 'Draft' : ''}
 							</div>
 						</div>
-						{#if $page.url.pathname != '/beranda'}
+						{#if $page.url.pathname === '/beranda/profil'}
 							<PostsMoreComponent {konten} {id} />
 						{/if}
 					</div>
-					<div class="tiptap min-h-[28rem]">
+					<div class="min-h-[28rem]">
 						<PostsKonten {konten} />
 					</div>
 				</div>
@@ -77,7 +77,7 @@
 	{/if}
 </div>
 
-<style lang="scss">
+<!-- <style lang="scss">
 	.tiptap {
 		:global(p::after) {
 			content: '';
@@ -133,4 +133,4 @@
 			margin: 2rem 0;
 		}
 	}
-</style>
+</style> -->

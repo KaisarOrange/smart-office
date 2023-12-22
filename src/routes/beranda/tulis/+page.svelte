@@ -1,18 +1,24 @@
 <script lang="ts">
 	import { goto, invalidate } from '$app/navigation';
+	import suggestion from './suggestion';
 	import { onMount } from 'svelte';
 	import type { Readable } from 'svelte/store';
 	import { createEditor, Editor, EditorContent, SvelteRenderer } from 'svelte-tiptap';
 	import Paragraph from '@tiptap/extension-paragraph';
 	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
+	import TextAlign from '@tiptap/extension-text-align';
 	import StarterKit from '@tiptap/starter-kit';
 	import Youtube from '@tiptap/extension-youtube';
 	import CharacterCount from '@tiptap/extension-character-count';
+	import Mention from '@tiptap/extension-mention';
 	import Placeholder from '@tiptap/extension-placeholder';
 	import Image from '@tiptap/extension-image';
 	import Document from '@tiptap/extension-document';
+	import TaskList from '@tiptap/extension-task-list';
+	import TaskItem from '@tiptap/extension-task-item';
 	import { currentRuang, editorJson, userID } from '$lib/Stores/editorOutput';
 	import { postPosts } from '$lib/functions/postPosts';
+
 	let active: boolean = false;
 	let editor: Readable<Editor>;
 
@@ -20,6 +26,7 @@
 	let ruanglist: any = [];
 	let userId = '';
 	let screenSize: any;
+
 	const CustomDocument = Document.extend({
 		content: 'heading block*'
 	});
@@ -67,9 +74,20 @@
 			extensions: [
 				CustomDocument,
 				CharacterCount,
+				TaskList,
+				TaskItem,
 				Youtube,
 				Image.configure({
 					allowBase64: true
+				}),
+				Mention.configure({
+					HTMLAttributes: {
+						class: 'mention'
+					},
+					suggestion
+				}),
+				TextAlign.configure({
+					types: ['heading', 'paragraph']
 				}),
 				StarterKit.configure({ document: false }),
 				Placeholder.configure({
@@ -179,7 +197,7 @@
 				}}
 				on:keydown={() => {}}
 				aria-hidden
-				class="{active ? '' : 'hidden'} absolute top-[68px] bg-[#D9D9D9] p-1 rounded-sm"
+				class="{active ? '' : 'hidden'} absolute top-[68px] bg-[#D9D9D9] p-1 rounded-sm mt-2"
 			>
 				<div class="bg-white p-3">
 					<div
@@ -234,6 +252,13 @@
 				<i class="ri-bold text-lg" />
 			</button>
 			<button
+				on:click={() => $editor?.chain().focus().toggleTaskList().run()}
+				disabled={!$editor?.can().chain().focus().toggleTaskList().run()}
+				class={$editor?.isActive('taskList') ? 'font-bold text-blue_office drop-shadow-md' : ''}
+			>
+				btn
+			</button>
+			<button
 				on:click={() => $editor?.chain().focus().toggleItalic().run()}
 				disabled={!$editor?.can().chain().focus().toggleItalic().run()}
 				class={$editor?.isActive('italic') ? 'font-bold text-blue_office drop-shadow-md' : ''}
@@ -257,13 +282,45 @@
 			</button> -->
 			<!-- <button on:click={() => $editor?.chain().focus().unsetAllMarks().run()}> clear marks </button>
 			<button on:click={() => $editor?.chain().focus().clearNodes().run()}> clear nodes </button> -->
-
+			<button
+				on:click={() => $editor?.chain().focus().setTextAlign('left').run()}
+				class={$editor?.isActive({ textAlign: 'left' })
+					? 'font-bold text-blue_office drop-shadow-md'
+					: ''}
+			>
+				<i class="ri-align-left text-lg" />
+			</button>
+			<button
+				on:click={() => $editor?.chain().focus().setTextAlign('right').run()}
+				class={$editor?.isActive({ textAlign: 'right' })
+					? 'font-bold text-blue_office drop-shadow-md'
+					: ''}
+			>
+				<i class="ri-align-right text-lg" />
+			</button>
+			<button
+				on:click={() => $editor?.chain().focus().setTextAlign('justify').run()}
+				class={$editor?.isActive({ textAlign: 'justify' })
+					? 'font-bold text-blue_office drop-shadow-md'
+					: ''}
+			>
+				<i class="ri-align-center text-lg" />
+			</button>
+			<button
+				on:click={() => $editor?.chain().focus().setTextAlign('center').run()}
+				class={$editor?.isActive({ textAlign: 'center' })
+					? 'font-bold text-blue_office drop-shadow-md'
+					: ''}
+			>
+				<i class="ri-align-justify text-lg" />
+			</button>
 			<button
 				on:click={() => $editor?.chain().focus().toggleBulletList().run()}
 				class={$editor?.isActive('bulletList') ? 'font-bold text-blue_office drop-shadow-md' : ''}
 			>
 				<i class="ri-list-unordered text-lg" />
 			</button>
+
 			<button
 				on:click={() => $editor?.chain().focus().toggleOrderedList().run()}
 				class={$editor?.isActive('orderedList') ? 'font-bold text-blue_office drop-shadow-md' : ''}
@@ -337,6 +394,9 @@
 </nav>
 
 <div class="tipedit mt-24">
+	<div id="template" style="display: none;">
+		<strong>Bolded content</strong>
+	</div>
 	<EditorContent editor={$editor} />
 </div>
 
@@ -416,5 +476,34 @@
 	}
 	:global(.tipedit .tiptap h3) {
 		@apply text-base;
+	}
+
+	:global(.tipedit .tiptap ul[data-type='taskList']) {
+		list-style: none;
+		padding: 0;
+	}
+
+	:global(.tipedit .tiptap ul[data-type='taskList']) {
+		list-style: none;
+		padding: 0;
+	}
+
+	:global(.tipedit .tiptap ul[data-type='taskList'] > li) {
+		display: flex;
+		align-items: center;
+	}
+
+	:global(.tipedit .tiptap ul[data-type='taskList'] > li > label) {
+		flex: 0 0 auto;
+		margin-right: 0.5rem;
+		user-select: none;
+	}
+
+	:global(.tipedit .tiptap ul[data-type='taskList'] > li > label > div) {
+		flex: 1 1 auto;
+	}
+
+	:global(.tipedit .tiptap ul[data-type='taskList'] > input[type='checkbox']) {
+		cursor: pointer;
 	}
 </style>
