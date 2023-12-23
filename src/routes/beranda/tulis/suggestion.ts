@@ -17,14 +17,12 @@ export default {
 
 		return {
 			onStart: (props: any) => {
-				console.log(props);
 				const PopUpComp: SvelteComponent = new PopUp({ target, props });
 
 				component = new SvelteRenderer(PopUpComp, { element: target });
 				if (!props.clientRect) {
 					return;
 				}
-				console.log(component);
 
 				popup = tippy('body', {
 					getReferenceClientRect: props.clientRect,

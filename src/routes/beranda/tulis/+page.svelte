@@ -123,7 +123,19 @@
 			},
 			onUpdate: ({ editor }) => {
 				$editorJson = editor.getJSON();
-				// send the content to an API here
+				let mentionedUser: any[] = [];
+				const filterMentionTypeDoc = $editorJson.content?.filter((e) => {
+					return e.content?.some((e) => e.type === 'mention');
+				});
+				filterMentionTypeDoc?.forEach((e) =>
+					e.content?.forEach((e) => {
+						if (e.type === 'mention') {
+							mentionedUser = [...mentionedUser, e.attrs];
+						}
+					})
+				);
+
+				console.log(mentionedUser);
 			}
 		});
 		$editorJson = $editor.getJSON();
@@ -486,6 +498,11 @@
 	:global(.tipedit .tiptap ul[data-type='taskList'] > li) {
 		display: flex;
 		align-items: center;
+		@apply border-b-2 border-dotted pb-1 pt-1;
+	}
+
+	:global(.tipedit .tiptap ul[data-type='taskList'] > li > div) {
+		word-break: break-all;
 	}
 
 	:global(.tipedit .tiptap ul[data-type='taskList'] > li > label) {
@@ -500,5 +517,15 @@
 
 	:global(.tipedit .tiptap ul[data-type='taskList'] > input[type='checkbox']) {
 		cursor: pointer;
+	}
+
+	:global(.tipedit .tiptap .mention) {
+		cursor: pointer;
+		/* @apply bg-blue_office; */
+		@apply border-blue_office text-blue_office;
+		padding: 1px 4px;
+		font-weight: 400;
+		font-weight: 500;
+		border-radius: 5px;
 	}
 </style>
