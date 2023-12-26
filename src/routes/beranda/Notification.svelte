@@ -5,6 +5,7 @@
 	import { userID } from '$lib/Stores/editorOutput';
 	import { notifications } from '$lib/notification';
 	import Invite from '$lib/Notification/Invite.svelte';
+	import Mention from '$lib/Notification/Mention.svelte';
 
 	let clicked: boolean;
 	let num: Number[] = [0, 1, 2, 3];
@@ -36,7 +37,7 @@
 	aria-hidden
 >
 	<span class="absolute text-xs text-white font-bold bottom-3 left-3 bg-[#0093ED] rounded-full px-1"
-		>{notifs?.data.length}</span
+		>{notifs?.data.length === undefined ? '0' : notifs?.data.length}</span
 	>
 </div>
 
@@ -58,7 +59,11 @@
 				{#each notifs.data as { message, type }}
 					{#if type === 'like'}
 						<Like {message} />
-						<Invite {message} />
+						<!-- <Invite {message} /> -->
+					{/if}
+					{#if type === 'mention'}
+						<Mention {message} />
+						<!-- <Invite {message} /> -->
 					{/if}
 				{/each}
 			{/if}

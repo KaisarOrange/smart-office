@@ -34,6 +34,8 @@
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte": "^2.30.0",
+		"flowbite": "^2.2.1",
+		"flowbite-svelte": "^0.44.21",
 		"postcss": "8.4.31",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.10.1",
@@ -53,6 +55,8 @@
 		"@floating-ui/dom": "1.5.3",
 		"@tiptap/core": "^2.1.12",
 		"@tiptap/extension-character-count": "^2.1.12",
+		"@tiptap/extension-collaboration": "^2.1.13",
+		"@tiptap/extension-collaboration-cursor": "^2.1.13",
 		"@tiptap/extension-document": "^2.1.12",
 		"@tiptap/extension-dropcursor": "^2.1.12",
 		"@tiptap/extension-image": "^2.1.12",
@@ -75,6 +79,9 @@
 		"sass": "^1.69.3",
 		"svelte-tiptap": "^1.1.2",
 		"tippy.js": "^6.3.7",
-		"uuid": "^9.0.1"
+		"uuid": "^9.0.1",
+		"y-webrtc": "^10.2.6",
+		"y-websocket": "^1.5.1",
+		"yjs": "^13.6.10"
 	}
 }

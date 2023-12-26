@@ -33,7 +33,8 @@ export async function load({ fetch, locals }) {
 						});
 				})
 			},
-			currentUserID: userID
+			currentUserID: userID,
+			currentUserName: locals.user.user_name
 			// user: data,
 		};
 	} catch (err) {

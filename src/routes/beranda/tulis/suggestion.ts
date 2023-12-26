@@ -6,7 +6,7 @@ import PopUp from './PopUp.svelte';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export default {
 	items: ({ query }: any) => {
-		return ['AlifAyodya', 'BobbyNaufal', 'Dwiantoro', 'JoanS.T', 'Annie', 'Angel']
+		return ['AlifAyodya', 'BobbyNaufal', 'Dwiantoro', 'JoanS.T', 'Joan22', 'Fein', 'Bobby22']
 			.filter((item) => item.toLowerCase().startsWith(query.toLowerCase()))
 			.slice(0, 5);
 	},

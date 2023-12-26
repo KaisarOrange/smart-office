@@ -13,6 +13,7 @@
 	import type { Readable } from 'svelte/store';
 	import Document from '@tiptap/extension-document';
 	import TextAlign from '@tiptap/extension-text-align';
+	import Mention from '@tiptap/extension-mention';
 
 	export let konten: any;
 
@@ -31,6 +32,11 @@
 				TaskList,
 				TaskItem,
 				Youtube,
+				Mention.configure({
+					HTMLAttributes: {
+						class: 'mention'
+					}
+				}),
 				Image.configure({
 					allowBase64: true
 				}),
@@ -174,5 +180,15 @@
 	}
 	:global(.tipPost ul[data-type='taskList'] > li > label > input[type='checkbox']:checked) {
 		@apply bg-blue_office;
+	}
+
+	:global(.tipPost .mention) {
+		/* cursor: pointer; */
+		/* @apply bg-blue_office; */
+		@apply border-blue_office text-blue_office;
+		padding: 1px 4px;
+		font-weight: 400;
+		font-weight: 500;
+		border-radius: 5px;
 	}
 </style>

@@ -18,6 +18,12 @@
 	import TaskItem from '@tiptap/extension-task-item';
 	import { currentRuang, editorJson, userID } from '$lib/Stores/editorOutput';
 	import { postPosts } from '$lib/functions/postPosts';
+	import Collaboration from '@tiptap/extension-collaboration';
+	import * as Y from 'yjs';
+	import { WebsocketProvider } from 'y-websocket';
+
+	import CollaborationCursor from '@tiptap/extension-collaboration-cursor';
+	import { env } from '$env/dynamic/public';
 
 	let active: boolean = false;
 	let editor: Readable<Editor>;
@@ -27,9 +33,23 @@
 	let userId = '';
 	let screenSize: any;
 
+	const ydoc = new Y.Doc();
+	// const provider = new WebrtcProvider('example-doc', ydoc);
+	const providerWS = new WebsocketProvider('ws://' + '192.168.100.35:8081' + '/ws', 'room', ydoc);
+
 	const CustomDocument = Document.extend({
 		content: 'heading block*'
 	});
+
+	function getRandomInt(max: number) {
+		return Math.floor(Math.random() * max);
+	}
+
+	const name = () => {
+		const names = ['Alif', 'Joan', 'Bobby', 'Dwi'];
+		console.log(getRandomInt(4));
+		return names[getRandomInt(4)];
+	};
 
 	const updateStore = () => {
 		$editorJson = $editor.getJSON();
@@ -73,10 +93,20 @@
 		editor = createEditor({
 			extensions: [
 				CustomDocument,
-				CharacterCount,
 				TaskList,
 				TaskItem,
+				CharacterCount,
 				Youtube,
+				Collaboration.configure({
+					document: ydoc
+				}),
+				CollaborationCursor.configure({
+					provider: providerWS,
+					user: {
+						name: data.currentUserName,
+						color: '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0')
+					}
+				}),
 				Image.configure({
 					allowBase64: true
 				}),
@@ -86,6 +116,7 @@
 					},
 					suggestion
 				}),
+				,
 				TextAlign.configure({
 					types: ['heading', 'paragraph']
 				}),
@@ -123,19 +154,6 @@
 			},
 			onUpdate: ({ editor }) => {
 				$editorJson = editor.getJSON();
-				let mentionedUser: any[] = [];
-				const filterMentionTypeDoc = $editorJson.content?.filter((e) => {
-					return e.content?.some((e) => e.type === 'mention');
-				});
-				filterMentionTypeDoc?.forEach((e) =>
-					e.content?.forEach((e) => {
-						if (e.type === 'mention') {
-							mentionedUser = [...mentionedUser, e.attrs];
-						}
-					})
-				);
-
-				console.log(mentionedUser);
 			}
 		});
 		$editorJson = $editor.getJSON();
@@ -518,6 +536,10 @@
 	:global(.tipedit .tiptap ul[data-type='taskList'] > input[type='checkbox']) {
 		cursor: pointer;
 	}
+	:global(.tipedit .tiptap ul[data-type='taskList'] > li > label > input[type='checkbox']:checked) {
+		cursor: pointer;
+		@apply bg-blue_office;
+	}
 
 	:global(.tipedit .tiptap .mention) {
 		cursor: pointer;
@@ -528,4 +550,29 @@
 		font-weight: 500;
 		border-radius: 5px;
 	}
+	:global(.tipedit .tiptap .collaboration-cursor__caret) {
+		border-left: 1px solid #0d0d0d;
+		border-right: 1px solid #0d0d0d;
+		margin-left: -1px;
+		margin-right: -1px;
+		pointer-events: none;
+		position: relative;
+		word-break: normal;
+	}
+	:global(.tipedit .tiptap .collaboration-cursor__label) {
+		border-radius: 3px 3px 3px 0;
+		color: #ffffff;
+		font-size: 12px;
+		font-style: normal;
+		font-weight: 600;
+		left: -1px;
+		line-height: normal;
+		padding: 0.1rem 0.3rem;
+		position: absolute;
+		top: -1.4em;
+		user-select: none;
+		white-space: nowrap;
+	}
+
+	/* Render the username above the caret */
 </style>

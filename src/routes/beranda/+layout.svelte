@@ -10,7 +10,7 @@
 	import ModalEditPost from '$lib/Modal/ModalEditPost.svelte';
 	import Spinner from '$lib/Spinner/Spinner.svelte';
 	import { page } from '$app/stores';
-	import { userID } from '$lib/Stores/editorOutput';
+	import { userID, userName } from '$lib/Stores/editorOutput';
 
 	const modalRegistry: Record<string, ModalComponent> = {
 		modalComponentOne: { ref: ModalComponentOne },
@@ -23,6 +23,7 @@
 
 	if (data) {
 		$userID = data.currentUserID;
+		$userName = data.currentUserName;
 	}
 
 	// onMount(() => {
