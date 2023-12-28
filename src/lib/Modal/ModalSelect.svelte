@@ -50,7 +50,7 @@
 
 		const konten: any = $editorJson;
 		const ruangId: string = roomId;
-		postPosts(ruangId, false, konten, privatee, $userID, $userName, date);
+		postPosts(ruangId, false, konten, privatee, $userID, $userName, date, reminder);
 
 		modalStore.close();
 	}

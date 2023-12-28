@@ -4,13 +4,15 @@ import { env } from '$env/dynamic/public';
 export const postSetReminder = async (
 	postId: number,
 	postTitle: string,
-	ruangId: string,
+	ruang_id: string,
 	totalTask: number,
 	completedTask: number,
 	dueTime: string,
 	mentionedUser: string[]
 ) => {
+	console.log(ruang_id);
 	console.log(mentionedUser);
+	console.log(postId);
 	try {
 		const res = await fetch(`${env.PUBLIC_SERVER_URL}/api/user/reminder`, {
 			method: 'PUT',
@@ -20,7 +22,7 @@ export const postSetReminder = async (
 				total_task: totalTask,
 				due_time: dueTime,
 				mentioned_users: mentionedUser,
-				ruang_id: ruangId,
+				ruang_id,
 				post_id: postId
 			}),
 			headers: {

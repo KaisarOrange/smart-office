@@ -35,7 +35,7 @@
 
 	const ydoc = new Y.Doc();
 	// const provider = new WebrtcProvider('example-doc', ydoc);
-	const providerWS = new WebsocketProvider('ws://' + '192.168.100.35:8081' + '/ws', 'room', ydoc);
+	const providerWS = new WebsocketProvider('ws://' + '127.0.0.1:8081' + '/ws', 'room', ydoc);
 
 	const CustomDocument = Document.extend({
 		content: 'heading block*'

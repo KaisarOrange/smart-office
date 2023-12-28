@@ -11,8 +11,8 @@ export const postPosts = async (
 	privatee: boolean,
 	user_id: string,
 	userName: string,
-	date: Date
-	// reminder: boolean
+	date: Date,
+	reminder: boolean
 ) => {
 	// const konten: any = get(editorJson);
 
@@ -80,6 +80,8 @@ export const postPosts = async (
 			//push current user into mentionAssigned user
 
 			assignedUser = [...assignedUser, userName];
+			const hasLoggedUser = assignedUser.includes(userName);
+			console.log(hasLoggedUser);
 
 			if (assignedUser.length > 0) {
 				const userInfo: any = result.data;
@@ -100,16 +102,27 @@ export const postPosts = async (
 
 				console.log(count);
 				console.log(countTaskCompleted);
-
-				postSetReminder(
-					userInfo.posts_id,
-					title,
-					ruang_id,
-					count,
-					countTaskCompleted,
-					date.toISOString(),
-					assignedUser
-				);
+				if (reminder === false && count > 0) {
+					postSetReminder(
+						userInfo.posts_id,
+						title,
+						ruang_id,
+						count,
+						countTaskCompleted,
+						'0001-01-01T00:00:00Z',
+						assignedUser
+					);
+				} else if (reminder === true) {
+					postSetReminder(
+						userInfo.posts_id,
+						title,
+						ruang_id,
+						count,
+						countTaskCompleted,
+						date.toISOString(),
+						assignedUser
+					);
+				}
 			}
 
 			//----------------//
