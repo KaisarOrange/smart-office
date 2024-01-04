@@ -1,4 +1,6 @@
 <script>
+	// @ts-nocheck
+
 	export let video;
 
 	function srcObject(node, video) {

@@ -1,6 +1,9 @@
 <script>
 	import { onMount } from 'svelte';
+	import { env } from '$env/dynamic/public';
 	import VideoDisplay from './VideoDisplay.svelte';
+	import { goto } from '$app/navigation';
+	import { postComment } from '$lib/functions/postComment';
 	let videos;
 	let videosPeers = [];
 	let test = [0, 1, 2, 3];
@@ -52,7 +55,7 @@
 		stream.getTracks().forEach((track) => pc.addTrack(track, stream));
 
 		let ws = new WebSocket(
-			'ws://127.0.0.1:8081/room/ee2f3861-5997-4d52-b48d-b35ed5481a18/websocket'
+			`ws://${env.PUBLIC_WS_URL}/room/ee2f3861-5997-4d52-b48d-b35ed5481a18/websocket`
 		);
 		pc.onicecandidate = (e) => {
 			console.log(e);
@@ -76,7 +79,7 @@
 			console.log('websocket has closed');
 			pc.close();
 			pc = null;
-			pr = document.getElementById('videos');
+			let pr = document.getElementById('videos');
 			while (pr.childElementCount > 3) {
 				pr.lastChild.remove();
 			}
