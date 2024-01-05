@@ -1,4 +1,4 @@
-import { goto } from '$app/navigation';
+import { goto, invalidateAll } from '$app/navigation';
 import { env } from '$env/dynamic/public';
 import { postSendMentionNotif } from './postSendMentionNotif';
 import { postSetReminder } from './postSetReminder';
@@ -128,6 +128,7 @@ export const postPosts = async (
 			//----------------//
 
 			if (res.ok) {
+				invalidateAll();
 				goto('/');
 			}
 		} catch (error: any) {

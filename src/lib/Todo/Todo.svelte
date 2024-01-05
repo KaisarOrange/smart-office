@@ -1,8 +1,9 @@
-<script>
+<script lang="ts">
 	import TodoComponent from '$lib/Todo/TodoComponent.svelte';
 
 	let nums = [0, 1, 2, 3, 4, 4, 4];
-
+	export let data: any;
+	console.log(data);
 	const hari = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
 	const bulan = [
 		'Januari',
@@ -21,7 +22,7 @@
 
 	const day = date.getDay() - 1;
 	const tanggal = date.getDate();
-	const bulanDate = date.getMonth() - 1;
+	const bulanDate = date.getMonth();
 	const tahun = date.getFullYear();
 </script>
 
@@ -37,8 +38,8 @@
 
 	<hr class="border-slate-700" />
 	<div class="h-[450px] overflow-scroll p-2 overflow-x-hidden">
-		{#each nums as num}
-			<TodoComponent />
+		{#each data as reminder}
+			<TodoComponent {reminder} />
 		{/each}
 	</div>
 </div>

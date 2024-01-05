@@ -1,7 +1,20 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { getToastStore, ProgressRadial } from '@skeletonlabs/skeleton';
-
-	let value: number = 50; // %
+	const hari = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+	const bulan = [
+		'Januari',
+		'Febuari',
+		'Maret',
+		'April',
+		'Mei',
+		'Juni',
+		'Juli',
+		'Agustus',
+		'September',
+		'November',
+		'Desember'
+	];
 	const toastStore = getToastStore();
 	const colors = ['green', 'orange', 'red'];
 	let nums = [0, 1, 2, 3];
@@ -9,14 +22,40 @@
 	const bg = (color: any) => {
 		return 'btn' + color;
 	};
+	export let reminder: any;
+
+	let date: any = new Date(reminder?.due_time);
+	let currentDate: any = new Date();
+	let leftTime = date - currentDate;
+	let timeLeft = new Date(leftTime);
+	let day = date.getDate();
+	let tanggal = date.getDay() - 1;
+	let month = date.getMonth();
+	let year = date.getFullYear();
+	const hour = date.getHours();
+	const minute = date.getMinutes();
+	const minutes = minute < 10 ? '0' + minute : minute;
+
+	const percentage =
+		reminder.completed_task === 0 ? 0 : (reminder.completed_task / reminder.total_task) * 100;
+	let value: number = percentage; // %
 </script>
 
 <!-- <AppShell>...</AppShell> -->
 <div class=" bg-white p-2 my-3 rounded-lg">
 	<div class="flex justify-around mb-1">
 		<div>
-			<p class="font-bold text-sm">Membuat rancangan kerja</p>
-			<p class="font-thin">Sabtu, 14 Agustus</p>
+			<p
+				on:click={() => {
+					goto(`/beranda/ruang/${reminder.ruang_id}/${reminder.post_id}`);
+				}}
+				on:keydown={() => {}}
+				aria-hidden
+				class="font-bold text-sm hover:text-blue_office cursor-pointer select-none active:text-blue-600"
+			>
+				{reminder.title}
+			</p>
+			<p class="font-thin">{hari[tanggal]}, {day} {bulan[month]} {year}</p>
 		</div>
 
 		<div class="m-1">
@@ -26,14 +65,16 @@
 				width={'w-12'}
 				meter="stroke-primary-500"
 				track="stroke-primary-500/30"
-				{value}>{value}%</ProgressRadial
+				{value}>{percentage}%</ProgressRadial
 			>
 		</div>
 	</div>
 	<hr class="border-slate-700" />
 
 	<div class="flex justify-between font-thin m-1">
-		<p>Hari ini, 14:00</p>
+		<p>
+			{timeLeft.getMonth() > 0 ? timeLeft.getMonth() + ' bulan' : timeLeft.getDate() + ' hari'} , {hour}:{minutes}
+		</p>
 
 		<div class="flex">
 			{#each nums as num}

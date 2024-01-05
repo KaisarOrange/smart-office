@@ -35,6 +35,10 @@
 				<Posts data={like.data.user_like} user={data.stream?.users} />
 			{/await}
 		{/if}
-		<Todo />
+		{#await data.stream.users}
+			<div>hello</div>
+		{:then users}
+			<Todo data={users.data?.reminders} />
+		{/await}
 	{/if}
 </div>

@@ -16,6 +16,10 @@
 	import { postPosts } from '$lib/functions/postPosts';
 	import { generateHTML } from '@tiptap/html';
 	import { postUpdate } from '$lib/functions/postUpdate';
+	import TaskList from '@tiptap/extension-task-list';
+	import TaskItem from '@tiptap/extension-task-item';
+	import Collaboration from '@tiptap/extension-collaboration';
+	import TextAlign from '@tiptap/extension-text-align';
 
 	let active: boolean = false;
 	let editor: Readable<Editor>;
@@ -54,10 +58,31 @@
 		editor = createEditor({
 			extensions: [
 				CustomDocument,
+				TaskList,
+				TaskItem,
 				CharacterCount,
 				Youtube,
+				// Collaboration.configure({
+				// 	document: ydoc
+				// }),
+				// CollaborationCursor.configure({
+				// 	provider: providerWS,
+				// 	user: {
+				// 		name: data.currentUserName,
+				// 		color: '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0')
+				// 	}
+				// }),
 				Image.configure({
 					allowBase64: true
+				}),
+				// Mention.configure({
+				// 	HTMLAttributes: {
+				// 		class: 'mention'
+				// 	},
+				// 	suggestion
+				// }),
+				TextAlign.configure({
+					types: ['heading', 'paragraph']
 				}),
 				StarterKit.configure({ document: false }),
 				Placeholder.configure({
@@ -94,7 +119,7 @@
 				$editorJson = editor.getJSON();
 				// send the content to an API here
 			},
-			content: generateHTML($currentPost.konten, [StarterKit, Youtube, Image])
+			content: generateHTML($currentPost.konten, [StarterKit, Youtube, Image, TaskList, TaskItem])
 		});
 		$editorJson = $editor.getJSON();
 	});
@@ -394,5 +419,78 @@
 	}
 	:global(.tipeditpost .tiptap h3) {
 		@apply text-base;
+	}
+
+	:global(.tipeditpost .tiptap ul[data-type='taskList']) {
+		list-style: none;
+		padding: 0;
+	}
+
+	:global(.tipeditpost .tiptap ul[data-type='taskList']) {
+		list-style: none;
+		padding: 0;
+	}
+
+	:global(.tipeditpost .tiptap ul[data-type='taskList'] > li) {
+		display: flex;
+		align-items: center;
+		@apply border-b-2 border-dotted pb-1 pt-1;
+	}
+
+	:global(.tipeditpost .tiptap ul[data-type='taskList'] > li > div) {
+		word-break: break-all;
+	}
+
+	:global(.tipeditpost .tiptap ul[data-type='taskList'] > li > label) {
+		flex: 0 0 auto;
+		margin-right: 0.5rem;
+		user-select: none;
+	}
+
+	:global(.tipeditpost .tiptap ul[data-type='taskList'] > li > label > div) {
+		flex: 1 1 auto;
+	}
+
+	:global(.tipeditpost .tiptap ul[data-type='taskList'] > input[type='checkbox']) {
+		cursor: pointer;
+	}
+	:global(
+			.tipeditpost .tiptap ul[data-type='taskList'] > li > label > input[type='checkbox']:checked
+		) {
+		cursor: pointer;
+		@apply bg-blue_office;
+	}
+
+	:global(.tipeditpost .tiptap .mention) {
+		cursor: pointer;
+		/* @apply bg-blue_office; */
+		@apply border-blue_office text-blue_office;
+		padding: 1px 4px;
+		font-weight: 400;
+		font-weight: 500;
+		border-radius: 5px;
+	}
+	:global(.tipeditpost .tiptap .collaboration-cursor__caret) {
+		border-left: 1px solid #0d0d0d;
+		border-right: 1px solid #0d0d0d;
+		margin-left: -1px;
+		margin-right: -1px;
+		pointer-events: none;
+		position: relative;
+		word-break: normal;
+	}
+	:global(.tipeditpost .tiptap .collaboration-cursor__label) {
+		border-radius: 3px 3px 3px 0;
+		color: #ffffff;
+		font-size: 12px;
+		font-style: normal;
+		font-weight: 600;
+		left: -1px;
+		line-height: normal;
+		padding: 0.1rem 0.3rem;
+		position: absolute;
+		top: -1.4em;
+		user-select: none;
+		white-space: nowrap;
 	}
 </style>

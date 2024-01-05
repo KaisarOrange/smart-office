@@ -16,7 +16,7 @@
 	import Document from '@tiptap/extension-document';
 	import TaskList from '@tiptap/extension-task-list';
 	import TaskItem from '@tiptap/extension-task-item';
-	import { currentRuang, editorJson, userID } from '$lib/Stores/editorOutput';
+	import { currentRuang, editorJson, userID, userName } from '$lib/Stores/editorOutput';
 	import { postPosts } from '$lib/functions/postPosts';
 	import Collaboration from '@tiptap/extension-collaboration';
 	import * as Y from 'yjs';
@@ -35,7 +35,7 @@
 
 	const ydoc = new Y.Doc();
 	// const provider = new WebrtcProvider('example-doc', ydoc);
-	const providerWS = new WebsocketProvider('ws://' + '127.0.0.1:8081' + '/ws', 'room', ydoc);
+	const providerWS = new WebsocketProvider('ws://' + '127.0.0.1:8080' + '/ws', 'room', ydoc);
 
 	const CustomDocument = Document.extend({
 		content: 'heading block*'
@@ -68,6 +68,7 @@
 	};
 
 	const modalStore = getModalStore();
+	const date = new Date();
 
 	let modalDraft: ModalSettings = {
 		type: 'confirm',
@@ -78,7 +79,8 @@
 			const konten: any = $editorJson;
 
 			if (r === true) {
-				postPosts(userId, true, konten, true, $userID);
+				//fix this later 1.0
+				postPosts(userId, true, konten, true, $userID, $userName, date, false);
 				return;
 			}
 		}
@@ -116,7 +118,6 @@
 					},
 					suggestion
 				}),
-				,
 				TextAlign.configure({
 					types: ['heading', 'paragraph']
 				}),
