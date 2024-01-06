@@ -12,7 +12,14 @@
 	import Placeholder from '@tiptap/extension-placeholder';
 	import Image from '@tiptap/extension-image';
 	import Document from '@tiptap/extension-document';
-	import { currentPost, currentRuang, editorJson, userID } from '$lib/Stores/editorOutput';
+	import suggestion from '$lib/functions/suggestion';
+	import {
+		currentPost,
+		currentRuang,
+		editorJson,
+		userID,
+		userName
+	} from '$lib/Stores/editorOutput';
 	import { postPosts } from '$lib/functions/postPosts';
 	import { generateHTML } from '@tiptap/html';
 	import { postUpdate } from '$lib/functions/postUpdate';
@@ -20,6 +27,7 @@
 	import TaskItem from '@tiptap/extension-task-item';
 	import Collaboration from '@tiptap/extension-collaboration';
 	import TextAlign from '@tiptap/extension-text-align';
+	import Mention from '@tiptap/extension-mention';
 
 	let active: boolean = false;
 	let editor: Readable<Editor>;
@@ -75,12 +83,12 @@
 				Image.configure({
 					allowBase64: true
 				}),
-				// Mention.configure({
-				// 	HTMLAttributes: {
-				// 		class: 'mention'
-				// 	},
-				// 	suggestion
-				// }),
+				Mention.configure({
+					HTMLAttributes: {
+						class: 'mention'
+					},
+					suggestion
+				}),
 				TextAlign.configure({
 					types: ['heading', 'paragraph']
 				}),
@@ -119,7 +127,14 @@
 				$editorJson = editor.getJSON();
 				// send the content to an API here
 			},
-			content: generateHTML($currentPost.konten, [StarterKit, Youtube, Image, TaskList, TaskItem])
+			content: generateHTML($currentPost.konten, [
+				StarterKit,
+				Youtube,
+				Image,
+				TaskList,
+				TaskItem,
+				Mention
+			])
 		});
 		$editorJson = $editor.getJSON();
 	});
@@ -328,7 +343,7 @@
 					on:click={() => {
 						// updateStore();
 						$editorJson = $editor.getJSON();
-						postUpdate($currentPost.id, $editorJson, $userID);
+						postUpdate($currentPost.id, $editorJson, $userID, $userName);
 						modalStore.close();
 					}}
 					class="btn bg-[#0093ED] text-white font-semibold rounded-sm px-2 py-1">Simpan</button

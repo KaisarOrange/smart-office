@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto, invalidate } from '$app/navigation';
-	import suggestion from './suggestion';
+	import suggestion from '../../../lib/functions/suggestion';
 	import { onMount } from 'svelte';
 	import type { Readable } from 'svelte/store';
 	import { createEditor, Editor, EditorContent, SvelteRenderer } from 'svelte-tiptap';

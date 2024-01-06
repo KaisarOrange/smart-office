@@ -23,6 +23,7 @@
 		return 'btn' + color;
 	};
 	export let reminder: any;
+	console.log(reminder);
 
 	let date: any = new Date(reminder?.due_time);
 	let currentDate: any = new Date();

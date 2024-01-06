@@ -26,7 +26,7 @@
 	const tahun = date.getFullYear();
 </script>
 
-<div class=" px-2.5 h-[550px] pt-2 rounded-sm bg-[#D9D9D9] right-5">
+<div class=" px-2.5 h-[550px] min-w-[250px] pt-2 rounded-sm bg-[#D9D9D9] right-5">
 	<div class="flex px-1 justify-between items-center">
 		<div>
 			<p class="font-bold">Pengingat</p>

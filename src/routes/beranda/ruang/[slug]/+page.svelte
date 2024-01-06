@@ -20,8 +20,9 @@
 			<Spinner />
 		</div>
 	{:then ruang}
+		<!-- {JSON.stringify(ruang.data.user} -->
 		<Anggota data={ruang.data.user} />
 		<Posts data={ruang.data.posts} user={data.stream?.users} />
-		<Todo />
+		<Todo data={ruang.data.reminders} />
 	{/await}
 </div>

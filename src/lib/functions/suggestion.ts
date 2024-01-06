@@ -1,7 +1,7 @@
 import tippy from 'tippy.js';
 import type { SvelteComponent } from 'svelte';
 import { SvelteRenderer } from 'svelte-tiptap';
-import PopUp from './PopUp.svelte';
+import PopUp from '../PopUp.svelte';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export default {

@@ -13,10 +13,28 @@ export async function load({ fetch, params }) {
 				return err;
 			});
 
+		const fetchReminders = fetch(`${env.PUBLIC_SERVER_URL}/api/ruang/${params.slug}/reminder`)
+			.then((res) => {
+				return res.json();
+			})
+			.catch((err) => {
+				console.log(err);
+				return err;
+			});
+
 		return {
 			ruang: {
 				ruangs: new Promise((resolve) => {
 					fet
+						.then((data: any) => {
+							resolve(data);
+						})
+						.catch((error: Error) => {
+							console.log(error);
+						});
+				}),
+				reminders: new Promise((resolve) => {
+					fetchReminders
 						.then((data: any) => {
 							resolve(data);
 						})
