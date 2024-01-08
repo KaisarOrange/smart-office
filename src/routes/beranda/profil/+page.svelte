@@ -20,19 +20,19 @@
 			{#await data.stream.users}
 				<div>hello</div>
 			{:then users}
-				<Posts data={users.data.posts} user={data.stream?.users} />
+				<Posts data={users.data.posts} user={data.stream?.users} allow={data.allowed} />
 			{/await}
 		{:else if selected === 1}
 			{#await data.stream_profile?.draft}
 				<div>hello</div>
 			{:then draft}
-				<Posts data={draft.data} user={data.stream?.users} />
+				<Posts data={draft.data} user={data.stream?.users} allow={data.allowed} />
 			{/await}
 		{:else}
 			{#await data.stream_profile?.like}
 				<div>hello</div>
 			{:then like}
-				<Posts data={like.data.user_like} user={data.stream?.users} />
+				<Posts data={like.data.user_like} user={data.stream?.users} allow={data.allowed} />
 			{/await}
 		{/if}
 		{#await data.stream.users}

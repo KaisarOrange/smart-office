@@ -72,7 +72,7 @@
 					<i class="ri-delete-bin-line" />
 					<div>Hapus</div>
 				</div>
-				<div
+				<!-- <div
 					on:click={() => {
 						$currentPost = { konten: konten, id: id };
 						// modalStore.trigger(modal);
@@ -83,7 +83,7 @@
 				>
 					<i class="ri-star-line" />
 					<div>Simpan</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	{/if}

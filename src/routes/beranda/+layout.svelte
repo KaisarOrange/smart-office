@@ -11,10 +11,12 @@
 	import Spinner from '$lib/Spinner/Spinner.svelte';
 	import { page } from '$app/stores';
 	import { userID, userName } from '$lib/Stores/editorOutput';
+	import ModalSelectUser from '$lib/Modal/ModalSelectUser.svelte';
 
 	const modalRegistry: Record<string, ModalComponent> = {
 		modalComponentOne: { ref: ModalComponentOne },
-		modalEditPost: { ref: ModalEditPost }
+		modalEditPost: { ref: ModalEditPost },
+		modalInsertUser: { ref: ModalSelectUser }
 	};
 
 	export let data: any;

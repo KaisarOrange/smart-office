@@ -1,4 +1,4 @@
-import { goto } from '$app/navigation';
+import { invalidateAll } from '$app/navigation';
 import { env } from '$env/dynamic/public';
 import { postSetReminder } from './postSetReminder';
 
@@ -83,7 +83,7 @@ export const postUpdate = async (id: string, konten: any, user_id: string, userN
 			}
 
 			if (res.ok) {
-				goto('/beranda');
+				invalidateAll();
 			}
 		} catch (error: any) {
 			console.error(error);

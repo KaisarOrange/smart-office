@@ -52,7 +52,8 @@ export async function load({ fetch, locals }) {
 							console.log(error);
 						});
 				})
-			}
+			},
+			allowed: true
 		};
 	} catch (err) {
 		console.log(err);

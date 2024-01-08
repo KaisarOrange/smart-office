@@ -35,7 +35,7 @@
 
 	const ydoc = new Y.Doc();
 	// const provider = new WebrtcProvider('example-doc', ydoc);
-	const providerWS = new WebsocketProvider('ws://' + '127.0.0.1:8080' + '/ws', 'room', ydoc);
+	const providerWS = new WebsocketProvider('ws://' + env.PUBLIC_WS_URL + '/ws', 'room', ydoc);
 
 	const CustomDocument = Document.extend({
 		content: 'heading block*'
@@ -67,8 +67,8 @@
 		}
 	};
 
-	const modalStore = getModalStore();
 	const date = new Date();
+	const modalStore = getModalStore();
 
 	let modalDraft: ModalSettings = {
 		type: 'confirm',

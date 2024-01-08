@@ -46,7 +46,7 @@
 			<i class="ri-heart-line" /> Disukai
 			<div class="bg-blue-400 {selected === 2 ? 'h-0.5' : ''}" />
 		</div>
-		<div
+		<!-- <div
 			on:click={() => (selected = 3)}
 			on:keydown={() => {}}
 			aria-hidden
@@ -56,6 +56,6 @@
 		>
 			<i class="ri-star-line" /> Tersimpan
 			<div class="bg-blue-400 {selected === 3 ? 'h-0.5' : ''}" />
-		</div>
+		</div> -->
 	</div>
 </div>

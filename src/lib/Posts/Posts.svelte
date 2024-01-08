@@ -6,6 +6,7 @@
 	import { writable } from 'svelte/store';
 	import { page } from '$app/stores';
 	export let data: any;
+	export let allow = false;
 	export let user;
 	const userInfoo = { username: '', photo: '' };
 
@@ -63,7 +64,7 @@
 								{draft ? 'Draft' : ''}
 							</div>
 						</div>
-						{#if $page.url.pathname === '/beranda/profil'}
+						{#if allow}
 							<PostsMoreComponent {konten} {id} />
 						{/if}
 					</div>

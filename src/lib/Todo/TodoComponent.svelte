@@ -44,7 +44,7 @@
 
 <!-- <AppShell>...</AppShell> -->
 <div class=" bg-white p-2 my-3 rounded-lg">
-	<div class="flex justify-around mb-1">
+	<div class="flex justify-between mb-1">
 		<div>
 			<p
 				on:click={() => {
@@ -77,12 +77,14 @@
 			{timeLeft.getMonth() > 0 ? timeLeft.getMonth() + ' bulan' : timeLeft.getDate() + ' hari'} , {hour}:{minutes}
 		</p>
 
+		<!-- User pictures -->
+		<!-- 
 		<div class="flex">
 			{#each nums as num}
 				<div class="m-0">
 					<img class="w-6 h-6 object-cover rounded-full" src="/alif.png" alt="profile_picture" />
 				</div>{/each}
-		</div>
+		</div> -->
 	</div>
 </div>
 

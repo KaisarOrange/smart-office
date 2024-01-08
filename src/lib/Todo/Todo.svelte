@@ -4,7 +4,7 @@
 	let nums = [0, 1, 2, 3, 4, 4, 4];
 	export let data: any;
 	console.log(data);
-	const hari = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+	const hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
 	const bulan = [
 		'Januari',
 		'Febuari',
@@ -19,8 +19,9 @@
 		'Desember'
 	];
 	let date = new Date();
+	const day = date.getDay();
+	console.log(day);
 
-	const day = date.getDay() - 1;
 	const tanggal = date.getDate();
 	const bulanDate = date.getMonth();
 	const tahun = date.getFullYear();

@@ -13,6 +13,8 @@
 	import Image from '@tiptap/extension-image';
 	import Document from '@tiptap/extension-document';
 	import suggestion from '$lib/functions/suggestion';
+	import { env } from '$env/dynamic/public';
+
 	import {
 		currentPost,
 		currentRuang,
@@ -28,6 +30,9 @@
 	import Collaboration from '@tiptap/extension-collaboration';
 	import TextAlign from '@tiptap/extension-text-align';
 	import Mention from '@tiptap/extension-mention';
+	import { WebsocketProvider } from 'y-websocket';
+	import * as Y from 'yjs';
+	import CollaborationCursor from '@tiptap/extension-collaboration-cursor';
 
 	let active: boolean = false;
 	let editor: Readable<Editor>;
@@ -35,7 +40,6 @@
 	let data: any;
 
 	const id = $currentPost.id;
-	console.log(id);
 
 	let screenSize: any;
 	const CustomDocument = Document.extend({
@@ -61,6 +65,10 @@
 	const modalStore: any = getModalStore();
 	console.log($modalStore);
 
+	const ydoc = new Y.Doc();
+	// const provider = new WebrtcProvider('example-doc', ydoc);
+	const providerWS = new WebsocketProvider('ws://' + env.PUBLIC_WS_URL + '/ws', 'room', ydoc);
+
 	onMount(() => {
 		//    const content = generateHTML(, [Youtube, StarterKit])
 		editor = createEditor({
@@ -70,16 +78,16 @@
 				TaskItem,
 				CharacterCount,
 				Youtube,
-				// Collaboration.configure({
-				// 	document: ydoc
-				// }),
-				// CollaborationCursor.configure({
-				// 	provider: providerWS,
-				// 	user: {
-				// 		name: data.currentUserName,
-				// 		color: '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0')
-				// 	}
-				// }),
+				Collaboration.configure({
+					document: ydoc
+				}),
+				CollaborationCursor.configure({
+					provider: providerWS,
+					user: {
+						name: $userName,
+						color: '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0')
+					}
+				}),
 				Image.configure({
 					allowBase64: true
 				}),

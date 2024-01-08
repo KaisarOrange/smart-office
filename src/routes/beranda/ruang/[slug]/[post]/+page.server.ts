@@ -18,7 +18,10 @@ export async function load({ fetch, locals, params }) {
 				console.log(err);
 				return err;
 			});
-
+		const isAllowed = await fetch(
+			`${env.PUBLIC_SERVER_URL}/api/post/${locals.user.user_id}/${params.post}/allow`
+		);
+		const resIsAllowed = await isAllowed.json();
 		return {
 			streamed: {
 				posts: new Promise((resolve) => {
@@ -31,7 +34,8 @@ export async function load({ fetch, locals, params }) {
 							return err;
 						});
 				})
-			}
+			},
+			allowed: resIsAllowed.data
 		};
 	} catch (error) {
 		console.log(error);
